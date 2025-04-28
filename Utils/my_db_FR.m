@@ -65,7 +65,7 @@ T2 = T2(1:3:end);
 output_table2 = output_table2(1:3:end,:);
 
 % quarterly loan 
-loan_obs = diff(log(output_table2(:,2)));
+l_obs = diff(log(output_table2(:,2)));
 
 %% Transform co2: correct for seacsonal adjustment using X13
 data = readtable('C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Data/filtered_series.csv');
@@ -80,12 +80,12 @@ T3 = T3(2:end);
 %% Align time series
 
 %  check min date where we have obs
-min(T)
-min(T2)
+min(T);
+min(T2);
 Tmin = min(T3); % max minimum
 % check max
-max(T)
-max(T2)
+max(T);
+max(T2);
 Tmax = max(T3); % min max
 
 % cropping observation window 
@@ -108,12 +108,18 @@ dataset(:,3) = gc_obs(eff_idx);
 dataset(:,4) = gi_obs(eff_idx);
 dataset(:,5) = pi_obs(eff_idx);
 dataset(:,6) = r_obs(eff_idx);
-dataset(:,7) = loan_obs(eff_idx2);
+dataset(:,7) = l_obs(eff_idx2);
 dataset(:,8) = co2_obs(eff_idx3);
 
-%%
+%% SAVE
 % save into myobs.mat
-% save my_obs gy_obs gc_obs gi_obs pi_obs r_obs loan_obs co2_obs eff_sample
+save myobs gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs
+
+colNames = {'eff_sample', 'gy_obs', 'gc_obs', 'gi_obs', 'pi_obs', 'r_obs', 'l_obs', 'co2_obs'};
+sTable = array2table(dataset,'VariableNames',colNames);
+
+filename = 'myobs.xlsx';
+writetable(sTable,filename,'Sheet',1,'Range','A1')
 
 %% Plot
 
@@ -123,7 +129,7 @@ gc_obs = dataset(:,3);
 gi_obs = dataset(:,4);
 pi_obs = dataset(:,5);
 r_obs = dataset(:,6);
-loan_obs = dataset(:,7);
+l_obs = dataset(:,7);
 co2_obs = dataset(:,8);
 
 figure;
@@ -151,7 +157,7 @@ plot(T,r_obs)
 xlim([min(T) max(T)]);
 title('Euribor 3-month')
 subplot(2,2,2)
-plot(T,loan_obs)
+plot(T,l_obs)
 xlim([min(T) max(T)]);
 title('corporate loan growth')
 subplot(2,2,3)

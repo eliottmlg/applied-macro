@@ -11,7 +11,7 @@ close all;
 % 1. Defining variables
 %----------------------------------------------------------------
 
-var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs ;
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
 var e_a e_g e_c e_m e_i e_r e_t e_p;
 
 
@@ -135,7 +135,9 @@ model;
 	r_obs  = r  - steady_state(r);
 	[name='measurement corporate loans']
 	l_obs  = log(l/l(-1));
-	
+// 	[name='measurement CO2 emissions']
+// 	co2_obs  = log(e/e(-1));
+
 	%%% stochastic innovations
 	[name='shocks']
 	log(e_a) = rho_a*log(e_a(-1))+eta_a;
@@ -180,11 +182,50 @@ steady_state_model;
 	chi		= w*lb_H/(h^sigmaL);
 	g 		= gy*y;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
-	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0;
+	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
 end;
 
 % check residuals
-resid(1);
+resid;
+
+%%% Estimation
+varobs gy_obs pi_obs r_obs gc_obs gi_obs l_obs; // co2_obs;
+
+estimated_params;
+//	PARAM NAME,		INITVAL,	LB,		UB,		PRIOR_SHAPE,		PRIOR_P1,		PRIOR_P2,		PRIOR_P3,		PRIOR_P4,		JSCALE
+	stderr eta_g,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_g,				.92,    	,		,		beta_pdf,			.5,				0.2;
+	stderr eta_p,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_p,				.92,    	,		,		beta_pdf,			.5,				0.2;
+	stderr eta_r,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_r,				.5,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_c,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_c,				.96,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_i,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_i,				.9,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_m,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_m,				.96,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_a,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_a,				.9,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_t,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_t,				.9,    		,		,		beta_pdf,			.5,				0.2;
+
+    rho,				.45,    	,		,		beta_pdf,			.75,				0.1;	
+end;
+
+%%% estimation of the model
+estimation(datafile='Utils/myobs.xlsx',	% your datafile, must be in your current folder
+first_obs=1,				% First data of the sample
+mode_compute=4,				% optimization algo, keep it to 4
+mh_replic=500,				% number of sample in Metropolis-Hastings
+mh_jscale=0.5,				% adjust this to have an acceptance rate between 0.2 and 0.3
+prefilter=1,				% remove the mean in the data
+lik_init=2,					% Don't touch this,
+mh_nblocks=1,				% number of mcmc chains
+forecast=8					% forecasts horizon
+) gy_obs pi_obs r_obs gc_obs gi_obs l_obs; // co2_obs;
+
+
 
 %%% Stochastic Simulations // replace with your codes
 

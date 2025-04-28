@@ -1,4 +1,4 @@
-Starting Dynare (version 5.4).
+Starting Dynare (version 6.3).
 Calling Dynare with arguments: none
-ERROR: Could not open file: credit_NK.mod
-
+ERROR: Could not open file: credit_NK.mod 
+Preprocessing time: 0h00m00s.

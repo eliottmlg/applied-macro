@@ -18,6 +18,12 @@ addpath([options.Dynare_path,'\matlab\']);
 dynare_config;
 addpath([options.model_path,'\']); 
 
+
+%% Fetching and processing the estimation data
+
+
+
+
 %% running mod-file and saving plots  
 
 % run mod file
