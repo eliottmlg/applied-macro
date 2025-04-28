@@ -1,0 +1,157 @@
+Starting Dynare (version 5.4).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
+Found 36 equation(s).
+Evaluating expressions...done
+Computing static model derivatives (order 1).
+Computing dynamic model derivatives (order 1).
+Processing outputs ...
+done
+Preprocessing completed.
+
+
+
+
+
+Residuals of the static equations:
+
+Equation number 1 : 0 : marginal utility of consumption
+Equation number 2 : 0 : Euler
+Equation number 3 : 0 : Labor Supply
+Equation number 4 : 0 : FOC i
+Equation number 5 : 0 : technology
+Equation number 6 : 0 : Borrowing constraint
+Equation number 7 : 0 : Capital law of motion
+Equation number 8 : 0 : FOC c
+Equation number 9 : 0 : FOC l
+Equation number 10 : 0 : FOC k
+Equation number 11 : 0 : FOC h
+Equation number 12 : 0 : NKPC
+Equation number 13 : 0 : FOC y
+Equation number 14 : 0 : FOC mu
+Equation number 15 : 0 : balance sheet
+Equation number 16 : 0 : Resources Constraint
+Equation number 17 : 0 : Total consumption
+Equation number 18 : 0 : Total emissions
+Equation number 19 : 0 : Fisherian equation
+Equation number 20 : 0 : Monetary Policy rule
+Equation number 21 : 0 : Public spending
+Equation number 22 : 0 : Carbon tax
+Equation number 23 : 0 : measurement GDP
+Equation number 24 : 0 : measurement consumption
+Equation number 25 : 0 : measurement investment
+Equation number 26 : 0 : measurement inflation
+Equation number 27 : 0 : measurement interest rate
+Equation number 28 : 0 : measurement corporate loans
+Equation number 29 : 0 : shocks
+Equation number 30 : 0 : 30
+Equation number 31 : 0 : 31
+Equation number 32 : 0 : 32
+Equation number 33 : 0 : 33
+Equation number 34 : 0 : 34
+Equation number 35 : 0 : 35
+Equation number 36 : 0 : 36
+
+
+
+MODEL SUMMARY
+
+  Number of variables:         36
+  Number of stochastic shocks: 8
+  Number of state variables:   16
+  Number of jumpers:           8
+  Number of static variables:  15
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables       eta_a     eta_g     eta_c     eta_m     eta_i     eta_r     eta_t     eta_p
+eta_a        1.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_g        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_c        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_m        0.000000  0.000000  0.000000  1.000000  0.000000  0.000000  0.000000  0.000000
+eta_i        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_r        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_t        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_p        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y             c_H             c_E               i              pi               r               q               e           phi_E
+Constant                   25.000000        8.818808        3.231681        4.029856        1.005000        1.012085        1.000000       -1.449913        0.013092
+c_E(-1)                     0.018976       -0.012777        0.134789       -0.109879        0.003700        0.001118       -0.122431       -0.002427        0.571780
+c_H(-1)                     0.607364        0.668533       -0.221595       -0.058594        0.007664        0.002315       -0.052715       -0.077698        0.229622
+k(-1)                       0.227328        0.002113        0.130396        0.012842        0.000631        0.000191        0.025450       -0.029081       -0.141656
+l(-1)                      -0.344243        0.007535       -0.201012       -0.026629       -0.001768       -0.000534       -0.041744        0.044038        0.223569
+r(-1)                    -151.155514       -2.731367      -80.817170      -13.099054       -1.524160        0.339529      -18.668147       19.336727       90.355024
+e_a(-1)                    26.646942        1.517374       12.005664        3.514796       -0.116314       -0.035140        2.716377       -3.408838      -12.084195
+e_g(-1)                     5.730394       -0.582570       -0.253067       -0.250396        0.056614        0.017104       -0.073426       -0.733067        0.219953
+e_c(-1)                     3.742470        1.663166        0.986960       -0.257222        0.026480        0.008000        0.122366       -0.478759       -0.673766
+e_m(-1)                    33.672161       -0.171523       19.115964        2.585261        0.157599        0.047613        4.244379       -4.307546      -23.275435
+e_r(-1)                   -84.225043       -2.854496      -43.234764       -7.763539       -1.097471        0.073272      -10.463792       10.774576       48.917384
+e_t(-1)                     1.399789       -0.084851       -1.312368       -0.255543        0.027537        0.008319       -0.309391       -1.198180        1.420632
+i(-1)                      -0.011290       -0.018056       -0.709302        0.720140        0.007612        0.002300       -0.165595        0.001444        0.735702
+e_i(-1)                   -14.503550        0.008361       -9.820035        0.538223       -0.021587       -0.006522       -2.437893        1.855382       10.702396
+eta_a                      28.049412        1.597236       12.637542        3.699786       -0.122436       -0.036990        2.859344       -3.588250      -12.720205
+eta_g                       6.031994       -0.613232       -0.266387       -0.263575        0.059594        0.018004       -0.077291       -0.771649        0.231529
+eta_c                       3.939443        1.750702        1.038905       -0.270760        0.027873        0.008421        0.128806       -0.503957       -0.709227
+eta_m                      35.444380       -0.180550       20.122067        2.721327        0.165894        0.050119        4.467767       -4.534259      -24.500458
+eta_i                     -15.266895        0.008801      -10.336879        0.566551       -0.022723       -0.006865       -2.566203        1.953033       11.265680
+eta_r                    -210.562609       -7.136240     -108.086910      -19.408847       -2.743677        0.183179      -26.159479       26.936441      122.293461
+eta_t                       3.499473       -0.212127       -3.280920       -0.638858        0.068843        0.020799       -0.773479       -2.995449        3.551581
+
+
+THEORETICAL MOMENTS
+VARIABLE           MEAN    STD. DEV.     VARIANCE
+y               25.0000     104.6102   10943.2919
+c_H              8.8188      25.1141     630.7194
+c_E              3.2317      33.7246    1137.3485
+i                4.0299      24.3751     594.1432
+pi               1.0050       0.2807       0.0788
+r                1.0121       0.2163       0.0468
+q                1.0000       5.4192      29.3674
+e               -1.4499      13.3824     179.0878
+phi_E            0.0131      27.6425     764.1106
+
+
+
+VARIANCE DECOMPOSITION (in percent)
+          eta_a   eta_g   eta_c   eta_m   eta_i   eta_r   eta_t   eta_p
+y         84.35    0.00    0.00   15.65    0.00    0.00    0.00    0.00
+c_H       91.81    0.00    0.00    8.19    0.00    0.00    0.00    0.00
+c_E       36.27    0.00    0.00   63.73    0.00    0.00    0.00    0.00
+i         98.08    0.00    0.00    1.92    0.00    0.00    0.00    0.00
+pi        30.53    0.00    0.00   69.47    0.00    0.00    0.00    0.00
+r         56.49    0.00    0.00   43.51    0.00    0.00    0.00    0.00
+q         28.37    0.00    0.00   71.63    0.00    0.00    0.00    0.00
+e         84.35    0.00    0.00   15.65    0.00    0.00    0.00    0.00
+phi_E     21.18    0.00    0.00   78.82    0.00    0.00    0.00    0.00
+
+
+
+MATRIX OF CORRELATIONS
+Variables          y      c_H      c_E        i       pi        r        q        e    phi_E
+y             1.0000   0.7612   0.7746   0.8880  -0.0645  -0.4203   0.4307  -1.0000  -0.4134
+c_H           0.7612   1.0000   0.2387   0.7283  -0.4081  -0.8083   0.0559  -0.7612  -0.0194
+c_E           0.7746   0.2387   1.0000   0.4961   0.2900   0.0938   0.6575  -0.7746  -0.6864
+i             0.8880   0.7283   0.4961   1.0000  -0.1577  -0.4504   0.2146  -0.8880  -0.1646
+pi           -0.0645  -0.4081   0.2900  -0.1577   1.0000   0.6552   0.2066   0.0645  -0.3110
+r            -0.4203  -0.8083   0.0938  -0.4504   0.6552   1.0000  -0.0115   0.4203  -0.1092
+q             0.4307   0.0559   0.6575   0.2146   0.2066  -0.0115   1.0000  -0.4307  -0.9825
+e            -1.0000  -0.7612  -0.7746  -0.8880   0.0645   0.4203  -0.4307   1.0000   0.4134
+phi_E        -0.4134  -0.0194  -0.6864  -0.1646  -0.3110  -0.1092  -0.9825   0.4134   1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION
+Order           1        2        3        4        5
+y          0.8821   0.8057   0.7537   0.7153   0.6844
+c_H        0.9955   0.9846   0.9696   0.9521   0.9332
+c_E        0.6744   0.4762   0.3523   0.2728   0.2203
+i          0.9757   0.9459   0.9109   0.8714   0.8283
+pi         0.5309   0.1720   0.0371   0.0059   0.0168
+r          0.9289   0.8023   0.6828   0.5902   0.5261
+q         -0.0789  -0.0458  -0.0220  -0.0068   0.0018
+e          0.8821   0.8057   0.7537   0.7153   0.6844
+phi_E     -0.0402  -0.0199  -0.0100  -0.0055  -0.0035
+Total computing time : 0h00m02s
+Note: 1 warning(s) encountered in the preprocessor
