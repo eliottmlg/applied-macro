@@ -11,12 +11,8 @@ close all;
 % 1. Defining variables
 %----------------------------------------------------------------
 
-// Original
-// var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
-// var e_a e_g e_c e_m e_i e_r e_t e_p;
-// New
-var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs l_s i_s;
-var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
+var e_a e_g e_c e_m e_i e_r e_t e_p;
 
 
 varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p;
@@ -104,9 +100,6 @@ model;
 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
 	[name='FOC mu']
 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
-// New
-	[name='Innovation level (mu) law of motion']
-	i_s*e_s*(1-(mu/2)*(i_s/i_s(-1)-1)^2) = mu-(1-delta_mu)*mu(-1);
 
 
 	%% AGGREGATION
