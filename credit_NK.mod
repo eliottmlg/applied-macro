@@ -11,11 +11,9 @@ close all;
 % 1. Defining variables
 %----------------------------------------------------------------
 
-// Original
-// var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
-// var e_a e_g e_c e_m e_i e_r e_t e_p;
-// New
-var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs b_s b_o;
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs 
+// New below
+b_s b_o;
 var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
 
 
@@ -23,7 +21,9 @@ varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p;
 
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
 			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
-			sig theta1 theta2 varphi  tau0 y0;
+			sig theta1 theta2 varphi  tau0 y0
+//             New below
+            stepup p_s gamma; 
             
             
 %----------------------------------------------------------------
@@ -65,6 +65,11 @@ rho_i	= 0.95;
 rho_r	= 0.40;
 rho_t	= 0.40;
 rho_p   = 0.90;
+
+// New
+stepup  = 0.25; // step if target is missed
+p_s     = 0.02; // sustainium: yield premium on SLBs (rate bond - rate SLB)
+gamma   = 0.3; // probability of missing target
 		
 %----------------------------------------------------------------
 % 3. Model
@@ -135,9 +140,9 @@ model;
 	tau = tau0*e_t;
 
 // New
-	[name='Carbon tax']
+	[name='Interest rate on SLB']
     r_s = rr + gamma * stepup
-	[name='Carbon tax']
+	[name='Interest rate on original bonds']
     r_o = r_s + p_s
 
 	%% Observable variables 
@@ -201,6 +206,9 @@ steady_state_model;
 	g 		= gy*y;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
+// New
+    r_s		= r + gamma*stepup;
+    r_o		= r_s + p_s;
 end;
 
 % check residuals

@@ -11,15 +11,21 @@ close all;
 % 1. Defining variables
 %----------------------------------------------------------------
 
-var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
-var e_a e_g e_c e_m e_i e_r e_t e_p;
+// Original
+// var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
+// var e_a e_g e_c e_m e_i e_r e_t e_p;
+// New
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs b_s b_o;
+var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
 
 
 varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p;
 
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
 			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
-			sig theta1 theta2 varphi  tau0 y0;
+			sig theta1 theta2 varphi  tau0 y0
+//             New below
+            stepup p_s gamma; 
             
             
 %----------------------------------------------------------------
@@ -100,11 +106,19 @@ model;
 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
 	[name='FOC mu']
 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
-
+// New
+	[name='FOC b_s']
+    lb_E = beta_E * lb_E * r_s
+	[name='FOC b_o']
+    lb_E = beta_E * lb_E * r_o
 
 	%% AGGREGATION
+// 	[name='balance sheet']
+// 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
+// New
 	[name='balance sheet']
-	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
+	c_E + i + w*h + r(-1)/pi*l(-1) + r_s(-1)/pi*b_s(-1) + r_o(-1)/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o + b_s;
+
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
 	[name='Total consumption']
@@ -121,6 +135,12 @@ model;
 	g = gy*steady_state(y)*e_g;
 	[name='Carbon tax']
 	tau = tau0*e_t;
+
+// New
+	[name='Interest rate on SLB']
+    r_s = rr + gamma * stepup
+	[name='Interest rate on original bonds']
+    r_o = r_s + p_s
 
 	%% Observable variables 
 	[name='measurement GDP']
@@ -183,6 +203,9 @@ steady_state_model;
 	g 		= gy*y;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
+// New
+    r_s		= rr*pi;
+    r_s		= rr*pi;
 end;
 
 % check residuals
