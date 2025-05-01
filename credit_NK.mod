@@ -15,7 +15,7 @@ close all;
 // var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs;
 // var e_a e_g e_c e_m e_i e_r e_t e_p;
 // New
-var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs l_s i_s;
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs b_s b_o;
 var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
 
 
@@ -105,13 +105,18 @@ model;
 	[name='FOC mu']
 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
 // New
-	[name='Innovation level (mu) law of motion']
-	i_s*e_s*(1-(mu/2)*(i_s/i_s(-1)-1)^2) = mu-(1-delta_mu)*mu(-1);
-
+	[name='FOC b_s']
+    lb_E = beta_E * lb_E * r_s
+	[name='FOC b_o']
+    lb_E = beta_E * lb_E * r_o
 
 	%% AGGREGATION
+// 	[name='balance sheet']
+// 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
+// New
 	[name='balance sheet']
-	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
+	c_E + i + w*h + r(-1)/pi*l(-1) + r_s(-1)/pi*b_s(-1) + r_o(-1)/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o + b_s;
+
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
 	[name='Total consumption']
@@ -128,6 +133,12 @@ model;
 	g = gy*steady_state(y)*e_g;
 	[name='Carbon tax']
 	tau = tau0*e_t;
+
+// New
+	[name='Carbon tax']
+    r_s = rr + gamma * stepup
+	[name='Carbon tax']
+    r_o = r_s + p_s
 
 	%% Observable variables 
 	[name='measurement GDP']
