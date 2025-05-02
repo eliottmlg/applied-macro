@@ -50,12 +50,12 @@ psi 	= 80;		% Adjustment costs on prices
 kappa	= 4;		% adjustment costs on investment
 varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
-mu_s    = 1000; // weight of SLBs
-mu_o    = 0.05; // weight of ordinary bonds 
-kappa_s = 8.9300; // elasticity SLB
-kappa_o = 8.9367; // elasticity ordinary bonds
+
+sigmaS = 8.9300; // elasticity SLB
+sigmaO = 8.9367; // elasticity ordinary bonds
+chi_s   = 15; // weight of SLBs
+chi_o   = 0.001; // weight of ordinary bonds
 BDratio = 0.05; // Bonds (SLB + ordinary) over debt ratio
-chi_s
 
 
 
@@ -139,7 +139,7 @@ model;
 // 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
 // New
 	[name='balance sheet']
-	c_E + i + w*h + r(-1)/pi*l(-1) + r_s(-1)/pi*b_s(-1) + r_o(-1)/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
+	c_E + i + w*h + r(-1)/pi*l(-1) + r_s/pi*b_s(-1) + r_o/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
     [name='Ordinary bond market clearing condition']
     b_o = b_o_E;
     [name='SLB market clearing condition']
@@ -240,8 +240,9 @@ steady_state_model;
 // New
 //     r_s		= r + gamma*stepup;
 //     r_o		= r_s + p_s;
-    b_o_E   = 0.04 * k;
-    b_s_E   = 0.3 * b_o_E;
+    b_o_E   = 0.04 * k; b_s_E   = 0.3 * b_o_E;
+    b_o     = 0.04 * k; b_s     = 0.3 * b_o_E;
+    e_s     = 1; e_o    = 1;
     
 
 end;
@@ -297,7 +298,7 @@ shocks;
 end;
 	
 % stochastic simulations
-stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
+// stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
 
 
 	

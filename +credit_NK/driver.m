@@ -359,24 +359,26 @@ M_.orig_maximum_lag = 1;
 M_.orig_maximum_lead = 1;
 M_.orig_maximum_lag_with_diffs_expanded = 1;
 M_.lead_lag_incidence = [
- 0 23 0;
- 1 24 0;
- 2 25 0;
- 3 26 0;
- 0 27 0;
- 0 28 0;
- 4 29 65;
- 5 30 0;
- 6 31 66;
- 7 32 0;
- 0 33 67;
- 0 34 0;
- 0 35 0;
- 0 36 68;
- 8 37 0;
- 0 38 69;
- 0 39 70;
- 0 40 71;
+ 0 21 0;
+ 1 22 0;
+ 2 23 0;
+ 3 24 0;
+ 0 25 0;
+ 0 26 0;
+ 4 27 65;
+ 5 28 0;
+ 6 29 66;
+ 7 30 0;
+ 0 31 67;
+ 0 32 0;
+ 0 33 0;
+ 0 34 68;
+ 8 35 0;
+ 0 36 69;
+ 0 37 70;
+ 0 38 71;
+ 0 39 0;
+ 0 40 0;
  0 41 0;
  0 42 0;
  0 43 0;
@@ -385,30 +387,28 @@ M_.lead_lag_incidence = [
  0 46 0;
  0 47 0;
  0 48 0;
- 0 49 0;
- 0 50 0;
- 9 51 0;
- 10 52 0;
- 0 53 0;
- 0 54 0;
- 11 0 72;
- 12 0 73;
- 13 55 0;
- 14 56 0;
- 15 57 0;
- 16 58 0;
- 17 59 74;
- 18 60 0;
- 19 61 0;
- 20 62 0;
- 21 63 0;
- 22 64 0;]';
+ 9 49 0;
+ 10 50 0;
+ 0 51 0;
+ 0 52 0;
+ 0 53 72;
+ 0 54 73;
+ 11 55 0;
+ 12 56 0;
+ 13 57 0;
+ 14 58 0;
+ 15 59 74;
+ 16 60 0;
+ 17 61 0;
+ 18 62 0;
+ 19 63 0;
+ 20 64 0;]';
 M_.nstatic = 17;
-M_.nfwrd   = 5;
+M_.nfwrd   = 7;
 M_.npred   = 17;
-M_.nboth   = 5;
+M_.nboth   = 3;
 M_.nsfwrd   = 10;
-M_.nspred   = 22;
+M_.nspred   = 20;
 M_.ndynamic   = 27;
 M_.dynamic_tmp_nbr = [28; 9; 0; 0; ];
 M_.model_local_variables_dynamic_tt_idxs = {
@@ -515,7 +515,7 @@ M_.mapping.eta_o.eqidx = [43 ];
 M_.mapping.eta_s.eqidx = [44 ];
 M_.static_and_dynamic_models_differ = false;
 M_.has_external_function = false;
-M_.state_var = [2 3 4 7 8 9 10 15 29 30 33 34 35 36 37 38 39 40 41 42 43 44 ];
+M_.state_var = [2 3 4 7 8 9 10 15 29 30 35 36 37 38 39 40 41 42 43 44 ];
 M_.exo_names_orig_ord = [1:10];
 M_.maximum_lag = 1;
 M_.maximum_lead = 1;
@@ -667,7 +667,7 @@ end
 if exist('oo_recursive_', 'var') == 1
   save([M_.dname filesep 'Output' filesep 'credit_NK_results.mat'], 'oo_recursive_', '-append');
 end
-disp('Note: 7 warning(s) encountered in the preprocessor')
+disp('Note: 3 warning(s) encountered in the preprocessor')
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end

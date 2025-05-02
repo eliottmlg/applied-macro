@@ -2,12 +2,8 @@ Starting Dynare (version 5.4).
 Calling Dynare with arguments: none
 Starting preprocessing of the model file ...
 WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
-WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
 WARNING: in the 'steady_state_model' block, variable 'r_s' is not assigned a value
 WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'e_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'e_o' is not assigned a value
 Found 44 equation(s).
 Evaluating expressions...done
 Computing static model derivatives (order 1).
@@ -26,8 +22,8 @@ Equation number 1 : 0 : marginal utility of consumption
 Equation number 2 : 0 : Euler
 Equation number 3 : 0 : Labor Supply
 Equation number 4 : 0 : FOC i
-Equation number 5 : NaN : Euler ordinary bonds (b_o)
-Equation number 6 : NaN : Euler SLBs (b_s)
+Equation number 5 : -1 : Euler ordinary bonds (b_o)
+Equation number 6 : -0.99999 : Euler SLBs (b_s)
 Equation number 7 : 0 : technology
 Equation number 8 : 0 : Borrowing constraint
 Equation number 9 : 0 : Capital law of motion
@@ -39,8 +35,8 @@ Equation number 14 : 0 : NKPC
 Equation number 15 : 0 : FOC y
 Equation number 16 : 0 : FOC mu
 Equation number 17 : -8.3821 : balance sheet
-Equation number 18 : -6.4478 : Ordinary bond market clearing condition
-Equation number 19 : -1.9343 : SLB market clearing condition
+Equation number 18 : 0 : Ordinary bond market clearing condition
+Equation number 19 : 0 : SLB market clearing condition
 Equation number 20 : 1.6257 : Firms debt structure
 Equation number 21 : -24.4545 : Firms capital structure
 Equation number 22 : 0 : Resources Constraint
@@ -64,13 +60,7 @@ Equation number 39 : 0 : 39
 Equation number 40 : 0 : 40
 Equation number 41 : 0 : 41
 Equation number 42 : 0 : 42
-Equation number 43 : NaN : 43
-Equation number 44 : NaN : 44
+Equation number 43 : 0 : 43
+Equation number 44 : 0 : 44
 
 
-[Warning: Problem in the model specification: some variables don't appear as current. Check whether this is
-desired.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('check_model', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\check_model.m', 21)" style="font-weight:bold">check_model</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\check_model.m',21,0)">line 21</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stoch_simul', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\stoch_simul.m', 92)" style="font-weight:bold">stoch_simul</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\stoch_simul.m',92,0)">line 92</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('credit_NK.driver', 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro\+credit_NK\driver.m', 643)" style="font-weight:bold">credit_NK.driver</a> (<a href="matlab: opentoline('C:\Users\eliot\Documents\REPOSITORIES\applied-macro\+credit_NK\driver.m',643,0)">line 643</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\dynare.m', 278)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\dynare.m',278,0)">line 278</a>)] 

@@ -22,14 +22,14 @@ assert(length(T) >= 37);
 
 T = credit_NK.dynamic_resid_tt(T, y, x, params, steady_state, it_);
 
-T(29) = getPowerDeriv(y(25)-params(12)*y(2),(-params(5)),1);
-T(30) = getPowerDeriv(y(26)-params(12)*y(3),(-params(5)),1);
-T(31) = getPowerDeriv(y(29),1-params(31),1);
-T(32) = getPowerDeriv(y(41)*params(28)*T(22)/(params(29)*params(30)),1/(params(30)-1),1);
+T(29) = getPowerDeriv(y(23)-params(12)*y(2),(-params(5)),1);
+T(30) = getPowerDeriv(y(24)-params(12)*y(3),(-params(5)),1);
+T(31) = getPowerDeriv(y(27),1-params(31),1);
+T(32) = getPowerDeriv(y(39)*params(28)*T(22)/(params(29)*params(30)),1/(params(30)-1),1);
 T(33) = getPowerDeriv(T(27),1-params(15),1);
-T(34) = getPowerDeriv(y(52)/(y(38)*y(36)),(-params(37)),1);
-T(35) = getPowerDeriv(y(51)/(y(38)*y(36)),(-params(36)),1);
-T(36) = (-(params(2)*y(69)))/(y(38)*y(38));
-T(37) = params(29)*getPowerDeriv(y(42),params(30),1);
+T(34) = getPowerDeriv(y(50)/(y(36)*y(34)),(-params(37)),1);
+T(35) = getPowerDeriv(y(49)/(y(36)*y(34)),(-params(36)),1);
+T(36) = (-(params(2)*y(69)))/(y(36)*y(36));
+T(37) = params(29)*getPowerDeriv(y(40),params(30),1);
 
 end
