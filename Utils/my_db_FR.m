@@ -11,7 +11,7 @@ clc
     'ECB/MNA/Q.Y.FR.W2.S1.S1.B.B1GQ._Z._Z._Z.IX.D.N', ...
     'ECB/FM/Q.U2.EUR.RT.MM.EURIBOR3MD_.HSTA');
 [output_table2,~,T2] = call_dbnomics('ECB/BSI/M.FR.Y.A.A20T.A.1.U2.2240.Z01.E');
-[output_table3,~,T3] = call_dbnomics('Eurostat/env_ac_aigg_q/Q.GHG.TOTAL_HH.THS_T.FR');
+% [output_table3,~,T3] = call_dbnomics('Eurostat/env_ac_aigg_q/Q.GHG.TOTAL_HH.THS_T.FR');
 
 % In order:
 
@@ -24,6 +24,8 @@ clc
 % loans, Working day and seasonally adjusted, stocks, monthly = use only last quarter's month + take first diff 
 
 % emissions, in tonnes, quarterly = needs to be Seasonally adjusted , maybe FD
+output_table3 = output_table2;
+T3 = T2;
 
 % select non NaN ids
 idx			= find(~isnan(sum(output_table(:,2:end),2)));
@@ -68,6 +70,11 @@ output_table2 = output_table2(1:3:end,:);
 l_obs = diff(log(output_table2(:,2)));
 
 %% Transform co2: correct for seacsonal adjustment using X13
+
+% download because series not available anymore on DBNOMICS
+T3 = T2(29:85);
+output_table3 = output_table3(29:85,:);
+
 data = readtable('C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Data/filtered_series.csv');
 co2_season = output_table3(:,2);
 output_table3(:,2) = table2array(data(:,2)); % replace with filtered series

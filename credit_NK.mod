@@ -139,7 +139,7 @@ model;
 // 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
 // New
 	[name='balance sheet']
-	c_E + i + w*h + r(-1)/pi*l(-1) + r_s/pi*b_s(-1) + r_o/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
+	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s_E(-1) + (r_o/pi)*b_o_E(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
     [name='Ordinary bond market clearing condition']
     b_o = b_o_E;
     [name='SLB market clearing condition']
@@ -147,7 +147,7 @@ model;
     [name='Firms debt structure']
     b_s_E + b_o_E = BDratio * (b_s_E + b_o_E + l);
     [name='Firms capital structure']
-    b_s_E + b_o_E + l = 0.99 * k;
+    b_s_E = 0. * 1/e;
 
 // 
 
@@ -240,7 +240,7 @@ steady_state_model;
 // New
 //     r_s		= r + gamma*stepup;
 //     r_o		= r_s + p_s;
-    b_o_E   = 0.04 * k; b_s_E   = 0.3 * b_o_E;
+    b_o_E   = 0.05 * l; b_s_E   = 0.3 * b_o_E;
     b_o     = 0.04 * k; b_s     = 0.3 * b_o;
     e_s     = 1; e_o    = 1;
     
@@ -298,7 +298,7 @@ shocks;
 end;
 	
 % stochastic simulations
-stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
+// stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
 
 
 	

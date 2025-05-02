@@ -14,8 +14,8 @@ function [nzij_pred, nzij_current, nzij_fwrd] = dynamic_g1_nz()
   nzij_pred(11,1)=34; nzij_pred(11,2)=10;
   nzij_pred(12,1)=17; nzij_pred(12,2)=15;
   nzij_pred(13,1)=26; nzij_pred(13,2)=15;
-  nzij_pred(14,1)=17; nzij_pred(14,2)=29;
-  nzij_pred(15,1)=17; nzij_pred(15,2)=30;
+  nzij_pred(14,1)=17; nzij_pred(14,2)=31;
+  nzij_pred(15,1)=17; nzij_pred(15,2)=32;
   nzij_pred(16,1)=35; nzij_pred(16,2)=35;
   nzij_pred(17,1)=36; nzij_pred(17,2)=36;
   nzij_pred(18,1)=37; nzij_pred(18,2)=37;

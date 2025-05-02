@@ -7,7 +7,7 @@ WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a val
 Found 44 equation(s).
 Evaluating expressions...done
 Computing static model derivatives (order 1).
-Computing dynamic model derivatives (order 1).
+Computing dynamic model derivatives (order 2).
 Processing outputs ...
 done
 Preprocessing completed.
@@ -38,7 +38,7 @@ Equation number 17 : -8.3821 : balance sheet
 Equation number 18 : 0 : Ordinary bond market clearing condition
 Equation number 19 : 0 : SLB market clearing condition
 Equation number 20 : 1.6257 : Firms debt structure
-Equation number 21 : -24.4545 : Firms capital structure
+Equation number 21 : -9.947 : Firms capital structure
 Equation number 22 : 0 : Resources Constraint
 Equation number 23 : 0 : Total consumption
 Equation number 24 : 0 : Total emissions
@@ -64,3 +64,5 @@ Equation number 43 : 0 : 43
 Equation number 44 : 0 : 44
 
 
+Total computing time : 0h00m00s
+Note: 3 warning(s) encountered in the preprocessor

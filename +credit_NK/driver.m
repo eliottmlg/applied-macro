@@ -343,6 +343,8 @@ options_.linear = false;
 options_.block = false;
 options_.bytecode = false;
 options_.use_dll = false;
+M_.nonzero_hessian_eqs = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 22 24 25 26 29 30 31 34 35 36 37 38 39 40 41 42 43 44];
+M_.hessian_eq_zero = isempty(M_.nonzero_hessian_eqs);
 M_.orig_eq_nbr = 44;
 M_.eq_nbr = 44;
 M_.ramsey_eq_nbr = 0;
@@ -387,10 +389,10 @@ M_.lead_lag_incidence = [
  0 46 0;
  0 47 0;
  0 48 0;
- 9 49 0;
- 10 50 0;
- 0 51 0;
- 0 52 0;
+ 0 49 0;
+ 0 50 0;
+ 9 51 0;
+ 10 52 0;
  0 53 72;
  0 54 73;
  11 55 0;
@@ -410,7 +412,7 @@ M_.nboth   = 3;
 M_.nsfwrd   = 10;
 M_.nspred   = 20;
 M_.ndynamic   = 27;
-M_.dynamic_tmp_nbr = [28; 9; 0; 0; ];
+M_.dynamic_tmp_nbr = [32; 53; 12; 0; ];
 M_.model_local_variables_dynamic_tt_idxs = {
 };
 M_.equations_tags = {
@@ -487,8 +489,8 @@ M_.mapping.gi_obs.eqidx = [31 ];
 M_.mapping.pi_obs.eqidx = [32 ];
 M_.mapping.r_obs.eqidx = [33 ];
 M_.mapping.l_obs.eqidx = [34 ];
-M_.mapping.b_s.eqidx = [6 17 19 ];
-M_.mapping.b_o.eqidx = [5 17 18 ];
+M_.mapping.b_s.eqidx = [6 19 ];
+M_.mapping.b_o.eqidx = [5 18 ];
 M_.mapping.b_s_E.eqidx = [17 19 20 21 ];
 M_.mapping.b_o_E.eqidx = [17 18 20 21 ];
 M_.mapping.r_s.eqidx = [6 17 ];
@@ -515,7 +517,7 @@ M_.mapping.eta_o.eqidx = [43 ];
 M_.mapping.eta_s.eqidx = [44 ];
 M_.static_and_dynamic_models_differ = false;
 M_.has_external_function = false;
-M_.state_var = [2 3 4 7 8 9 10 15 29 30 35 36 37 38 39 40 41 42 43 44 ];
+M_.state_var = [2 3 4 7 8 9 10 15 31 32 35 36 37 38 39 40 41 42 43 44 ];
 M_.exo_names_orig_ord = [1:10];
 M_.maximum_lag = 1;
 M_.maximum_lead = 1;
@@ -527,7 +529,7 @@ M_.maximum_exo_lead = 0;
 oo_.exo_steady_state = zeros(10, 1);
 M_.params = NaN(40, 1);
 M_.endo_trends = struct('deflator', cell(44, 1), 'log_deflator', cell(44, 1), 'growth_factor', cell(44, 1), 'log_growth_factor', cell(44, 1));
-M_.NNZDerivatives = [184; -1; -1; ];
+M_.NNZDerivatives = [184; 328; -1; ];
 M_.static_tmp_nbr = [17; 7; 0; 0; ];
 M_.model_local_variables_static_tt_idxs = {
 };
@@ -637,10 +639,6 @@ estim_params_.param_vals = [estim_params_.param_vals; 15, .45, NaN, NaN, 1, .75,
 M_.exo_det_length = 0;
 M_.Sigma_e(1, 1) = (1)^2;
 M_.Sigma_e(4, 4) = (1)^2;
-options_.irf = 30;
-options_.order = 1;
-var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'e';'phi_E'};
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
 
 
 oo_.time = toc(tic0);
