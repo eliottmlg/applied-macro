@@ -1,5 +1,30 @@
 Starting Dynare (version 6.3).
 Calling Dynare with arguments: none
 Starting preprocessing of the model file ... 
-ERROR: credit_NK.mod: line 102, col 2: syntax error, unexpected '[' 
-Preprocessing time: 0h00m01s.
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'r_s' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'e_s' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'e_o' is not assigned a value 
+Found 44 equation(s). 
+Evaluating expressions... 
+Computing static model derivatives (order 1). 
+Normalizing the static model... 
+Finding the optimal block decomposition of the static model... 
+16 block(s) found: 
+  15 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 25 equation(s) 
+                                 and 25 feedback variable(s). 
+Computing dynamic model derivatives (order 1). 
+Normalizing the dynamic model... 
+Finding the optimal block decomposition of the dynamic model... 
+13 block(s) found: 
+  12 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 27 equation(s) 
+                                 and 26 feedback variable(s). 
+Preprocessing completed. 
+Preprocessing time: 0h00m00s.

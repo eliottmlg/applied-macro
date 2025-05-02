@@ -13,7 +13,7 @@ close all;
 
 var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs 
 // New below
-b_s b_o b_s_E b_o_E;
+b_s b_o b_s_E b_o_E r_s r_o;
 var e_a e_g e_c e_m e_i e_r e_t e_p e_s e_o;
 
 
@@ -24,7 +24,7 @@ parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon k
 			sig theta1 theta2 varphi  tau0 y0
 //             New below
 //             stepup p_s gamma; 
-            chi_s chi_o sigmaS sigmaO;
+            chi_s chi_o sigmaS sigmaO rho_s rho_o;
             
             
 %----------------------------------------------------------------
@@ -49,6 +49,11 @@ psi 	= 80;		% Adjustment costs on prices
 kappa	= 4;		% adjustment costs on investment
 varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
+mu_s    = 1000; // weight of SLBs
+mu_o    = 0.05; // weight of ordinary bonds 
+kappa_s = 8.9300; // elasticity SLB
+kappa_o = 8.9367; // elasticity ordinary bonds
+
 
 % value of long term variables
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
@@ -66,15 +71,15 @@ rho_i	= 0.95;
 rho_r	= 0.40;
 rho_t	= 0.40;
 rho_p   = 0.90;
+// New
+rho_s   = 0.90; // persistence of SLB preference shock
+rho_o   = 0.90; // persistence of ordinary bonds preference shock
+
 
 // New
 // stepup  = 0.25; // stepup if target is missed
 // p_s     = 0.02; // sustainium: yield premium on SLBs (rate bond - rate SLB)
 // gamma   = 0.3; // probability of missing target
-mu_s    = 1000; // weight of SLBs
-kappa_s = 8.9300; // elasticity SLB
-mu_o    = 0.05; // weight of ordinary bonds 
-kappa_o = 8.9367; // elasticity ordinary bonds
 		
 %----------------------------------------------------------------
 % 3. Model
@@ -92,10 +97,10 @@ model;
  	e_i*q = 1 + e_i*q*(kappa/2)*( 1 + ( 3*i/i(-1)-4 )*i/i(-1) )
 			+ beta_E*lb_E(+1)/lb_E*e_i(+1)*q(+1)*kappa*(1-i(+1)/i)*(i(+1)/i)^2;
 // New
-    [name='Euler b_o']
+    [name='Euler ordinary bonds (b_o)']
     beta_H*lb_H(+1)/lb_H * r_o(+1)/pi(+1) + e_o * chi_o * (b_o/(lb_H*pi))^-sigmaO = 1;
-    [name='Euler b_s']
-    beta_H*lb_H(+1)/lb_H * r_s(+1)/pi(+1) + e_s * chi_s * (b_s/(lb_H*pi))^-sigmaS = 1
+    [name='Euler SLBs (b_s)']
+    beta_H*lb_H(+1)/lb_H * r_s(+1)/pi(+1) + e_s * chi_s * (b_s/(lb_H*pi))^-sigmaS = 1;
 
  	
 	%% Production
@@ -120,10 +125,10 @@ model;
 	[name='FOC mu']
 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
 // New
-	[name='FOC b_s_E']
-    lb_E = beta_E * lb_E * r_s
-	[name='FOC b_o_E']
-    lb_E = beta_E * lb_E * r_o
+	[name='FOC for entrepreneur SLB (b_s_E)']
+    lb_E = beta_E * lb_E * r_s;
+	[name='FOC for ordinary bonds (b_o_E)']
+    lb_E = beta_E * lb_E * r_o;
 
 	%% AGGREGATION
 // 	[name='balance sheet']
