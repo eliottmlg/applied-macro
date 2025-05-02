@@ -29,7 +29,7 @@ T(32) = getPowerDeriv(y(41)*params(28)*T(22)/(params(29)*params(30)),1/(params(3
 T(33) = getPowerDeriv(T(27),1-params(15),1);
 T(34) = getPowerDeriv(y(52)/(y(38)*y(36)),(-params(37)),1);
 T(35) = getPowerDeriv(y(51)/(y(38)*y(36)),(-params(36)),1);
-T(36) = (-(params(2)*y(71)))/(y(38)*y(38));
+T(36) = (-(params(2)*y(69)))/(y(38)*y(38));
 T(37) = params(29)*getPowerDeriv(y(42),params(30),1);
 
 end

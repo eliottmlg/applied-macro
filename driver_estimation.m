@@ -10,6 +10,7 @@ options.model_path = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro/';
 options.modfile = 'credit_NK';
 % change your Dynare path
 options.Dynare_path = 'C:\dynare\6.3';
+options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
 
 options.folder2plot = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Plots/';   % Your destination folder
 

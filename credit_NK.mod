@@ -14,6 +14,7 @@ close all;
 var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs 
 // New below
 b_s b_o b_s_E b_o_E r_s r_o;
+
 var e_a e_g e_c e_m e_i e_r e_t e_p e_s e_o;
 
 
@@ -24,7 +25,7 @@ parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon k
 			sig theta1 theta2 varphi  tau0 y0
 //             New below
 //             stepup p_s gamma; 
-            chi_s chi_o sigmaS sigmaO rho_s rho_o;
+            chi_s chi_o sigmaS sigmaO rho_s rho_o BDratio;
             
             
 %----------------------------------------------------------------
@@ -49,10 +50,13 @@ psi 	= 80;		% Adjustment costs on prices
 kappa	= 4;		% adjustment costs on investment
 varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
-mu_s    = 1000; // weight of SLBs
-mu_o    = 0.05; // weight of ordinary bonds 
-kappa_s = 8.9300; // elasticity SLB
-kappa_o = 8.9367; // elasticity ordinary bonds
+
+sigmaS = 8.9300; // elasticity SLB
+sigmaO = 8.9367; // elasticity ordinary bonds
+chi_s   = 15; // weight of SLBs
+chi_o   = 0.001; // weight of ordinary bonds
+BDratio = 0.05; // Bonds (SLB + ordinary) over debt ratio
+
 
 
 % value of long term variables
@@ -125,10 +129,10 @@ model;
 	[name='FOC mu']
 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
 // New
-	[name='FOC for entrepreneur SLB (b_s_E)']
-    lb_E = beta_E * lb_E * r_s;
-	[name='FOC for ordinary bonds (b_o_E)']
-    lb_E = beta_E * lb_E * r_o;
+// 	[name='FOC for entrepreneur SLB (b_s_E)']
+//     lb_E = beta_E * lb_E * r_s;
+// 	[name='FOC for ordinary bonds (b_o_E)']
+//     lb_E = beta_E * lb_E * r_o;
 
 	%% AGGREGATION
 // 	[name='balance sheet']
@@ -140,7 +144,13 @@ model;
     b_o = b_o_E;
     [name='SLB market clearing condition']
     b_s = b_s_E;
+    [name='Firms debt structure']
+    b_s_E + b_o_E = BDratio * (b_s_E + b_o_E + l);
+    [name='Firms capital structure']
+    b_s_E + b_o_E + l = 0.99 * k;
+
 // 
+
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
 	[name='Total consumption']
@@ -230,6 +240,10 @@ steady_state_model;
 // New
 //     r_s		= r + gamma*stepup;
 //     r_o		= r_s + p_s;
+    b_o_E   = 0.04 * k;
+    b_s_E   = 0.3 * b_o_E;
+    
+
 end;
 
 % check residuals
