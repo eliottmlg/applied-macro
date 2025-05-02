@@ -40,7 +40,25 @@ function [ys_, params, info] = steadystate(ys_, exo_, params)
     ys_(26)=0;
     ys_(27)=0;
     ys_(28)=0;
-    ys_(32)=ys_(8)*0.04;
-    ys_(31)=ys_(32)*0.3;
+    b_total=params(40)*(ys_(10)+ys_(10)*params(40)/(1-params(40)));
+    ys_(29)=b_total*params(34)/(params(34)+params(35));
+    ys_(30)=b_total-ys_(29);
+    ys_(33)=ys_(15)+params(41);
+    ys_(43)=1;
+    ys_(44)=1;
+    ys_(35)=1;
+    ys_(36)=1;
+    ys_(37)=1;
+    ys_(38)=1;
+    ys_(39)=1;
+    ys_(40)=1;
+    ys_(41)=1;
+    ys_(42)=1;
+    ys_(23)=0;
+    ys_(24)=0;
+    ys_(25)=0;
+    ys_(26)=0;
+    ys_(27)=0;
+    ys_(28)=0;
     % Auxiliary equations
 end

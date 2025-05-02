@@ -25,7 +25,7 @@ parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon k
 			sig theta1 theta2 varphi  tau0 y0
 //             New below
 //             stepup p_s gamma; 
-            chi_s chi_o sigmaS sigmaO rho_s rho_o BDratio;
+            chi_s chi_o sigmaS sigmaO rho_s rho_o BDratio lambda_s;
             
             
 %----------------------------------------------------------------
@@ -51,11 +51,13 @@ kappa	= 4;		% adjustment costs on investment
 varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
 
-sigmaS = 8.9300; // elasticity SLB
-sigmaO = 8.9367; // elasticity ordinary bonds
-chi_s   = 15; // weight of SLBs
-chi_o   = 0.001; // weight of ordinary bonds
-BDratio = 0.05; // Bonds (SLB + ordinary) over debt ratio
+sigmaS = 8.9300;    % elasticity SLB
+sigmaO = 2;    % elasticity ordinary bonds
+chi_s   = 15;       % weight of SLBs
+chi_o   = 0.01;    % weight of ordinary bonds
+BDratio = 0.05;     % Bonds (SLB + ordinary) over debt ratio;
+lambda_s = 0.04;    % stetup beween rs and r
+lambda_o = 0.02;    % stepup between re and rs
 
 
 
@@ -139,18 +141,17 @@ model;
 // 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
 // New
 	[name='balance sheet']
-	c_E + i + w*h + r(-1)/pi*l(-1) + r_s(-1)/pi*b_s(-1) + r_o(-1)/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
+	c_E + i + w*h + r(-1)/pi*l(-1) + r_s/pi*b_s(-1) + r_o/pi*b_o(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
     [name='Ordinary bond market clearing condition']
     b_o = b_o_E;
     [name='SLB market clearing condition']
     b_s = b_s_E;
-    [name='Firms debt structure']
-    b_s_E + b_o_E = BDratio * (b_s_E + b_o_E + l);
-    [name='Firms capital structure']
-    b_s_E + b_o_E + l = 0.99 * k;
+    [name='SLB interest rate rule']
+    r_s = r + lambda_s; // a fixed spread over policy rate
+    [name='bonds to debt ratio']
+    b_o_E + b_s_E = BDratio * (b_o_E + b_s_E + l);
 
 // 
-
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
 	[name='Total consumption']
@@ -237,13 +238,25 @@ steady_state_model;
 	g 		= gy*y;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
-// New
-//     r_s		= r + gamma*stepup;
-//     r_o		= r_s + p_s;
-    b_o_E   = 0.04 * k;
-    b_s_E   = 0.3 * b_o_E;
-    
+ 
+    // New 
+	// Bond allocation using weights
+	b_total = BDratio * (l + BDratio * l / (1 - BDratio)); // Solve b_total = BDratio*(l + b_total)
+	b_s = (chi_s / (chi_s + chi_o)) * b_total;
+	b_o = b_total - b_s;
+    % 
+	% b_s_E = b_s;
+	% b_o_E = b_o;
 
+	// Interest rates with stepups
+	r_s = r + lambda_s;
+   
+    // Preference shocks in steady state
+	e_s = 1;
+	e_o = 1;
+
+    e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
+	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0;
 end;
 
 % check residuals

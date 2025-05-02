@@ -1,24 +1,10 @@
-function residual = static_resid(T, y, x, params, T_flag)
-% function residual = static_resid(T, y, x, params, T_flag)
-%
-% File created by Dynare Preprocessor from .mod file
-%
-% Inputs:
-%   T         [#temp variables by 1]  double   vector of temporary terms to be filled by function
-%   y         [M_.endo_nbr by 1]      double   vector of endogenous variables in declaration order
-%   x         [M_.exo_nbr by 1]       double   vector of exogenous variables in declaration order
-%   params    [M_.param_nbr by 1]     double   vector of parameter values in declaration order
-%                                              to evaluate the model
-%   T_flag    boolean                 boolean  flag saying whether or not to calculate temporary terms
-%
-% Output:
-%   residual
-%
-
-if T_flag
-    T = credit_NK.static_resid_tt(T, y, x, params);
+function [residual, T_order, T] = static_resid(y, x, params, T_order, T)
+if nargin < 5
+    T_order = -1;
+    T = NaN(17, 1);
 end
-residual = zeros(44, 1);
+[T_order, T] = credit_NK.sparse.static_resid_tt(y, x, params, T_order, T);
+residual = NaN(44, 1);
     residual(1) = (y(16)) - (y(37)*T(1));
     residual(2) = (params(2)*y(1)) - (1);
     residual(3) = (y(16)*y(6)) - (params(7)*y(5)^params(6));
@@ -63,5 +49,4 @@ residual(34) = y(28);
     residual(42) = (log(y(41))) - (log(y(41))*params(26)+x(7));
     residual(43) = (log(y(44))) - (log(y(44))*params(39)+x(9));
     residual(44) = (log(y(43))) - (log(y(43))*params(38)+x(10));
-
 end

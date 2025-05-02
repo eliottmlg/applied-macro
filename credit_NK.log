@@ -1,76 +1,91 @@
-Starting Dynare (version 5.4).
+Starting Dynare (version 6.2).
 Calling Dynare with arguments: none
-Starting preprocessing of the model file ...
-WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
-WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'r_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'e_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'e_o' is not assigned a value
-Found 44 equation(s).
-Evaluating expressions...done
-Computing static model derivatives (order 1).
-Computing dynamic model derivatives (order 1).
-Processing outputs ...
-done
-Preprocessing completed.
-
-
-
+Starting preprocessing of the model file ... 
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_a' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_g' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_c' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_m' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_i' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_r' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_t' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'e_p' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'gy_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'gc_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'gi_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'pi_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'r_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'l_obs' is declared twice 
+WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value 
+WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a value 
+Found 44 equation(s). 
+Evaluating expressions... 
+Computing static model derivatives (order 1). 
+Normalizing the static model... 
+Finding the optimal block decomposition of the static model... 
+16 block(s) found: 
+  15 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 24 equation(s) 
+                                 and 24 feedback variable(s). 
+Computing dynamic model derivatives (order 1). 
+Normalizing the dynamic model... 
+Finding the optimal block decomposition of the dynamic model... 
+13 block(s) found: 
+  12 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 27 equation(s) 
+                                 and 24 feedback variable(s). 
+Preprocessing completed. 
+Preprocessing time: 0h00m00s.
 
 
 Residuals of the static equations:
+Equation number  1: marginal utility of consumption         :       0.000000
+Equation number  2: Euler                                   :       0.000000
+Equation number  3: Labor Supply                            :       0.000000
+Equation number  4: FOC i                                   :       0.000000
+Equation number  5: Euler ordinary bonds (b_o)              :      72.058735
+Equation number  6: Euler SLBs (b_s)                        :       0.039522
+Equation number  7: technology                              :       0.000000
+Equation number  8: Borrowing constraint                    :       0.000000
+Equation number  9: Capital law of motion                   :       0.000000
+Equation number 10: FOC c                                   :       0.000000
+Equation number 11: FOC l                                   :       0.000000
+Equation number 12: FOC k                                   :       0.000000
+Equation number 13: FOC h                                   :       0.000000
+Equation number 14: NKPC                                    :       0.000000
+Equation number 15: FOC y                                   :       0.000000
+Equation number 16: FOC mu                                  :       0.000000
+Equation number 17: balance sheet                           :       6.978703
+Equation number 18: Ordinary bond market clearing condition :       0.004444
+Equation number 19: SLB market clearing condition           :       6.666380
+Equation number 20: SLB interest rate rule                  :       0.000000
+Equation number 21: bonds to debt ratio                     :      -6.337283
+Equation number 22: Resources Constraint                    :       0.000000
+Equation number 23: Total consumption                       :       0.000000
+Equation number 24: Total emissions                         :       0.000000
+Equation number 25: Fisherian equation                      :       0.000000
+Equation number 26: Monetary Policy rule                    :       0.000000
+Equation number 27: Public spending                         :       0.000000
+Equation number 28: Carbon tax                              :       0.000000
+Equation number 29: measurement GDP                         :       0.000000
+Equation number 30: measurement consumption                 :       0.000000
+Equation number 31: measurement investment                  :       0.000000
+Equation number 32: measurement inflation                   :       0.000000
+Equation number 33: measurement interest rate               :       0.000000
+Equation number 34: measurement corporate loans             :       0.000000
+Equation number 35: shocks                                  :       0.000000
+Equation number 36: 36                                      :       0.000000
+Equation number 37: 37                                      :       0.000000
+Equation number 38: 38                                      :       0.000000
+Equation number 39: 39                                      :       0.000000
+Equation number 40: 40                                      :       0.000000
+Equation number 41: 41                                      :       0.000000
+Equation number 42: 42                                      :       0.000000
+Equation number 43: 43                                      :       0.000000
+Equation number 44: 44                                      :       0.000000
 
-Equation number 1 : 0 : marginal utility of consumption
-Equation number 2 : 0 : Euler
-Equation number 3 : 0 : Labor Supply
-Equation number 4 : 0 : FOC i
-Equation number 5 : NaN : Euler ordinary bonds (b_o)
-Equation number 6 : NaN : Euler SLBs (b_s)
-Equation number 7 : 0 : technology
-Equation number 8 : 0 : Borrowing constraint
-Equation number 9 : 0 : Capital law of motion
-Equation number 10 : 0 : FOC c
-Equation number 11 : 0 : FOC l
-Equation number 12 : 0 : FOC k
-Equation number 13 : 0 : FOC h
-Equation number 14 : 0 : NKPC
-Equation number 15 : 0 : FOC y
-Equation number 16 : 0 : FOC mu
-Equation number 17 : -8.3821 : balance sheet
-Equation number 18 : -6.4478 : Ordinary bond market clearing condition
-Equation number 19 : -1.9343 : SLB market clearing condition
-Equation number 20 : 1.6257 : Firms debt structure
-Equation number 21 : -24.4545 : Firms capital structure
-Equation number 22 : 0 : Resources Constraint
-Equation number 23 : 0 : Total consumption
-Equation number 24 : 0 : Total emissions
-Equation number 25 : 0 : Fisherian equation
-Equation number 26 : 0 : Monetary Policy rule
-Equation number 27 : 0 : Public spending
-Equation number 28 : 0 : Carbon tax
-Equation number 29 : 0 : measurement GDP
-Equation number 30 : 0 : measurement consumption
-Equation number 31 : 0 : measurement investment
-Equation number 32 : 0 : measurement inflation
-Equation number 33 : 0 : measurement interest rate
-Equation number 34 : 0 : measurement corporate loans
-Equation number 35 : 0 : shocks
-Equation number 36 : 0 : 36
-Equation number 37 : 0 : 37
-Equation number 38 : 0 : 38
-Equation number 39 : 0 : 39
-Equation number 40 : 0 : 40
-Equation number 41 : 0 : 41
-Equation number 42 : 0 : 42
-Equation number 43 : NaN : 43
-Equation number 44 : NaN : 44
 
-
-[Warning: Problem in the model specification: some variables don't appear as current. Check whether this is
-desired.] 
-[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('check_model', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\check_model.m', 21)" style="font-weight:bold">check_model</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\check_model.m',21,0)">line 21</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stoch_simul', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\stoch_simul.m', 92)" style="font-weight:bold">stoch_simul</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\stoch_simul.m',92,0)">line 92</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('credit_NK.driver', 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro\+credit_NK\driver.m', 643)" style="font-weight:bold">credit_NK.driver</a> (<a href="matlab: opentoline('C:\Users\eliot\Documents\REPOSITORIES\applied-macro\+credit_NK\driver.m',643,0)">line 643</a>)
-In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\dynare.m', 278)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4\matlab\dynare.m',278,0)">line 278</a>)] 
+[Warning: Some of the parameters have no value (chi_l, A) when using stoch_simul. If these parameters are not initialized in a
+steadystate file or a steady_state_model-block, Dynare may not be able to solve the model. Note that simul, perfect_foresight_setup,
+and perfect_foresight_solver do not automatically call the steady state file.] 
