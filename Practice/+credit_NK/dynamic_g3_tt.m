@@ -18,7 +18,7 @@ function T = dynamic_g3_tt(T, y, x, params, steady_state, it_)
 %   T           [#temp variables by 1]       double  vector of temporary terms
 %
 
-assert(length(T) >= 31);
+assert(length(T) >= 33);
 
 T = credit_NK.dynamic_g2_tt(T, y, x, params, steady_state, it_);
 

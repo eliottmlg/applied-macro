@@ -228,7 +228,7 @@ estimated_params;
 end;
 
 %%% estimation of the model
-estimation(datafile='myobs.xlsx',	% your datafile, must be in your current folder
+estimation(datafile='myobs.mat',	% your datafile, must be in your current folder
 first_obs=1,				% First data of the sample
 mode_compute=4,				% optimization algo, keep it to 4
 mh_replic=500,				% number of sample in Metropolis-Hastings
@@ -277,7 +277,7 @@ end
 Tfreq = mean(diff(Tvec));
 
 %%%%%%%%%%%%%%%%% END OF SAMPLE FORECASTING - PLOTS
-tprior = 20; % period before forecasts to plot
+tprior = 30; % period before forecasts to plot
 Tvec2 = Tvec(end) + (0:(options_.forecast))*Tfreq;
 for i1 = 1 :size(dataset_.name,1)
 	idv		= strmatch(dataset_.name{i1},M_.endo_names,'exact');
@@ -331,7 +331,7 @@ Mx.params(strcmp('phi_y',M_.param_names)) = .25;
 ydov            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
 
 % draw result
-var_names={'lny','lnc','lni','lnpi','lnr','h_obs'};
+var_names={'lny','lnc','lni','lnpi','lnr'};
 Ty = [T(1)-Tfreq;T];
 draw_tables(var_names,M_,Ty,[],y_,ydov)
 legend('Estimated','Dovish')

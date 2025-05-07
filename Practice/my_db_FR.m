@@ -75,7 +75,7 @@ l_obs = diff(log(output_table2(:,2)));
 T3 = T2(29:85);
 output_table3 = output_table3(29:85,:);
 
-data = readtable('Data/filtered_series.csv');
+data = readtable('/Users/jakob/Documents/Parforceleistung/Studium/MSc Economics/Semester 4/Applied Macro Modelling/Project/applied-macro/Data/filtered_series.csv');
 co2_season = output_table3(:,2);
 output_table3(:,2) = table2array(data(:,2)); % replace with filtered series
 
