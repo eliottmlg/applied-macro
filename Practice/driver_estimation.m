@@ -32,13 +32,15 @@ cd(options.model_path)
 dynare(options.modfile)
 
 %% plots
-
-FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
-for     iFig = 1:length(FigList)   
-  FigHandle = FigList(iFig);
-  FigName   = get(FigHandle, 'Name');
-  FigName   = erase(FigName,[".", ":"]);
-  set(FigHandle,'Position',[300 100 800 800]);
-  savefig(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig)]);
-  saveas(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig), '.jpg']);
+yesplot = 0;
+if yesplot == 1
+    FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
+    for     iFig = 1:length(FigList)   
+      FigHandle = FigList(iFig);
+      FigName   = get(FigHandle, 'Name');
+      FigName   = erase(FigName,[".", ":"]);
+      set(FigHandle,'Position',[300 100 800 800]);
+      savefig(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig)]);
+      saveas(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig), '.jpg']);
+    end
 end
