@@ -2,67 +2,9 @@ Starting Dynare (version 5.4).
 Calling Dynare with arguments: none
 Starting preprocessing of the model file ...
 WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
-WARNING: in the 'steady_state_model' block, variable 'r_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'r_o' is not assigned a value
-Found 44 equation(s).
-Evaluating expressions...done
-Computing static model derivatives (order 1).
-Computing dynamic model derivatives (order 2).
-Processing outputs ...
-done
-Preprocessing completed.
+WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value
+ERROR: There are 43 equations but 44 endogenous variables!
 
-
-
-
-
-Residuals of the static equations:
-
-Equation number 1 : 0 : marginal utility of consumption
-Equation number 2 : 0 : Euler
-Equation number 3 : 0 : Labor Supply
-Equation number 4 : 0 : FOC i
-Equation number 5 : -1 : Euler ordinary bonds (b_o)
-Equation number 6 : -0.99999 : Euler SLBs (b_s)
-Equation number 7 : 0 : technology
-Equation number 8 : 0 : Borrowing constraint
-Equation number 9 : 0 : Capital law of motion
-Equation number 10 : 0 : FOC c
-Equation number 11 : 0 : FOC l
-Equation number 12 : 0 : FOC k
-Equation number 13 : 0 : FOC h
-Equation number 14 : 0 : NKPC
-Equation number 15 : 0 : FOC y
-Equation number 16 : 0 : FOC mu
-Equation number 17 : -8.3821 : balance sheet
-Equation number 18 : 0 : Ordinary bond market clearing condition
-Equation number 19 : 0 : SLB market clearing condition
-Equation number 20 : 1.6257 : Firms debt structure
-Equation number 21 : -9.947 : Firms capital structure
-Equation number 22 : 0 : Resources Constraint
-Equation number 23 : 0 : Total consumption
-Equation number 24 : 0 : Total emissions
-Equation number 25 : 0 : Fisherian equation
-Equation number 26 : 0 : Monetary Policy rule
-Equation number 27 : 0 : Public spending
-Equation number 28 : 0 : Carbon tax
-Equation number 29 : 0 : measurement GDP
-Equation number 30 : 0 : measurement consumption
-Equation number 31 : 0 : measurement investment
-Equation number 32 : 0 : measurement inflation
-Equation number 33 : 0 : measurement interest rate
-Equation number 34 : 0 : measurement corporate loans
-Equation number 35 : 0 : shocks
-Equation number 36 : 0 : 36
-Equation number 37 : 0 : 37
-Equation number 38 : 0 : 38
-Equation number 39 : 0 : 39
-Equation number 40 : 0 : 40
-Equation number 41 : 0 : 41
-Equation number 42 : 0 : 42
-Equation number 43 : 0 : 43
-Equation number 44 : 0 : 44
-
-
-Total computing time : 0h00m00s
-Note: 3 warning(s) encountered in the preprocessor
