@@ -213,7 +213,7 @@ estimated_params;
 end;
 
 %%% estimation of the model
-estimation(datafile='myobs.xlsx',	% your datafile, must be in your current folder
+estimation(datafile='myobs.mat',	% your datafile, must be in your current folder
 first_obs=1,				% First data of the sample
 mode_compute=4,				% optimization algo, keep it to 4
 mh_replic=500,				% number of sample in Metropolis-Hastings

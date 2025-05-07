@@ -3,6 +3,9 @@
 clear all
 close all
 clc
+
+addpath(['','\']); 
+
 %%
 [output_table,~,T] = call_dbnomics( ...
     'ECB/MNA/Q.Y.FR.W2.S1.S1.B.B1GQ._Z._Z._Z.EUR.V.N', ...
@@ -75,7 +78,7 @@ l_obs = diff(log(output_table2(:,2)));
 T3 = T2(29:85);
 output_table3 = output_table3(29:85,:);
 
-data = readtable('Data/filtered_series.csv');
+data = readtable('filtered_series.csv');
 co2_season = output_table3(:,2);
 output_table3(:,2) = table2array(data(:,2)); % replace with filtered series
 
