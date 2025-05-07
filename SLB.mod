@@ -13,19 +13,19 @@ close all;
 
 var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs 
 // New below
-b_s b_o b_s_E b_o_E r_s r_o;
+b_s b_s_E r_s;
 
-var e_a e_g e_c e_m e_i e_r e_t e_p e_s e_o;
+var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
 
 
-varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p eta_o eta_s;
+varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p eta_s;
 
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
 			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
 			sig theta1 theta2 varphi  tau0 y0
 //             New below
             stepup p_s gamma
-            chi_s chi_o sigmaS sigmaO rho_s rho_o BDratio;
+            chi_s sigmaS rho_s BDratio;
             
             
 %----------------------------------------------------------------
@@ -52,9 +52,7 @@ varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
 
 sigmaS = 8.9300; // elasticity SLB
-sigmaO = 8.9367; // elasticity ordinary bonds
 chi_s   = 15; // weight of SLBs
-chi_o   = 0.001; // weight of ordinary bonds
 BDratio = 0.05; // Bonds (SLB + ordinary) over debt ratio
 
 
@@ -77,7 +75,6 @@ rho_t	= 0.40;
 rho_p   = 0.90;
 // New
 rho_s   = 0.90; // persistence of SLB preference shock
-rho_o   = 0.90; // persistence of ordinary bonds preference shock
 
 // New
 stepup  = 0.25; // stepup if target is missed
@@ -100,10 +97,8 @@ model;
  	e_i*q = 1 + e_i*q*(kappa/2)*( 1 + ( 3*i/i(-1)-4 )*i/i(-1) )
 			+ beta_E*lb_E(+1)/lb_E*e_i(+1)*q(+1)*kappa*(1-i(+1)/i)*(i(+1)/i)^2;
 // New
-    [name='Euler ordinary bonds (b_o)']
-    beta_H*lb_H(+1)/lb_H * r_o(+1)/pi(+1) + e_o * chi_o * (b_o/(lb_H*pi))^-sigmaO = 1;
     [name='Euler SLBs (b_s)']
-    beta_H*lb_H(+1)/lb_H * r_s(+1)/pi(+1) + e_s * chi_s * (b_s/(lb_H*pi))^-sigmaS = 1;
+    beta_H * (lb_H(+1)/lb_H) * r_s(+1)/pi(+1) + e_s * (chi_s/lb_H) * (b_s/pi)^-sigmaS = 1;
 
  	
 	%% Production
@@ -130,22 +125,18 @@ model;
 // New
 	[name='FOC for entrepreneur SLB (b_s_E)']
     lb_E = beta_E*lb_E * r_s;
-	1-phi_E = beta_E*lb_E(+1)/lb_E*rr;
-	[name='FOC for ordinary bonds (b_o_E)']
-    lb_E = beta_E * lb_E * r_o;
+// 	1-phi_E = beta_E*lb_E(+1)/lb_E*rr;
 
 	%% AGGREGATION
 // 	[name='balance sheet']
 // 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
 // New
 	[name='balance sheet']
-	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s_E(-1) + (r_o/pi)*b_o_E(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_o_E + b_s_E;
-    [name='Ordinary bond market clearing condition']
-    b_o = b_o_E;
+	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s_E(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_s_E;
     [name='SLB market clearing condition']
     b_s = b_s_E;
-    [name='Firms debt structure']
-    b_s_E + b_o_E = BDratio * (b_s_E + b_o_E + l);
+//     [name='Firms debt structure']
+//     b_s_E = BDratio * (b_s_E + l);
 
 
 //     [name='Firms capital structure']
@@ -202,7 +193,6 @@ model;
     log(e_m) = rho_m*log(e_m(-1))+eta_m;
     log(e_r) = rho_r*log(e_r(-1))+eta_r;  
     log(e_t) = rho_t*log(e_t(-1))+eta_t;  
-    log(e_o) = rho_o*log(e_o(-1))+eta_o;  
     log(e_s) = rho_s*log(e_s(-1))+eta_s;  
 end;
 
@@ -240,9 +230,11 @@ steady_state_model;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
 // New
-    r_s		= r + gamma*stepup; 
-    r_o     = r_s + p_s;
-    e_s     = 1; e_o    = 1;
+	b_s		= mk*k/rr;
+    b_s_E   = b_s;
+//     r_s		= r + gamma*stepup; 
+//     r_o     = r_s + p_s;
+//     e_s     = 1;
     
 
 end;

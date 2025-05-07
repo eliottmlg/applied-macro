@@ -7,7 +7,7 @@ clear all   % clear all variables
 
 % user options 
 options.model_path = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro/';
-options.modfile = 'credit_NK';
+options.modfile = 'SLB';
 % change your Dynare path
 options.Dynare_path = 'C:\dynare\6.3';
 options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
@@ -21,9 +21,7 @@ addpath([options.model_path,'\']);
 
 
 %% Fetching and processing the estimation data
-
-
-
+my_db_FR;
 
 %% running mod-file and saving plots  
 
