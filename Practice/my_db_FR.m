@@ -75,7 +75,7 @@ l_obs = diff(log(output_table2(:,2)));
 T3 = T2(29:85);
 output_table3 = output_table3(29:85,:);
 
-data = readtable('C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Data/filtered_series.csv');
+data = readtable('Data/filtered_series.csv');
 co2_season = output_table3(:,2);
 output_table3(:,2) = table2array(data(:,2)); % replace with filtered series
 
@@ -117,6 +117,15 @@ dataset(:,5) = pi_obs(eff_idx);
 dataset(:,6) = r_obs(eff_idx);
 dataset(:,7) = l_obs(eff_idx2);
 dataset(:,8) = co2_obs(eff_idx3);
+
+% crop all variables
+gy_obs = gy_obs(eff_idx);
+gc_obs = gc_obs(eff_idx);
+gi_obs = gi_obs(eff_idx);
+pi_obs = pi_obs(eff_idx);
+r_obs= r_obs(eff_idx);
+l_obs= l_obs(eff_idx2);
+co2_obs = co2_obs(eff_idx3);
 
 %% SAVE
 % save into myobs.mat
