@@ -118,6 +118,15 @@ dataset(:,6) = r_obs(eff_idx);
 dataset(:,7) = l_obs(eff_idx2);
 dataset(:,8) = co2_obs(eff_idx3);
 
+% crop all variables
+gy_obs = gy_obs(eff_idx);
+gc_obs = gc_obs(eff_idx);
+gi_obs = gi_obs(eff_idx);
+pi_obs = pi_obs(eff_idx);
+r_obs= r_obs(eff_idx);
+l_obs= l_obs(eff_idx2);
+co2_obs = co2_obs(eff_idx3);
+
 %% SAVE
 % save into myobs.mat
 save myobs gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs
