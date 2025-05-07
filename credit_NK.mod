@@ -241,16 +241,17 @@ steady_state_model;
  
     // New 
 	// Bond allocation using weights
+    % b_s_E = b_s;
+    % b_o_E = b_o;
+    % 
 	% b_total = BDratio * (l / (1 - BDratio)); // Solve b_total = BDratio*(l + b_total)
 	% b_o_E = b_total - b_s_E;
 	% b_s_E = (chi_s / (chi_s + chi_o)) * b_total;
 
     % 
-    b_s_E = b_s;
-    b_o_E = b_o;
 
 	// Interest rates with stepups
-	% r_s = r + lambda_s;
+	r_s = r + lambda_s;
    
     // Preference shocks in steady state
 	e_s = 1;
