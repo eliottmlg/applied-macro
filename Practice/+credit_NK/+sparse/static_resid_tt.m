@@ -8,7 +8,7 @@ if size(T, 1) < 17
 end
 T(1) = (y(4)-y(4)*params(12))^(-params(5));
 T(2) = y(8)^params(4);
-T(3) = y(34)*params(9)*T(2);
+T(3) = y(36)*params(9)*T(2);
 T(4) = y(5)^(1-params(4));
 T(5) = (y(3)-params(12)*y(3))^(-params(5));
 T(6) = params(29)*y(20)^params(30);

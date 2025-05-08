@@ -16,6 +16,7 @@ var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g;
 var gy_obs gc_obs gi_obs pi_obs r_obs l_obs; %co2_obs;
 
 var lny, lnc, lni, lnpi, lnr;
+var gl, ge;
 var e_a e_g e_c e_m e_i e_r e_t e_p;
 
 % List of exogenous shocks: eA = productivity shock, eC = preference shock, eM = financial friction shock, eR = monetary policy shock
@@ -51,11 +52,11 @@ varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
 
 % value of long term variables
-tau0 	= 100/1000;	% value of carbon tax ($/ton)
-sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
-y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.05;		% level of abatement costs
-theta2  = 2.6;		% curvature abatement cost
+tau0 	= 100/1000;	    % value of carbon tax ($/ton)
+sig		= 0.2; 		    % Carbon intensity USA 0.2 Gt / Trillions USD
+y0	 	= 25;		    % trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
+theta1  = 0.05;		    % level of abatement costs
+theta2  = 2.6;		    % curvature abatement cost
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -140,6 +141,10 @@ model;
 	r_obs  = r  - steady_state(r);
 	[name='measurement corporate loans']
 	l_obs  = log(l/l(-1));
+	[name='loan growth']
+    gl = log(l) - log(l(-1));
+	[name='emission growth']
+    ge = log(e) - log(e(-1));
 
 	[name='Output gap']
 	lny = log(y/steady_state(y));
@@ -230,13 +235,14 @@ end;
 %%% estimation of the model
 estimation(datafile='myobs.mat',	% your datafile, must be in your current folder
 first_obs=1,				% First data of the sample
-mode_compute=4,				% optimization algo, keep it to 4
+mode_compute=0,             %mode_compute=4,				% optimization algo, keep it to 4
 mh_replic=500,				% number of sample in Metropolis-Hastings
 mh_jscale=0.5,				% adjust this to have an acceptance rate between 0.2 and 0.3
 prefilter=1,				% remove the mean in the data
 lik_init=2,					% Don't touch this,
 mh_nblocks=1,				% number of mcmc chains
-forecast=8					% forecasts horizon
+forecast=8,					% forecasts horizon
+mode_file = 'credit_NK/Output/credit_NK_mode.mat'
 ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs; // co2_obs;
 
 
@@ -262,11 +268,10 @@ for ix = 1:size(fx,1)
 	M_.Sigma_e(idx,idx) = eval(['oo_.posterior_mean.shocks_std.' fx{ix}])^2;
 end
 
-stoch_simul(irf=30,conditional_variance_decomposition=[1,4,10,100],order=1) gy_obs pi_obs r_obs;
+shock_decomposition(parameter_set=posterior_mean) lny pi_obs r_obs l_obs l;
 
+stoch_simul(irf=30,conditional_variance_decomposition=[1,4,10,100],order=1) gy_obs pi_obs r_obs l_obs l;
 
-
-shock_decomposition lny pi_obs r_obs;
 
 load(options_.datafile);
 if exist('T') ==1
@@ -277,6 +282,7 @@ end
 Tfreq = mean(diff(Tvec));
 
 %%%%%%%%%%%%%%%%% END OF SAMPLE FORECASTING - PLOTS
+
 tprior = 30; % period before forecasts to plot
 Tvec2 = Tvec(end) + (0:(options_.forecast))*Tfreq;
 for i1 = 1 :size(dataset_.name,1)
@@ -337,14 +343,8 @@ draw_tables(var_names,M_,Ty,[],y_,ydov)
 legend('Estimated','Dovish')
 
 
-
-
-
-
-
-
 %%%%%%%%%%%%%%%%% FORECAST UNDER ALTERNATIVE POLICY %%%%%%%%%%%%%%%%%%
-Thorizon 	= 12; % number of quarters for simulation
+Thorizon 	= 16; % number of quarters for simulation
 % Built baseline forecast
 fx = fieldnames(oo_.SmoothedShocks);
 for ix=1:size(fx,1)
@@ -391,7 +391,8 @@ ee_matx(end-Thorizon+1,idx) = -0.05;% add a 50 percent increase in carbon price
 y_monetary           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
 
 % draw result
-var_names={'lny','lni','lnpi','lnr','g','tau'};
+var_names={'lny','lni','lnpi','lnr','g','tau', 'gl','ge'};
 Ty = [T(1)-Tfreq;T];
 draw_tables(var_names,M_,Tvec2,[2023 Tvec2(end)],y_,y_fiscal,y_carbon,y_monetary)
 legend('Estimated','Fiscal','Carbon','Monetary')
+                        % see the impact of these shocks on loans and emissions
