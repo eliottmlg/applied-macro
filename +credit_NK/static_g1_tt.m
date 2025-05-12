@@ -17,9 +17,9 @@ assert(length(T) >= 19);
 
 T = credit_NK.static_resid_tt(T, y, x, params);
 
-T(16) = getPowerDeriv(y(7),1-params(31),1);
-T(17) = getPowerDeriv(y(19)*params(28)*T(8)/(params(29)*params(30)),1/(params(30)-1),1);
+T(16) = getPowerDeriv(y(7),1-params(32),1);
+T(17) = getPowerDeriv(y(19)*params(29)*T(8)/(params(30)*params(31)),1/(params(31)-1),1);
 T(18) = getPowerDeriv(T(14),1-params(15),1);
-T(19) = params(29)*getPowerDeriv(y(20),params(30),1);
+T(19) = params(30)*getPowerDeriv(y(20),params(31),1);
 
 end

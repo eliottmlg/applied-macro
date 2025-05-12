@@ -1,7 +1,8 @@
 
+addpath('Utils');
 
 %% Fetching and processing the estimation data
-run( 'Utils/my_db_FR.m' );
+run( 'my_db_FR.m' );
 
 %% Setting up Dynare
 clc % clean console
@@ -10,8 +11,7 @@ clear all   % clear all variables
 
 % change your Dynare path
 options.Dynare_path = 'C:\dynare\6.3';
-options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
-
+% options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
 %% Launch routine
 
 % user options 

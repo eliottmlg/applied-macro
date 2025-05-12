@@ -18,6 +18,6 @@ function g2 = static_g2(T, y, x, params, T_flag)
 if T_flag
     T = credit_NK.static_g2_tt(T, y, x, params);
 end
-g2 = sparse([],[],[],36,1296);
+g2 = sparse([],[],[],38,1444);
 
 end
