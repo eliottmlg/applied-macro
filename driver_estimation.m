@@ -6,18 +6,18 @@ close all  % close all figures
 clear all   % clear all variables
 
 % user options 
-options.model_path = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro/';
-options.modfile = 'SLB';
+options.model_path = '/Users/jakob/Documents/Parforceleistung/Studium/MSc Economics/Semester 4/Applied Macro Modelling/Project/applied-macro';
+options.modfile = 'credit_NK.mod';
 % change your Dynare path
-options.Dynare_path = 'C:\dynare\6.3';
-options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
+options.Dynare_path = '/Applications/Dynare/6.2-x86_64';
+%% options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
 
-options.folder2plot = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Plots/';   % Your destination folder
+options.folder2plot = '/Users/jakob/Documents/Parforceleistung/Studium/MSc Economics/Semester 4/Applied Macro Modelling/Project/applied-macro/Plots';   % Your destination folder
 
 % set path
-addpath([options.Dynare_path,'\matlab\']); 
+addpath([options.Dynare_path,'/matlab/']); 
 dynare_config;
-addpath([options.model_path,'\']); 
+addpath([options.model_path,'/']); 
 
 
 %% Fetching and processing the estimation data

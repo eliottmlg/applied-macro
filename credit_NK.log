@@ -1,10 +1,62 @@
-Starting Dynare (version 5.4).
+Starting Dynare (version 6.2).
 Calling Dynare with arguments: none
 Starting preprocessing of the model file ...
 WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
-WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value
-WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value
-ERROR: There are 43 equations but 44 endogenous variables!
+Found 35 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+12 block(s) found:
+  11 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 14 equation(s)
+                                 and 14 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+10 block(s) found:
+  9 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 15 equation(s)
+                                 and 14 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption :       0.000000
+Equation number  2: Euler                           :       0.000000
+Equation number  3: Labor Supply                    :       0.000000
+Equation number  4: FOC i                           :       0.000000
+Equation number  5: technology                      :       0.000000
+Equation number  6: Capital law of motion           :       0.000000
+Equation number  7: FOC k                           :       0.000000
+Equation number  8: FOC h                           :       0.000000
+Equation number  9: NKPC                            :       0.000000
+Equation number 10: FOC y                           :       0.000000
+Equation number 11: FOC mu                          :       0.000000
+Equation number 12: Resources Constraint            :       0.000000
+Equation number 13: Total emissions                 :       0.000000
+Equation number 14: Fisherian equation              :       0.000000
+Equation number 15: Monetary Policy rule            :       0.000000
+Equation number 16: Public spending                 :       0.000000
+Equation number 17: Carbon tax                      :       0.000000
+Equation number 18: measurement GDP                 :       0.000000
+Equation number 19: measurement consumption         :       0.000000
+Equation number 20: measurement investment          :       0.000000
+Equation number 21: measurement inflation           :       0.000000
+Equation number 22: measurement interest rate       :       0.000000
+Equation number 23: measurement hours worked        :       0.000000
+Equation number 24: Output gap                      :       0.000000
+Equation number 25: Consumption gap                 :       0.000000
+Equation number 26: Investment gap                  :       0.000000
+Equation number 27: Investment gap                  :       0.000000
+Equation number 28: Investment gap                  :       0.000000
+Equation number 29: shocks                          :       0.000000
+Equation number 30: 30                              :       0.000000
+Equation number 31: 31                              :       0.000000
+Equation number 32: 32                              :       0.000000
+Equation number 33: 33                              :       0.000000
+Equation number 34: 34                              :       0.000000
+Equation number 35: 35                              :       0.000000
+
 

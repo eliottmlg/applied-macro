@@ -1,0 +1,132 @@
+Starting Dynare (version 6.2).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+WARNING: in the 'steady_state_model' block, variable 'mu' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'e' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'k' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'i' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'A' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'w' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'l' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c_E' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c_H' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'lb_E' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'lb_H' is declared twice
+Found 43 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+17 block(s) found:
+  16 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 22 equation(s)
+                                 and 22 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+14 block(s) found:
+  13 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 25 equation(s)
+                                 and 23 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption   :       0.000000
+Equation number  2: Euler equation (standard bond)    :       0.000000
+Equation number  3: Labor supply                      :       0.000000
+Equation number  4: Investment FOC                    :       0.000000
+Equation number  5: Euler equation for SLBs           :      -0.003112
+Equation number  6: Production function               :       0.000000
+Equation number  7: Borrowing constraint              :       0.000000
+Equation number  8: Capital accumulation              :       0.000000
+Equation number  9: Entrepreneur consumption FOC      :       0.000000
+Equation number 10: Loan FOC                          :       0.000000
+Equation number 11: Capital FOC                       :       0.000000
+Equation number 12: Labor FOC                         :       0.000000
+Equation number 13: New Keynesian Phillips Curve      :       0.000000
+Equation number 14: Output FOC                        :       0.000000
+Equation number 15: Abatement optimality              :       0.000000
+Equation number 16: SLB borrowing FOC (entrepreneurs) :       0.000000
+Equation number 17: Balance sheet (resource use)      :       0.000000
+Equation number 18: Resource constraint               :       0.000000
+Equation number 19: Total consumption                 :       0.000000
+Equation number 20: Emissions                         :       0.000000
+Equation number 21: Fisher equation (standard)        :       0.000000
+Equation number 22: Fisher equation (SLB)             :       0.000000
+Equation number 23: SLB spread                        :       0.000000
+Equation number 24: Monetary policy (Taylor rule)     :       0.000000
+Equation number 25: Government spending rule          :       0.000000
+Equation number 26: Carbon tax rule                   :       0.000000
+Equation number 27: Observed GDP growth               :       0.000000
+Equation number 28: Observed consumption growth       :       0.000000
+Equation number 29: Observed investment growth        :       0.000000
+Equation number 30: Observed inflation                :       0.000000
+Equation number 31: Observed nominal interest rate    :       0.000000
+Equation number 32: Observed corporate loans          :       0.000000
+Equation number 33: Shock processes (AR(1))           :       0.000000
+Equation number 34: 34                                :       0.000000
+Equation number 35: 35                                :       0.000000
+Equation number 36: 36                                :       0.000000
+Equation number 37: 37                                :       0.000000
+Equation number 38: 38                                :       0.000000
+Equation number 39: 39                                :       0.000000
+Equation number 40: 40                                :       0.000000
+Equation number 41: 41                                :       0.000000
+Equation number 42: 42                                :       0.000000
+Equation number 43: 43                                :       0.000000
+
+
+[Warning: Some of the parameters have no value (A) when using steady. If these parameters are not initialized
+in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model. Note that
+simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady state file.] 
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption   :       0.000000
+Equation number  2: Euler equation (standard bond)    :       0.000000
+Equation number  3: Labor supply                      :       0.000000
+Equation number  4: Investment FOC                    :       0.000000
+Equation number  5: Euler equation for SLBs           :      -0.003112
+Equation number  6: Production function               :       0.000000
+Equation number  7: Borrowing constraint              :       0.000000
+Equation number  8: Capital accumulation              :       0.000000
+Equation number  9: Entrepreneur consumption FOC      :       0.000000
+Equation number 10: Loan FOC                          :       0.000000
+Equation number 11: Capital FOC                       :       0.000000
+Equation number 12: Labor FOC                         :       0.000000
+Equation number 13: New Keynesian Phillips Curve      :       0.000000
+Equation number 14: Output FOC                        :       0.000000
+Equation number 15: Abatement optimality              :       0.000000
+Equation number 16: SLB borrowing FOC (entrepreneurs) :       0.000000
+Equation number 17: Balance sheet (resource use)      :       0.000000
+Equation number 18: Resource constraint               :       0.000000
+Equation number 19: Total consumption                 :       0.000000
+Equation number 20: Emissions                         :       0.000000
+Equation number 21: Fisher equation (standard)        :       0.000000
+Equation number 22: Fisher equation (SLB)             :       0.000000
+Equation number 23: SLB spread                        :       0.000000
+Equation number 24: Monetary policy (Taylor rule)     :       0.000000
+Equation number 25: Government spending rule          :       0.000000
+Equation number 26: Carbon tax rule                   :       0.000000
+Equation number 27: Observed GDP growth               :       0.000000
+Equation number 28: Observed consumption growth       :       0.000000
+Equation number 29: Observed investment growth        :       0.000000
+Equation number 30: Observed inflation                :       0.000000
+Equation number 31: Observed nominal interest rate    :       0.000000
+Equation number 32: Observed corporate loans          :       0.000000
+Equation number 33: Shock processes (AR(1))           :       0.000000
+Equation number 34: 34                                :       0.000000
+Equation number 35: 35                                :       0.000000
+Equation number 36: 36                                :       0.000000
+Equation number 37: 37                                :       0.000000
+Equation number 38: 38                                :       0.000000
+Equation number 39: 39                                :       0.000000
+Equation number 40: 40                                :       0.000000
+Equation number 41: 41                                :       0.000000
+Equation number 42: 42                                :       0.000000
+Equation number 43: 43                                :       0.000000
+
+
