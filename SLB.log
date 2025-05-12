@@ -1,5 +1,0 @@
-Starting Dynare (version 5.4).
-Calling Dynare with arguments: none
-Starting preprocessing of the model file ...
-ERROR: in the 'steady_state_model' block, variable 'lb_E' is undefined in the declaration of variable 'rrs'
-
