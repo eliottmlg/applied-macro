@@ -302,7 +302,7 @@ steady_state_model;
     phiS   = 1 - beta_E * rrs;            // Shadow price on SLB borrowing
 
     %% --- SLB bond holdings (initial approximation) ---
-    //b_s     = (0.1 / 0.92) * l;
+    //b_s     = (0.08 / 0.92) * l;
     b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;    // SLB constraint
     chi_s  = (1 - beta_H * rrs) * lb_H * b_s^sigmaS;    // Utility weight on SLBs
 

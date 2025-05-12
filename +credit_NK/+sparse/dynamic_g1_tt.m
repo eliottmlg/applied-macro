@@ -4,13 +4,13 @@ if T_order >= 1
 end
 [T_order, T] = credit_NK.sparse.dynamic_resid_tt(y, x, params, steady_state, T_order, T);
 T_order = 1;
-if size(T, 1) < 35
-    T = [T; NaN(35 - size(T, 1), 1)];
+if size(T, 1) < 31
+    T = [T; NaN(31 - size(T, 1), 1)];
 end
-T(30) = getPowerDeriv(y(37)-params(9)*y(2),(-params(4)),1);
-T(31) = getPowerDeriv(T(28),params(14),1);
-T(32) = getPowerDeriv(y(40),1-params(29),1);
-T(33) = getPowerDeriv(y(49)*params(26)*T(18)/(params(27)*params(28)),1/(params(28)-1),1);
-T(34) = getPowerDeriv(T(25),1-params(12),1);
-T(35) = params(27)*getPowerDeriv(y(50),params(28),1);
+T(26) = getPowerDeriv(y(39)-params(12)*y(3),(-params(5)),1);
+T(27) = getPowerDeriv(y(40)-params(12)*y(4),(-params(5)),1);
+T(28) = getPowerDeriv(y(43),1-params(31),1);
+T(29) = getPowerDeriv(y(55)*params(28)*T(19)/(params(29)*params(30)),1/(params(30)-1),1);
+T(30) = getPowerDeriv(T(24),1-params(15),1);
+T(31) = params(29)*getPowerDeriv(y(56),params(30),1);
 end

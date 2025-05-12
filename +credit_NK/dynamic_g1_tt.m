@@ -18,15 +18,15 @@ function T = dynamic_g1_tt(T, y, x, params, steady_state, it_)
 %   T           [#temp variables by 1]       double  vector of temporary terms
 %
 
-assert(length(T) >= 35);
+assert(length(T) >= 31);
 
 T = credit_NK.dynamic_resid_tt(T, y, x, params, steady_state, it_);
 
-T(30) = getPowerDeriv(y(14)-params(9)*y(1),(-params(4)),1);
-T(31) = getPowerDeriv(T(28),params(14),1);
-T(32) = getPowerDeriv(y(17),1-params(29),1);
-T(33) = getPowerDeriv(y(26)*params(26)*T(18)/(params(27)*params(28)),1/(params(28)-1),1);
-T(34) = getPowerDeriv(T(25),1-params(12),1);
-T(35) = params(27)*getPowerDeriv(y(27),params(28),1);
+T(26) = getPowerDeriv(y(19)-params(12)*y(2),(-params(5)),1);
+T(27) = getPowerDeriv(y(20)-params(12)*y(3),(-params(5)),1);
+T(28) = getPowerDeriv(y(23),1-params(31),1);
+T(29) = getPowerDeriv(y(35)*params(28)*T(19)/(params(29)*params(30)),1/(params(30)-1),1);
+T(30) = getPowerDeriv(T(24),1-params(15),1);
+T(31) = params(29)*getPowerDeriv(y(36),params(30),1);
 
 end
