@@ -1,66 +1,25 @@
-%----------------------------------------------------------------
-% 0. Housekeeping
-%----------------------------------------------------------------
-close all;  % Close all open figure windows
+% Toy model of borrowing constraint for entrepreneurs
+% gauthier@vermandel.fr
 
 %----------------------------------------------------------------
-% 1. Declaration of endogenous and exogenous variables
+% 0. Housekeeping (close all graphic windows)
 %----------------------------------------------------------------
 
-% Endogenous variables
-var 
-    rr      % Real interest rate
-    c       % Aggregate consumption
-    c_E     % Entrepreneur consumption
-    c_H     % Household consumption
-    h       % Hours worked
-    w       % Real wage
-    y       % Output
-    k       % Capital
-    i       % Investment
-    l       % Loans
-    lb_E    % Entrepreneur borrowing constraint
-    phi_E   % Lagrange multiplier on borrowing constraint
-    mc      % Marginal cost
-    pi      % Inflation
-    r       % Nominal interest rate
-    lb_H    % Household deposits
-    q       % Price of capital
-    varrho  % Productivity shock term
-    tau     % Carbon tax
-    mu      % Emissions abatement
-    e       % Emissions
-    g       % Government spending
-    gy_obs gc_obs gi_obs pi_obs r_obs l_obs; % Observable variables
+close all;
 
-% Exogenous shocks
+%----------------------------------------------------------------
+% 1. Defining variables
+%----------------------------------------------------------------
+
+var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs ;
 var e_a e_g e_c e_m e_i e_r e_t e_p;
 
-% Exogenous processes (shock innovations)
-varexo 
-    eta_a   % Technology shock
-    eta_g   % Gov spending shock
-    eta_c   % Preference shock
-    eta_m   % Collateral shock
-    eta_i   % Investment shock
-    eta_r   % Monetary policy shock
-    eta_t   % CO2 tax shock
-    eta_p;  % Cost-push shock
 
-%----------------------------------------------------------------
-% 2. Parameter Declaration
-%----------------------------------------------------------------
-parameters 
-    beta_E beta_H         % Discount factors for Entrepreneurs and Households
-    delta alpha           % Capital depreciation and production function share
-    sigmaC sigmaL chi     % Preferences: risk aversion, labor disutility, weight
-    gy A mh mk hh         % Steady state govt. spend/output, TFP, collateral ratios, habit
-    epsilon kappa         % Substitution elasticity, inv. adj. cost
-    rho phi_y phi_pi      % Taylor rule parameters
-    psi piss              % Price adjustment cost, SS inflation
-    rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p  % AR(1) shock parameters
-    sig theta1 theta2     % Emission intensity, abatement cost parameters
-    varphi tau0 y0;       % Emission elasticity, SS CO2 tax, SS output
+varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p;
+
+parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
+			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
+			sig theta1 theta2 varphi  tau0 y0;
             
             
 %----------------------------------------------------------------
@@ -231,7 +190,7 @@ resid;
 
 % variance covariance matrix
 shocks;
-	var eta_a;	stderr 1;
+	var eta_g;	stderr 1;
 end;
 	
 % stochastic simulations

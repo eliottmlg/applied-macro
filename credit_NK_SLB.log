@@ -1,0 +1,68 @@
+Starting Dynare (version 6.2).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+Found 39 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Normalization failed with cutoff, trying symbolic normalization...
+Finding the optimal block decomposition of the static model...
+14 block(s) found:
+  13 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 21 equation(s)
+                                 and 21 feedback variable(s).
+Computing dynamic model derivatives (order 2).
+Normalizing the dynamic model...
+Normalization failed with cutoff, trying symbolic normalization...
+Finding the optimal block decomposition of the dynamic model...
+11 block(s) found:
+  10 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 24 equation(s)
+                                 and 22 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m01s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption   :       0.000000
+Equation number  2: Euler                             :       0.000000
+Equation number  3: Labor Supply                      :       0.000000
+Equation number  4: FOC investment                    :       0.000000
+Equation number  5: technology                        :       0.000000
+Equation number  6: Borrowing constraint              :       0.000000
+Equation number  7: Capital law of motion             :       0.000000
+Equation number  8: FOC entrepreneur consumption      :       0.000000
+Equation number  9: FOC total borrowing               :       0.000000
+Equation number 10: FOC capital                       :       0.000000
+Equation number 11: FOC labor demand                  :       0.000000
+Equation number 12: NK Phillips Curve                 :       0.000000
+Equation number 13: FOC abatement                     :       0.000000
+Equation number 14: Productivity composite definition :       0.000000
+Equation number 15: Entrepreneur balance sheet        :       0.000000
+Equation number 16: Resource constraint               :       0.000000
+Equation number 17: Total consumption definition      :       0.000000
+Equation number 18: Emissions definition              :       0.000000
+Equation number 19: SLB loan share                    :       0.000000
+Equation number 20: Bank balance sheet identity       :       0.000000
+Equation number 21: SLB loan interest rate            :       0.000000
+Equation number 22: Fisherian equation                :       0.000000
+Equation number 23: Monetary Policy rule              :       0.000000
+Equation number 24: Public spending                   :       0.000000
+Equation number 25: Carbon tax                        :       0.000000
+Equation number 26: measurement GDP                   :       0.000000
+Equation number 27: measurement consumption           :       0.000000
+Equation number 28: measurement investment            :       0.000000
+Equation number 29: measurement inflation             :       0.000000
+Equation number 30: measurement interest rate         :       0.000000
+Equation number 31: measurement total loans           :       0.000000
+Equation number 32: shocks                            :       0.000000
+Equation number 33: 33                                :       0.000000
+Equation number 34: 34                                :       0.000000
+Equation number 35: 35                                :       0.000000
+Equation number 36: 36                                :       0.000000
+Equation number 37: 37                                :       0.000000
+Equation number 38: 38                                :       0.000000
+Equation number 39: 39                                :       0.000000
+
+
+Total computing time : 0h00m00s

@@ -974,7 +974,7 @@ M_.block_structure_stat.block(14).g1_sparse_colptr = int32([]);
 M_.static_g1_sparse_rowval = int32([2 6 9 10 19 16 17 8 15 17 1 17 3 5 6 11 15 3 6 11 15 5 10 11 13 14 15 16 18 20 21 5 6 7 10 7 15 16 6 15 8 9 10 11 12 13 12 15 19 20 15 19 20 1 3 4 6 10 10 11 13 13 14 15 22 13 14 15 16 18 15 18 16 21 23 24 25 26 27 28 5 29 21 30 1 8 31 6 10 34 4 7 33 20 35 22 36 32 ]);
 M_.static_g1_sparse_colval = int32([1 1 1 1 1 2 2 3 3 3 4 4 5 5 5 5 5 6 6 6 6 7 7 7 7 7 7 7 7 7 7 8 8 8 8 9 9 9 10 10 11 12 12 12 13 13 14 14 14 14 15 15 15 16 16 17 17 17 18 18 18 19 19 19 19 20 20 20 20 20 21 21 22 22 23 24 25 26 27 28 29 29 30 30 31 31 31 32 32 32 33 33 33 34 34 35 35 36 ]);
 M_.static_g1_sparse_colptr = int32([1 6 8 11 13 18 22 32 36 39 41 42 45 47 51 54 56 59 62 66 71 73 75 76 77 78 79 80 81 83 85 88 91 94 96 98 99 ]);
-close all;  
+close all;
 M_.params(2) = 0.993;
 beta_H = M_.params(2);
 M_.params(1) = 0.980;
@@ -1043,7 +1043,7 @@ display_static_residuals(M_, options_, oo_, options_resid_);
 % SHOCKS instructions
 %
 M_.exo_det_length = 0;
-M_.Sigma_e(1, 1) = (1)^2;
+M_.Sigma_e(2, 2) = (1)^2;
 options_.irf = 30;
 options_.order = 1;
 var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'phi_E'};

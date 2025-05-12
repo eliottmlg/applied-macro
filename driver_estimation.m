@@ -7,7 +7,7 @@ clear all   % clear all variables
 
 % user options 
 options.model_path = '/Users/jakob/Documents/Parforceleistung/Studium/MSc Economics/Semester 4/Applied Macro Modelling/Project/applied-macro';
-options.modfile = 'credit_NK.mod';
+options.modfile = 'credit_NK_SLB.mod';
 % change your Dynare path
 options.Dynare_path = '/Applications/Dynare/6.2-x86_64';
 %% options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
