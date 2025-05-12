@@ -1,0 +1,78 @@
+Starting Dynare (version 5.4).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+WARNING: in the 'steady_state_model' block, variable 'mu' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'e' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'k' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'i' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'A' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'w' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'l' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c_E' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'c_H' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'lb_E' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'lb_H' is declared twice
+Found 43 equation(s).
+Evaluating expressions...done
+Computing static model derivatives (order 1).
+Computing dynamic model derivatives (order 1).
+Processing outputs ...
+done
+Preprocessing completed.
+
+[Warning: Some of the parameters have no value (chi_l, A) when using steady. If these parameters are not
+initialized in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model. Note
+that simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady state
+file.] 
+
+
+
+
+Residuals of the static equations:
+
+Equation number 1 : 0 : marginal utility of consumption
+Equation number 2 : 0 : Euler
+Equation number 3 : 0 : Labor Supply
+Equation number 4 : 0 : FOC i
+Equation number 5 : -0.0018173 : Euler SLBs (b_s)
+Equation number 6 : 0 : technology
+Equation number 7 : 0 : Borrowing constraint
+Equation number 8 : 0 : Capital law of motion
+Equation number 9 : 0 : FOC c
+Equation number 10 : 0 : FOC l
+Equation number 11 : 0 : FOC k
+Equation number 12 : 0 : FOC h
+Equation number 13 : 0 : NKPC
+Equation number 14 : 0 : FOC y
+Equation number 15 : 0 : FOC mu
+Equation number 16 : 0 : FOC for entrepreneur SLB (b_s_E)
+Equation number 17 : 0 : balance sheet
+Equation number 18 : 0 : Resources Constraint
+Equation number 19 : 0 : Total consumption
+Equation number 20 : 0 : Total emissions
+Equation number 21 : 0 : Fisherian equation
+Equation number 22 : 0 : Fisherian equation for SLB
+Equation number 23 : 0 : Sustainium equation
+Equation number 24 : 0 : Monetary Policy rule
+Equation number 25 : 0 : Public spending
+Equation number 26 : 0 : Carbon tax
+Equation number 27 : 0 : measurement GDP
+Equation number 28 : 0 : measurement consumption
+Equation number 29 : 0 : measurement investment
+Equation number 30 : 0 : measurement inflation
+Equation number 31 : 0 : measurement interest rate
+Equation number 32 : 0 : measurement corporate loans
+Equation number 33 : 0 : shocks
+Equation number 34 : 0 : 34
+Equation number 35 : 0 : 35
+Equation number 36 : 0 : 36
+Equation number 37 : 0 : 37
+Equation number 38 : 0 : 38
+Equation number 39 : 0 : 39
+Equation number 40 : 0 : 40
+Equation number 41 : 0 : 41
+Equation number 42 : 0 : 42
+Equation number 43 : 0 : 43
+
+

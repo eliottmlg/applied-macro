@@ -4,8 +4,6 @@ clear all
 close all
 clc
 
-addpath(['','\']); 
-
 %%
 [output_table,~,T] = call_dbnomics( ...
     'ECB/MNA/Q.Y.FR.W2.S1.S1.B.B1GQ._Z._Z._Z.EUR.V.N', ...
@@ -71,6 +69,8 @@ output_table2 = output_table2(1:3:end,:);
 
 % quarterly loan 
 l_obs = diff(log(output_table2(:,2)));
+% stationary test
+adftest(l_obs) % reject unit root
 
 %% Transform co2: correct for seacsonal adjustment using X13
 
@@ -84,7 +84,7 @@ output_table3(:,2) = table2array(data(:,2)); % replace with filtered series
 
 % co2 emissions
 co2_obs  = diff(log(output_table3(:,2)));
-
+adftest(co2_obs)
 T3 = T3(2:end);
 
 %% Align time series

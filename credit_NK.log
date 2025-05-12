@@ -6,5 +6,5 @@ WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a val
 WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
 WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value
 WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value
-ERROR: There are 43 equations but 44 endogenous variables!
+ERROR: There are 46 equations but 44 endogenous variables!
 

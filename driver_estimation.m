@@ -7,7 +7,7 @@ clear all   % clear all variables
 
 % user options 
 options.model_path = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro/';
-options.modfile = 'SLB';
+options.modfile = 'SLBnum';
 % change your Dynare path
 options.Dynare_path = 'C:\dynare\6.3';
 options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';

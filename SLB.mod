@@ -13,19 +13,24 @@ close all;
 
 var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs 
 // New below
-b_s b_s_E r_s;
+b_s r_s rrs phiS;
 
-var e_a e_g e_c e_m e_i e_r e_t e_p e_s;
+var e_a e_g e_c e_m e_i e_r e_t e_p
+// New 
+e_s e_mmu e_ms;
 
 
-varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p eta_s;
+varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p 
+// New 
+eta_s eta_mmu eta_ms;
 
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
 			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
 			sig theta1 theta2 varphi  tau0 y0
 //             New below
             stepup p_s gamma
-            chi_s sigmaS rho_s BDratio;
+            chi_s sigmaS rho_s BDratio
+            mmu rho_mmu ms rho_ms;
             
             
 %----------------------------------------------------------------
@@ -75,11 +80,14 @@ rho_t	= 0.40;
 rho_p   = 0.90;
 // New
 rho_s   = 0.90; // persistence of SLB preference shock
-
+rho_ms  = 0.90; // persistence of SLB capital constraint shock 
+rho_mmu = 0.90; // persistence of SLB emission constraint shock
 // New
 stepup  = 0.25; // stepup if target is missed
 p_s     = 0.02; // sustainium: yield premium on SLBs (rate bond - rate SLB)
 gamma   = 0.3; // probability of missing target
+ms      = 0.8; // Capital for SLB borrowing constraint
+mmu     = 0.1; // Emission for SLB borrowing constraint
 		
 %----------------------------------------------------------------
 % 3. Model
@@ -113,36 +121,36 @@ model;
 	[name='FOC l']
 	1-phi_E = beta_E*lb_E(+1)/lb_E*rr;
 	[name='FOC k']
-	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
+// 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
+// New
+	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk + phiS*q(+1)*e_ms*ms*(rr/rrs) = q*rr;
 	[name='FOC h']
 	w = (1-alpha)*varrho*y/(h*(1+mh*phi_E));
 	[name='NKPC']
 	(1-epsilon) + epsilon*mc - psi*pi*(pi-steady_state(pi)) + psi*beta_E*lb_E(+1)/lb_E*y(+1)/y*pi(+1)*(pi(+1)-steady_state(pi));
 	[name='FOC y']
-	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
+// 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
+	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi - phiS*mmu*theta1*mu^theta2;
 	[name='FOC mu']
-	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
+// 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
+((tau*sig*y^(1-varphi))/((1+phiS)*theta2*theta1))^(1/(theta2-1)) = mu;
 // New
 	[name='FOC for entrepreneur SLB (b_s_E)']
-    lb_E = beta_E*lb_E * r_s;
-// 	1-phi_E = beta_E*lb_E(+1)/lb_E*rr;
+//     lb_E = beta_E*lb_E * r_s;
+	1-phiS = beta_E*lb_E(+1)/lb_E*rrs;
 
 	%% AGGREGATION
 // 	[name='balance sheet']
 // 	c_E + i + w*h + r(-1)/pi*l(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l ;
-// New
 	[name='balance sheet']
-	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s_E(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_s_E;
-    [name='SLB market clearing condition']
-    b_s = b_s_E;
+	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_s;
+// TRIALS
+//     [name='SLB market clearing condition']
+//     b_s = b_s_E;
 //     [name='Firms debt structure']
 //     b_s_E = BDratio * (b_s_E + l);
-
-
 //     [name='Firms capital structure']
 //     r_s = r + gamma * stepup;
-
-// 
 
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
@@ -152,6 +160,12 @@ model;
 	e = sig*(1-mu)*y^(1-varphi);
 	[name='Fisherian equation']
 	rr = r/pi(+1);
+// New
+	[name='Fisherian equation']
+	rrs = r_s/pi;
+	[name='Sustainium equation']
+	r_s = r + gamma*stepup;
+
 	
 	%%% Policy instruments
 	[name='Monetary Policy rule']
@@ -193,7 +207,10 @@ model;
     log(e_m) = rho_m*log(e_m(-1))+eta_m;
     log(e_r) = rho_r*log(e_r(-1))+eta_r;  
     log(e_t) = rho_t*log(e_t(-1))+eta_t;  
+// New
     log(e_s) = rho_s*log(e_s(-1))+eta_s;  
+    log(e_mmu) = rho_mmu*log(e_mmu(-1))+eta_mmu;  
+    log(e_ms) = rho_ms*log(e_ms(-1))+eta_ms;  
 end;
 
 
@@ -203,38 +220,54 @@ end;
 steady_state_model;
 	y		= y0;
 	tau 	= tau0;
-	mu		= (tau*sig*y^(1-varphi)/(theta2*theta1))^(1/(theta2-1));
-	e 		= sig*(1-mu)*y^(1-varphi);
 	g       = gy*y;
 	pi		= piss;
 	rr		= 1/beta_H;
 	r		= rr*pi;
+// New
+    rrs     = 1/beta_H * ( 1 - (chi_s/lb_E)*(b_s/piss)^-sigmaS );
+//     rrs     = rr + gamma*stepup;
+    r_s     = rrs*pi;
+//     r_s     = r + gamma*stepup;
+	phiS    = 1 - beta_E*rrs;
+// 
+// 	mu		= (tau*sig*y^(1-varphi)/(theta2*theta1))^(1/(theta2-1));
+	mu		= (tau*sig*y^(1-varphi)/((1+phiS)*theta2*theta1))^(1/(theta2-1));
+	e 		= sig*(1-mu)*y^(1-varphi);
 	mc		= (epsilon-1)/epsilon;
 	varrho 	= mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^(-varphi);
 	h		= 1/3;
 	q		= 1;
 	phi_E	= 1-beta_E/beta_H;
-	k		= alpha*varrho*y/((rr-phi_E*mk)/(1-phi_E)-(1-delta)) ;
+// 	k		= alpha*varrho*y/((rr-phi_E*mk)/(1-phi_E)-(1-delta)) ;
+	k		= alpha*varrho*y/((rr-phi_E*mk-phiS*ms)/(1-phi_E)-(1-delta)) ;
 	A		= y/(k^alpha*h^(1-alpha));
 	i		= delta*k;
 	w		= (1-alpha)*varrho*y/h/(1+mh*phi_E);
 	l		= mk*k/rr - mh*w*h;
 	c_E 	= -i - w*h - theta1*mu^theta2*y - tau*e + mc*y +(1-mc)*y + (1-rr)*l;
-
 	c  		= (1-gy)*y-i-theta1*mu^theta2*y;
 	c_H		= c - c_E;
 	lb_E 	= (c_E-hh*c_E)^-sigmaC;
 	lb_H 	= (c_H-hh*c_H)^-sigmaC;
-	chi_l		= w*lb_H/(h^sigmaL);
+	chi_l	= w*lb_H/(h^sigmaL);
 	g 		= gy*y;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
 // New
-	b_s		= mk*k/rr;
-    b_s_E   = b_s;
+	b_s		= mk*k/rr - mmu*y*theta1*mu^theta2;
 //     r_s		= r + gamma*stepup; 
 //     r_o     = r_s + p_s;
-//     e_s     = 1;
+    e_s     = 1; e_mmu  = 1; e_ms   = 1;
+//     r_s     = r + gamma*stepup;
+//     rrs     = rr + gamma*stepup;
+//     rrs     = 1/beta_H * ( 1 - (chi_s/lb_E)*(b_s/piss)^-sigmaS );
+//     r_s     = rrs*pi;
+// 	phiS  = 1 - beta_E*rrs;
+// 	mu		= (tau*sig*y^(1-varphi)/((1+phiS)*theta2*theta1))^(1/(theta2-1));
+// 	k		= alpha*varrho*y/((rr-phi_E*mk-phiS*ms)/(1-phi_E)-(1-delta)) ;
+
+
     
 
 end;
@@ -290,7 +323,7 @@ shocks;
 end;
 	
 % stochastic simulations
-// stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
+stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
 
 
 	
