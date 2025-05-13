@@ -1,6 +1,250 @@
 Starting Dynare (version 6.2).
 Calling Dynare with arguments: none
 Starting preprocessing of the model file ...
-ERROR: credit_NK_SLB.mod: line 288, cols 8-54: Unknown symbol: co2_obs.
-If referenced from the 'initval', 'endval', 'histval', or 'shocks' block, you can pass the 'nostrict' option to dynare to have this line ignored.
+Found 40 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+16 block(s) found:
+  15 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 20 equation(s)
+                                 and 20 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+13 block(s) found:
+  12 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 23 equation(s)
+                                 and 20 feedback variable(s).
+Preprocessing completed.
 Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption   :       0.000000
+Equation number  2: Euler                             :       0.000000
+Equation number  3: Labor Supply                      :       0.000000
+Equation number  4: FOC investment                    :       0.000000
+Equation number  5: technology                        :       0.000000
+Equation number  6: Borrowing constraint              :       0.000000
+Equation number  7: Capital law of motion             :       0.000000
+Equation number  8: FOC entrepreneur consumption      :       0.000000
+Equation number  9: FOC total borrowing               :       0.000000
+Equation number 10: FOC capital                       :       0.000000
+Equation number 11: FOC labor demand                  :       0.000000
+Equation number 12: NK Phillips Curve                 :       0.000000
+Equation number 13: Exogenous abatement rate          :       0.000000
+Equation number 14: Productivity composite definition :       0.000000
+Equation number 15: Entrepreneur balance sheet        :       0.000000
+Equation number 16: Resource constraint               :       0.000000
+Equation number 17: Total consumption definition      :       0.000000
+Equation number 18: Emissions definition              :       0.000000
+Equation number 19: SLB loan share                    :       0.000000
+Equation number 20: Bank balance sheet identity       :       0.000000
+Equation number 21: SLB loan interest rate            :       0.000000
+Equation number 22: FOC xi                            :       0.000000
+Equation number 23: Fisherian equation                :       0.000000
+Equation number 24: Monetary Policy rule              :       0.000000
+Equation number 25: Public spending                   :       0.000000
+Equation number 26: Carbon tax                        :       0.000000
+Equation number 27: measurement GDP                   :       0.000000
+Equation number 28: measurement consumption           :       0.000000
+Equation number 29: measurement investment            :       0.000000
+Equation number 30: measurement inflation             :       0.000000
+Equation number 31: measurement interest rate         :       0.000000
+Equation number 32: measurement total loans           :       0.000000
+Equation number 33: shocks                            :       0.000000
+Equation number 34: 34                                :       0.000000
+Equation number 35: 35                                :       0.000000
+Equation number 36: 36                                :       0.000000
+Equation number 37: 37                                :       0.000000
+Equation number 38: 38                                :       0.000000
+Equation number 39: 39                                :       0.000000
+Equation number 40: 40                                :       0.000000
+
+
+[Warning: Some of the parameters have no value (chi, A) when using steady. If these parameters are not
+initialized in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model.
+Note that simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
+state file.] 
+
+STEADY-STATE RESULTS:
+
+rr     		 1.00705
+xi     		 0.303226
+c      		 14.6104
+c_E    		 3.30948
+c_H    		 11.3009
+h      		 0.333333
+w      		 45.6325
+y      		 25
+k      		 187.593
+i      		 4.68982
+l      		 102.776
+l_SLB  		 44.7266
+d_t    		 147.503
+lb_E   		 1.00721
+phi_E  		 0.0130916
+mc     		 0.9
+pi     		 1.005
+r      		 1.01208
+r_SLB  		 1.01203
+lb_H   		 0.294961
+q      		 1
+varrho 		 0.870329
+tau    		 0.1
+mu     		 0.8
+e      		 0.525306
+g      		 5
+gy_obs 		 0
+gc_obs 		 0
+gi_obs 		 0
+pi_obs 		 0
+r_obs  		 0
+l_obs  		 0
+e_a    		 1
+e_g    		 1
+e_c    		 1
+e_m    		 1
+e_i    		 1
+e_r    		 1
+e_t    		 1
+e_p    		 1
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+               0                0                0
+       1.486e-17       -1.486e-17                0
+       2.027e-16       -2.027e-16                0
+       5.841e-16        5.841e-16                0
+        1.35e-15         1.35e-15                0
+       6.621e-15       -6.621e-15                0
+             0.4              0.4                0
+             0.4              0.4                0
+          0.6069           0.5958           0.1157
+          0.6069           0.5958          -0.1157
+           0.641            0.641                0
+          0.8503           0.8503                0
+             0.9              0.9                0
+          0.9464           0.9464                0
+            0.95             0.95                0
+            0.95             0.95                0
+            0.95             0.95                0
+            0.95             0.95                0
+            0.95             0.95                0
+           1.062            1.062                0
+           1.074            1.074          0.03058
+           1.074            1.074         -0.03058
+           1.333             1.32            0.184
+           1.333             1.32           -0.184
+           59.82            59.82                0
+       3.037e+16        3.037e+16                0
+        1.95e+17        -1.95e+17                0
+
+There are 8 eigenvalue(s) larger than 1 in modulus for 8 forward-looking variable(s)
+The rank condition is verified.
+
+
+MODEL SUMMARY
+
+  Number of variables:         40
+  Number of stochastic shocks: 8
+  Number of state variables:   19
+  Number of jumpers:           8
+  Number of static variables:  16
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables       eta_a     eta_g     eta_c     eta_m     eta_i     eta_r     eta_t     eta_p
+eta_a        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_g        0.000000  1.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_c        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_m        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_i        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_r        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_t        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_p        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y             c_E             c_H               i              pi               r             d_t           l_SLB               e
+Constant                   25.000000        3.309480       11.300946        4.689822        1.005000        1.012085      147.502713       44.726621        0.525306
+c_E(-1)                     0.007755        0.148956       -0.018027       -0.123391        0.003976        0.001201       -0.637012       -0.193158        0.000130
+c_H(-1)                     0.489818       -0.144558        0.667946       -0.047281        0.005999        0.001812       -0.846121       -0.256566        0.008234
+k(-1)                       0.183076        0.151429        0.004882        0.021642        0.000015        0.000005        0.263859        0.080009        0.003077
+l(-1)                      -0.271783       -0.230519        0.005025       -0.038682       -0.000734       -0.000222        0.660167        0.200180       -0.004569
+l_SLB(-1)                  -0.271770       -0.230507        0.005025       -0.038681       -0.000734       -0.000222        0.660134        0.200170       -0.004568
+r(-1)                    -129.101732     -100.642854       -5.129876      -19.715436       -1.152039        0.451952       30.006610        9.098777       -2.170171
+r_SLB(-1)                 -12.010807      -10.187214        0.222070       -1.709479       -0.032447       -0.009803       29.174477        8.846453       -0.201899
+e_a(-1)                    26.570438       17.233877        2.859213        5.733639       -0.185412       -0.056016       42.320667       12.832716        0.446643
+e_g(-1)                     4.695535        0.412188       -0.539730       -0.058352        0.039838        0.012036       -4.349430       -1.318859        0.078931
+e_c(-1)                     4.339423        1.972262        2.227898        0.017802        0.019004        0.005741       -1.940480       -0.588404        0.072945
+e_m(-1)                    30.253850       25.210578        0.023556        4.172909        0.065815        0.019884       42.998212       13.038165        0.508561
+e_r(-1)                   -79.331762      -60.234935       -4.367266      -12.509059       -0.924800        0.125438      -16.582578       -5.028265       -1.333549
+e_t(-1)                    -0.008166       -0.006439       -0.000175       -0.001323        0.000051        0.000015       -0.001380       -0.000418       -0.000137
+i(-1)                       0.023283       -0.669939       -0.020850        0.713421        0.007626        0.002304       -1.159316       -0.351534        0.000391
+e_i(-1)                   -13.154494      -12.880312        0.016924        0.077089        0.026251        0.007931      -26.710584       -8.099337       -0.221124
+eta_a                      27.968882       18.140923        3.009698        6.035410       -0.195170       -0.058964       44.548071       13.508122        0.470151
+eta_g                       4.942668        0.433882       -0.568137       -0.061423        0.041935        0.012669       -4.578348       -1.388273        0.083085
+eta_c                       4.567813        2.076065        2.345155        0.018739        0.020004        0.006044       -2.042611       -0.619372        0.076784
+eta_m                      31.846158       26.537450        0.024796        4.392536        0.069279        0.020930       45.261276       13.724384        0.535327
+eta_i                     -13.846836      -13.558223        0.017814        0.081146        0.027633        0.008348      -28.116404       -8.525618       -0.232762
+eta_r                    -198.329404     -150.587338      -10.918164      -31.272649       -2.311999        0.313595      -41.456444      -12.570661       -3.333873
+eta_t                      -0.020416       -0.016099       -0.000438       -0.003308        0.000128        0.000039       -0.003449       -0.001046       -0.000343
+
+
+THEORETICAL MOMENTS
+VARIABLE         MEAN  STD. DEV.   VARIANCE
+y             25.0000     9.3284    87.0196
+c_E            3.3095     0.6085     0.3703
+c_H           11.3009     6.6533    44.2669
+i              4.6898     1.8127     3.2860
+pi             1.0050     0.0565     0.0032
+r              1.0121     0.0567     0.0032
+d_t          147.5027    34.0350  1158.3833
+l_SLB         44.7266    10.3203   106.5085
+e              0.5253     0.1568     0.0246
+
+
+
+VARIANCE DECOMPOSITION (in percent)
+          eta_a   eta_g   eta_c   eta_m   eta_i   eta_r   eta_t   eta_p
+y          0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+c_E        0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+c_H        0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+i          0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+pi         0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+r          0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+d_t        0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+l_SLB      0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+e          0.00  100.00    0.00    0.00    0.00    0.00    0.00    0.00
+
+
+
+MATRIX OF CORRELATIONS
+Variables          y      c_E      c_H        i       pi        r      d_t    l_SLB        e
+y             1.0000   0.8713  -0.7741  -0.7496   0.9265   0.9151  -0.6756  -0.6756   1.0000
+c_E           0.8713   1.0000  -0.4126  -0.5098   0.8738   0.6130  -0.2479  -0.2479   0.8713
+c_H          -0.7741  -0.4126   1.0000   0.9250  -0.5787  -0.9480   0.9048   0.9048  -0.7741
+i            -0.7496  -0.5098   0.9250   1.0000  -0.4896  -0.8784   0.6787   0.6787  -0.7496
+pi            0.9265   0.8738  -0.5787  -0.4896   1.0000   0.7482  -0.5964  -0.5964   0.9265
+r             0.9151   0.6130  -0.9480  -0.8784   0.7482   1.0000  -0.8608  -0.8608   0.9151
+d_t          -0.6756  -0.2479   0.9048   0.6787  -0.5964  -0.8608   1.0000   1.0000  -0.6756
+l_SLB        -0.6756  -0.2479   0.9048   0.6787  -0.5964  -0.8608   1.0000   1.0000  -0.6756
+e             1.0000   0.8713  -0.7741  -0.7496   0.9265   0.9151  -0.6756  -0.6756   1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION
+Order          1       2       3       4       5
+y         0.8459  0.7335  0.6504  0.5874  0.5379
+c_E       0.6820  0.5294  0.4547  0.4136  0.3849
+c_H       0.9922  0.9731  0.9467  0.9164  0.8842
+i         0.9905  0.9649  0.9283  0.8844  0.8361
+pi        0.6574  0.4381  0.3308  0.2818  0.2612
+r         0.9683  0.9104  0.8484  0.7912  0.7417
+d_t       0.9888  0.9693  0.9496  0.9327  0.9189
+l_SLB     0.9888  0.9693  0.9496  0.9327  0.9189
+e         0.8459  0.7335  0.6504  0.5874  0.5379
+Total computing time : 0h00m02s
+Note: warning(s) encountered in MATLAB/Octave code

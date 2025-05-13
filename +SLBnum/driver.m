@@ -422,7 +422,7 @@ M_.nboth   = 3;
 M_.nsfwrd   = 9;
 M_.nspred   = 20;
 M_.ndynamic   = 26;
-M_.dynamic_tmp_nbr = [27; 7; 0; 0; ];
+M_.dynamic_tmp_nbr = [27; 6; 0; 0; ];
 M_.equations_tags = {
   1 , 'name' , 'marginal utility of consumption' ;
   2 , 'name' , 'Euler' ;
@@ -1386,7 +1386,6 @@ end
 if exist('options_mom_', 'var') == 1
   save([M_.dname filesep 'Output' filesep 'SLBnum_results.mat'], 'options_mom_', '-append');
 end
-disp('Note: 12 warning(s) encountered in the preprocessor')
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end

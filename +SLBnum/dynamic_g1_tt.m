@@ -18,7 +18,7 @@ function T = dynamic_g1_tt(T, y, x, params, steady_state, it_)
 %   T           [#temp variables by 1]       double  vector of temporary terms
 %
 
-assert(length(T) >= 34);
+assert(length(T) >= 33);
 
 T = SLBnum.dynamic_resid_tt(T, y, x, params, steady_state, it_);
 
@@ -27,7 +27,6 @@ T(29) = getPowerDeriv(y(24)-params(12)*y(3),(-params(5)),1);
 T(30) = getPowerDeriv(y(27),1-params(31),1);
 T(31) = getPowerDeriv(y(39)*params(28)*T(21)/(params(29)*params(30)*(1+y(52))),1/(params(30)-1),1);
 T(32) = getPowerDeriv(T(26),1-params(15),1);
-T(33) = (-(params(1)*y(66)))/(y(31)*y(31));
-T(34) = getPowerDeriv(y(40),params(30),1);
+T(33) = getPowerDeriv(y(40),params(30),1);
 
 end

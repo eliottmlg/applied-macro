@@ -1101,7 +1101,7 @@ M_.params(18) = 0;
 phi_y = M_.params(18);
 M_.params(19) = 1.5;
 phi_pi = M_.params(19);
-M_.params(22) = 0.02;
+M_.params(22) = 5e-05;
 rho = M_.params(22);
 M_.params(20) = 80;
 psi = M_.params(20);
@@ -1112,7 +1112,7 @@ varphi = M_.params(34);
 M_.params(21) = 1.005;
 piss = M_.params(21);
 rho_xi  = 0.9;          
-M_.params(1) = 1.5;
+M_.params(1) = 0.8;
 mu_bar = M_.params(1);
 M_.params(2) = 0.3;
 gamma = M_.params(2);
@@ -1150,10 +1150,10 @@ oo_.dr.eigval = check(M_,options_,oo_);
 % SHOCKS instructions
 %
 M_.exo_det_length = 0;
-M_.Sigma_e(6, 6) = (1)^2;
+M_.Sigma_e(2, 2) = (1)^2;
 options_.irf = 30;
 options_.order = 1;
-var_list_ = {'y';'c_E';'c_H';'i';'pi';'r';'d_t';'l_SLB';'mu';'phi_E'};
+var_list_ = {'y';'c_E';'c_H';'i';'pi';'r';'d_t';'l_SLB';'e'};
 [info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
 
 

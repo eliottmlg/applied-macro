@@ -1,0 +1,119 @@
+Starting Dynare (version 6.2).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+Found 43 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+20 block(s) found:
+  19 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 16 equation(s)
+                                 and 16 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+15 block(s) found:
+  14 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 22 equation(s)
+                                 and 21 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+[Warning: Some of the parameters have no value (chi_l, A) when using steady. If these parameters are not
+initialized in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model.
+Note that simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
+state file.] 
+
+STEADY-STATE RESULTS:
+
+rr     		 1.00705
+c      		 10.3031
+c_E    		 -0.254853
+c_H    		 10.5579
+h      		 0.333333
+w      		 39.3691
+y      		 25
+k      		 234.418
+i      		 5.86044
+l      		 184.909
+lb_E   		 -13.0795
+phi_E  		 0.0130916
+mc     		 0.9
+pi     		 1.005
+r      		 1.01208
+lb_H   		 0.315718
+q      		 1
+varrho 		 0.75087
+tau    		 0.1
+mu     		 1.53928
+e      		 -1.41642
+g      		 5
+gy_obs 		 0
+gc_obs 		 0
+gi_obs 		 0
+pi_obs 		 0
+r_obs  		 0
+l_obs  		 0
+b_s    		 185.838
+r_s    		 1.01188
+rrs    		 1.00685
+phiS   		 0.0132867
+e_a    		 1
+e_g    		 1
+e_c    		 1
+e_m    		 1
+e_i    		 1
+e_r    		 1
+e_t    		 1
+e_p    		 1
+e_s    		 1
+e_mmu  		 1
+e_ms   		 1
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption   :       0.000000
+Equation number  2: Euler                             :       0.000000
+Equation number  3: Labor Supply                      :       0.000000
+Equation number  4: FOC i                             :       0.000000
+Equation number  5: Euler SLBs (b_s)                  :       0.000000
+Equation number  6: technology                        :       0.000000
+Equation number  7: Borrowing constraint              :       0.000000
+Equation number  8: Capital law of motion             :       0.000000
+Equation number  9: FOC c                             :       0.000000
+Equation number 10: FOC l                             :       0.000000
+Equation number 11: FOC k                             :       0.000000
+Equation number 12: FOC h                             :       0.000000
+Equation number 13: NKPC                              :       0.000000
+Equation number 14: FOC y                             :       0.000000
+Equation number 15: FOC mu                            :       0.000000
+Equation number 16: FOC for entrepreneur SLB (b_s_E)  :       0.000000
+Equation number 17: balance sheet                     :       0.000000
+Equation number 18: Total consumption                 :       0.000000
+Equation number 19: Total emissions                   :       0.000000
+Equation number 20: Fisherian equation                :       0.000000
+Equation number 21: Fisherian equation for SLB        :       0.000000
+Equation number 22: Sustainium equation               :       0.000000
+Equation number 23: Entrepreneur borrowing constraint :       0.000000
+Equation number 24: Monetary Policy rule              :       0.000000
+Equation number 25: Public spending                   :       0.000000
+Equation number 26: Carbon tax                        :       0.000000
+Equation number 27: measurement GDP                   :       0.000000
+Equation number 28: measurement consumption           :       0.000000
+Equation number 29: measurement investment            :       0.000000
+Equation number 30: measurement inflation             :       0.000000
+Equation number 31: measurement interest rate         :       0.000000
+Equation number 32: measurement corporate loans       :       0.000000
+Equation number 33: shocks                            :       0.000000
+Equation number 34: 34                                :       0.000000
+Equation number 35: 35                                :       0.000000
+Equation number 36: 36                                :       0.000000
+Equation number 37: 37                                :       0.000000
+Equation number 38: 38                                :       0.000000
+Equation number 39: 39                                :       0.000000
+Equation number 40: 40                                :       0.000000
+Equation number 41: 41                                :       0.000000
+Equation number 42: 42                                :       0.000000
+Equation number 43: 43                                :       0.000000
+
+

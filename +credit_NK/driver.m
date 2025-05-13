@@ -287,15 +287,6 @@ M_.endo_nbr = 39;
 M_.param_nbr = 35;
 M_.orig_endo_nbr = 39;
 M_.aux_vars = [];
-options_.varobs = cell(7, 1);
-options_.varobs(1)  = {'gy_obs'};
-options_.varobs(2)  = {'pi_obs'};
-options_.varobs(3)  = {'r_obs'};
-options_.varobs(4)  = {'gc_obs'};
-options_.varobs(5)  = {'gi_obs'};
-options_.varobs(6)  = {'l_obs'};
-options_.varobs(7)  = {'co2_obs'};
-options_.varobs_id = [ 23 26 27 24 25 28 29  ];
 M_.Sigma_e = zeros(10, 10);
 M_.Correlation_matrix = eye(10, 10);
 M_.H = 0;
@@ -1089,9 +1080,9 @@ M_.params(5) = 1;
 sigmaC = M_.params(5);
 M_.params(6) = 1;
 sigmaL = M_.params(6);
-M_.params(11) = 0.8;
+M_.params(11) = MK_PLACEHOLDER;
 mk = M_.params(11);
-M_.params(10) = 0.1;
+M_.params(10) = MH_PLACEHOLDER;
 mh = M_.params(10);
 M_.params(13) = 10;
 epsilon = M_.params(13);
@@ -1141,228 +1132,16 @@ M_.params(29) = 0.90;
 rho_mh = M_.params(29);
 options_resid_ = struct();
 display_static_residuals(M_, options_, oo_, options_resid_);
-if isempty(estim_params_)
-    estim_params_.var_exo = zeros(0, 10);
-    estim_params_.var_endo = zeros(0, 10);
-    estim_params_.corrx = zeros(0, 11);
-    estim_params_.corrn = zeros(0, 11);
-    estim_params_.param_vals = zeros(0, 10);
-end
-if ~isempty(find(estim_params_.var_exo(:,1)==2))
-    error('The standard deviation for eta_g has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 2, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==21))
-    error('Parameter rho_g has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 21, .92, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==8))
-    error('The standard deviation for eta_p has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 8, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==27))
-    error('Parameter rho_p has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 27, .92, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==6))
-    error('The standard deviation for eta_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 6, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==25))
-    error('Parameter rho_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 25, .5, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==3))
-    error('The standard deviation for eta_c has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 3, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==22))
-    error('Parameter rho_c has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 22, .96, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==5))
-    error('The standard deviation for eta_i has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 5, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==24))
-    error('Parameter rho_i has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 24, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==4))
-    error('The standard deviation for eta_m has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 4, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==23))
-    error('Parameter rho_m has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 23, .96, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==1))
-    error('The standard deviation for eta_a has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 1, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==20))
-    error('Parameter rho_a has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 20, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==7))
-    error('The standard deviation for eta_t has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 7, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==26))
-    error('Parameter rho_t has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 26, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==15))
-    error('Parameter rho has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 15, .45, NaN, NaN, 1, .75, 0.1, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==5))
-    error('Parameter sigmaC has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 5, 1, NaN, NaN, 3, 1.5, .35, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==6))
-    error('Parameter sigmaL has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 6, 1, NaN, NaN, 3, 1, 0.5, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==12))
-    error('Parameter hh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 12, .7, NaN, NaN, 1, .75, 0.1, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==14))
-    error('Parameter kappa has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 14, 4, NaN, NaN, 2, 4, 1.5, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==9))
-    error('The standard deviation for eta_e has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 9, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==28))
-    error('Parameter rho_e has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 28, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.var_exo(:,1)==10))
-    error('The standard deviation for eta_mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.var_exo = [estim_params_.var_exo; 10, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==29))
-    error('Parameter rho_mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 29, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==11))
-    error('Parameter mk has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 11, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
-if ~isempty(find(estim_params_.param_vals(:,1)==10))
-    error('Parameter mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
-end
-estim_params_.param_vals = [estim_params_.param_vals; 10, .6, NaN, NaN, 3, .6, 0.2, NaN, NaN, NaN ];
-options_.datafile = 'Utils/myobs.mat';
-options_.first_obs = 1;
-options_.forecast = 8;
-options_.lik_init = 2;
-options_.mh_jscale = 0.5;
-options_.mh_nblck = 1;
-options_.mh_replic = 500;
-options_.mode_compute = 4;
-options_.prefilter = 1;
-options_.order = 1;
-var_list_ = {'gy_obs';'pi_obs';'r_obs';'gc_obs';'gi_obs';'l_obs';'co2_obs'};
-oo_recursive_=dynare_estimation(var_list_);
+%
+% SHOCKS instructions
+%
+M_.exo_det_length = 0;
+M_.Sigma_e(7, 7) = (1)^2;
 options_.irf = 30;
+options_.nograph = true;
 options_.order = 1;
-var_list_ = {'y';'c_H';'c_E';'i';'pi';'l';'e'};
+var_list_ = {};
 [info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
-fn = fieldnames(oo_.posterior_mean.parameters);
-for ix = 1:size(fn,1)
-set_param_value(fn{ix},eval(['oo_.posterior_mean.parameters.' fn{ix} ]))
-end
-fx = fieldnames(oo_.posterior_mean.shocks_std);
-for ix = 1:size(fx,1)
-idx = strmatch(fx{ix},M_.exo_names,'exact');
-M_.Sigma_e(idx,idx) = eval(['oo_.posterior_mean.shocks_std.' fx{ix}])^2;
-end
-options_.conditional_variance_decomposition = [1;4;10;100;];
-options_.irf = 30;
-options_.order = 1;
-var_list_ = {'gy_obs';'pi_obs';'r_obs'};
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
-var_list_ = {'gy_obs';'pi_obs';'r_obs';'l_obs';'co2_obs'};
-oo_ = shock_decomposition(M_,oo_,options_,var_list_,bayestopt_,estim_params_);
-load(options_.datafile);
-if exist('T') ==1
-Tvec = T;
-else
-Tvec = 1:size(dataset_,1);
-end
-Tfreq = mean(diff(Tvec));
-tprior = 20; 
-Tvec2 = Tvec(end) + (0:(options_.forecast))*Tfreq;
-for i1 = 1 :size(dataset_.name,1)
-idv		= strmatch(dataset_.name{i1},M_.endo_names,'exact');
-idd		= strmatch(dataset_.name{i1},dataset_.name,'exact');
-if ~isempty(idd) && isfield(oo_.MeanForecast.Mean, dataset_.name{i1})
-yobs   = eval(['oo_.SmoothedVariables.' dataset_.name{i1}])+dataset_info.descriptive.mean(idd);
-yfc    = eval(['oo_.MeanForecast.Mean.'  dataset_.name{i1}])+dataset_info.descriptive.mean(idd);
-yfcVar = sqrt(eval(['oo_.MeanForecast.Var.' dataset_.name{i1}]));
-figure;
-plot(Tvec(end-tprior+1:end),yobs(end-tprior+1:end))
-hold on;
-plot(Tvec2,[yobs(end) yfc'] ,'r--','LineWidth',1.5);
-plot(Tvec2,[yobs(end) (yfc+1.96*yfcVar)'],'r:','LineWidth',1.5)
-plot(Tvec2,[yobs(end) (yfc-1.96*yfcVar)'],'r:','LineWidth',1.5)
-grid on;
-xlim([Tvec(end-tprior+1) Tvec2(end)])
-legend('Sample','Forecasting','Uncertainty')
-title(['forecasting of ' M_.endo_names_tex{idv}])
-hold off;
-else
-warning([ dataset_.name{i1} ' is not an observable or you have not computed its forecast'])
-end
-end
-fx = fieldnames(oo_.SmoothedShocks);
-for ix=1:size(fx,1)
-shock_mat = eval(['oo_.SmoothedShocks.' fx{ix}]);
-if ix==1; ee_mat = zeros(length(shock_mat),M_.exo_nbr); end;
-ee_mat(:,strmatch(fx{ix},M_.exo_names,'exact')) = shock_mat;
-end
-[oo_.dr, info, M_.params] = resol(0, M_, options_, oo_.dr, oo_.dr.ys, oo_.exo_steady_state, oo_.exo_det_steady_state);
-y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat,options_.order);
-Mx  = M_;
-oox = oo_;
-Mx.params(strcmp('phi_y',M_.param_names)) = .25;
-[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
-ydov            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Ty,[],y_,ydov)
-legend('Estimated','Dovish')
-Thorizon 	= 12; 
-fx = fieldnames(oo_.SmoothedShocks);
-for ix=1:size(fx,1)
-shock_mat = eval(['oo_.SmoothedShocks.' fx{ix}]);
-if ix==1; ee_mat2 = zeros(length(shock_mat),M_.exo_nbr); end;
-ee_mat2(:,strmatch(fx{ix},M_.exo_names,'exact')) = shock_mat;
-end
-ee_mat2 	= [ee_mat;zeros(Thorizon,M_.exo_nbr)];
-Tvec2 		= Tvec(1):Tfreq:(Tvec(1)+size(ee_mat2,1)*Tfreq);
-[oo_.dr, info, M_.params] = resol(0, M_, options_, oo_.dr, oo_.dr.ys, oo_.exo_steady_state, oo_.exo_det_steady_state);
-y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat2,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_g',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = 0.05;
-y_fiscal           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_t',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = 0.5;
-y_carbon           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_r',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = -0.05;
-y_monetary           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs','g','tau'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Tvec2,[2023 Tvec2(end)],y_,y_fiscal,y_carbon,y_monetary)
-legend('Estimated','Fiscal','Carbon','Monetary')
 
 
 oo_.time = toc(tic0);
@@ -1392,7 +1171,6 @@ end
 if exist('options_mom_', 'var') == 1
   save([M_.dname filesep 'Output' filesep 'credit_NK_results.mat'], 'options_mom_', '-append');
 end
-disp('Note: 1 warning(s) encountered in the preprocessor')
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end

@@ -88,13 +88,13 @@ epsilon = 10;           % Elasticity of substitution between differentiated good
 rho_mp  = 0.8;          % Monetary policy smoothing (Taylor rule) – renamed from rho
 phi_y   = 0;            % Monetary policy response to output
 phi_pi  = 1.5;          % Monetary policy response to inflation
-rho     = 0.02;         % Interest rate spread for SLB loans (e.g., SLB loans 2% cheaper)
+rho     = 0.0002/4;       % Interest rate spread for SLB loans (e.g., SLB loans 2% cheaper)
 psi     = 80;           % Price adjustment cost (Rotemberg)
 kappa   = 4;            % Investment adjustment cost
 varphi  = 0.2;          % Elasticity of emissions to output
 piss    = 1.005;        % Steady-state gross inflation (0.5% quarterly)
 rho_xi  = 0.9;          % Persistence of SLB policy rule
-mu_bar  = 1.5;
+mu_bar  = 0.8;
 gamma   = 0.3;
 
 % Values of long-term variables (steady-state targets)
@@ -276,9 +276,10 @@ check;
 
 % (Stochastic simulation or estimation commands can follow here)
 shocks;
-    var eta_r; stderr 1;
+    var eta_g; stderr 1;
     % Additional shock standard deviations can be set here...
 end;
 
 % Example: simulate impulse responses
-stoch_simul(irf=30, order=1) y c_E c_H i pi r d_t l_SLB mu phi_E;
+stoch_simul(irf=30, order=1) y c_E c_H i pi r l l_SLB e;
+

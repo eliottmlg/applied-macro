@@ -20,6 +20,49 @@ Finding the optimal block decomposition of the dynamic model...
                                  and 19 feedback variable(s).
 Preprocessing completed.
 Preprocessing time: 0h00m00s.
+[Warning: Some of the parameters have no value (chi, A) when using steady. If these parameters are not
+initialized in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model.
+Note that simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
+state file.] 
+
+STEADY-STATE RESULTS:
+
+rr     		 1.00705
+c      		 12.0505
+c_E    		 3.23168
+c_H    		 8.81881
+h      		 0.333333
+w      		 39.211
+y      		 25
+k      		 161.194
+i      		 4.02986
+l      		 126.746
+lb_E   		 1.03145
+phi_E  		 0.0130916
+mc     		 0.9
+pi     		 1.005
+r      		 1.01208
+lb_H   		 0.37798
+q      		 1
+varrho 		 0.747854
+tau    		 0.1
+mu     		 1.55203
+e      		 -1.44991
+g      		 5
+gy_obs 		 0
+gc_obs 		 0
+gi_obs 		 0
+pi_obs 		 0
+r_obs  		 0
+l_obs  		 0
+e_a    		 1
+e_g    		 1
+e_c    		 1
+e_m    		 1
+e_i    		 1
+e_r    		 1
+e_t    		 1
+e_p    		 1
 
 
 Residuals of the static equations:
@@ -61,10 +104,6 @@ Equation number 35: 35                              :       0.000000
 Equation number 36: 36                              :       0.000000
 
 
-[Warning: Some of the parameters have no value (chi, A) when using stoch_simul. If these parameters are not
-initialized in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model.
-Note that simul, perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady
-state file.] 
 
 MODEL SUMMARY
 

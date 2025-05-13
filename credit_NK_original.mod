@@ -172,7 +172,6 @@ steady_state_model;
 	w		= (1-alpha)*varrho*y/h/(1+mh*phi_E);
 	l		= mk*k/rr - mh*w*h;
 	c_E 	= -i - w*h - theta1*mu^theta2*y - tau*e + mc*y +(1-mc)*y + (1-rr)*l;
-
 	c  		= (1-gy)*y-i-theta1*mu^theta2*y;
 	c_H		= c - c_E;
 	lb_E 	= (c_E-hh*c_E)^-sigmaC;
@@ -182,6 +181,8 @@ steady_state_model;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0;
 end;
+
+steady;
 
 % check residuals
 resid;

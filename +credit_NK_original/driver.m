@@ -1037,6 +1037,7 @@ M_.params(26) = 0.40;
 rho_t = M_.params(26);
 M_.params(27) = 0.90;
 rho_p = M_.params(27);
+steady;
 options_resid_ = struct();
 display_static_residuals(M_, options_, oo_, options_resid_);
 %
