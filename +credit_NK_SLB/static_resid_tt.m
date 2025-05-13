@@ -15,20 +15,20 @@ function T = static_resid_tt(T, y, x, params)
 
 assert(length(T) >= 15);
 
-T(1) = (y(4)-y(4)*params(12))^(-params(5));
-T(2) = y(8)^params(4);
-T(3) = y(32)*params(9)*T(2);
-T(4) = y(5)^(1-params(4));
-T(5) = (y(3)-params(12)*y(3))^(-params(5));
-T(6) = y(7)^(1-params(33));
-T(7) = params(31)*y(23)^params(32);
-T(8) = y(7)^(-params(33));
-T(9) = params(18)/2*(y(16)-(y(16)))^2;
-T(10) = y(17)^params(15);
-T(11) = (y(16)/(y(16)))^params(17);
-T(12) = (y(17))*T(11);
-T(13) = (y(7)/(y(7)))^params(16);
+T(1) = (y(5)-y(5)*params(14))^(-params(7));
+T(2) = y(9)^params(6);
+T(3) = y(33)*params(11)*T(2);
+T(4) = y(6)^(1-params(6));
+T(5) = (y(4)-params(14)*y(4))^(-params(7));
+T(6) = y(8)^(1-params(34));
+T(7) = params(32)*y(24)^params(33);
+T(8) = y(8)^(-params(34));
+T(9) = params(20)/2*(y(17)-(y(17)))^2;
+T(10) = y(18)^params(17);
+T(11) = (y(17)/(y(17)))^params(19);
+T(12) = (y(18))*T(11);
+T(13) = (y(8)/(y(8)))^params(18);
 T(14) = T(12)*T(13);
-T(15) = T(14)^(1-params(15));
+T(15) = T(14)^(1-params(17));
 
 end

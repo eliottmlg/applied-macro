@@ -18,17 +18,9 @@ function T = dynamic_g2_tt(T, y, x, params, steady_state, it_)
 %   T           [#temp variables by 1]       double  vector of temporary terms
 %
 
-assert(length(T) >= 77);
+assert(length(T) >= 31);
 
 T = credit_NK_SLB.dynamic_g1_tt(T, y, x, params, steady_state, it_);
 
-T(70) = getPowerDeriv(y(23)-params(12)*y(3),(-params(5)),2);
-T(71) = (-params(12))*T(70);
-T(72) = getPowerDeriv(y(22)-params(12)*y(2),(-params(5)),2);
-T(73) = (-params(12))*T(72);
-T(74) = getPowerDeriv(y(26),1-params(33),2);
-T(75) = getPowerDeriv(T(20),1/(params(32)-1),2);
-T(76) = params(31)*getPowerDeriv(y(42),params(32),2);
-T(77) = getPowerDeriv(T(27),1-params(15),2);
 
 end
