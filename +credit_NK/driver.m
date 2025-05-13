@@ -1115,7 +1115,7 @@ M_.params(30) = 0.2;
 sig = M_.params(30);
 M_.params(35) = 2.4;
 y0 = M_.params(35);
-M_.params(31) = 0.05;
+M_.params(31) = 0.3;
 theta1 = M_.params(31);
 M_.params(32) = 2.6;
 theta2 = M_.params(32);
@@ -1259,122 +1259,56 @@ estim_params_.param_vals = [estim_params_.param_vals; 10, .6, NaN, NaN, 3, .6, 0
 if ~isempty(find(estim_params_.param_vals(:,1)==31))
     error('Parameter theta1 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
 end
-estim_params_.param_vals = [estim_params_.param_vals; 31, .05, NaN, NaN, 1, .05, 0.01, NaN, NaN, NaN ];
+estim_params_.param_vals = [estim_params_.param_vals; 31, .3, NaN, NaN, 2, .3, 0.1, NaN, NaN, NaN ];
 if ~isempty(find(estim_params_.param_vals(:,1)==32))
     error('Parameter theta2 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
 end
-estim_params_.param_vals = [estim_params_.param_vals; 32, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
+estim_params_.param_vals = [estim_params_.param_vals; 32, 2.6, NaN, NaN, 2, 2.6, 0.5, NaN, NaN, NaN ];
 if ~isempty(find(estim_params_.param_vals(:,1)==33))
     error('Parameter varphi has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
 end
-estim_params_.param_vals = [estim_params_.param_vals; 33, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
+estim_params_.param_vals = [estim_params_.param_vals; 33, .2, NaN, NaN, 2, .2, 0.1, NaN, NaN, NaN ];
+if estim ==1 
 options_.datafile = 'Utils/myobs.mat';
 options_.first_obs = 1;
-options_.forecast = 8;
 options_.lik_init = 2;
-options_.mh_jscale = 0.5;
+options_.mh_jscale = 0.299;
 options_.mh_nblck = 1;
-options_.mh_replic = 500;
+options_.mh_replic = 10000;
 options_.mode_compute = 4;
 options_.prefilter = 1;
 options_.order = 1;
-var_list_ = {'gy_obs';'pi_obs';'r_obs';'gc_obs';'gi_obs';'l_obs';'co2_obs'};
+var_list_ = {};
 oo_recursive_=dynare_estimation(var_list_);
-options_.irf = 30;
+else
+options_.datafile = 'Utils/myobs.mat';
+options_.first_obs = 1;
+options_.lik_init = 2;
+options_.mh_jscale = 0.299;
+options_.mh_nblck = 1;
+options_.mh_replic = 0;
+options_.mode_compute = 0;
+options_.mode_file = 'Credit_NK/Output/credit_NK_mean.mat';
+options_.nograph = true;
+options_.prefilter = 1;
 options_.order = 1;
-var_list_ = {'y';'c_H';'c_E';'i';'pi';'l';'e'};
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
-fn = fieldnames(oo_.posterior_mean.parameters);
-for ix = 1:size(fn,1)
-set_param_value(fn{ix},eval(['oo_.posterior_mean.parameters.' fn{ix} ]))
+var_list_ = {};
+oo_recursive_=dynare_estimation(var_list_);
 end
-fx = fieldnames(oo_.posterior_mean.shocks_std);
-for ix = 1:size(fx,1)
-idx = strmatch(fx{ix},M_.exo_names,'exact');
-M_.Sigma_e(idx,idx) = eval(['oo_.posterior_mean.shocks_std.' fx{ix}])^2;
-end
-options_.conditional_variance_decomposition = [1;4;10;100;];
-options_.irf = 30;
-options_.order = 1;
-var_list_ = {'gy_obs';'pi_obs';'r_obs'};
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
-var_list_ = {'gy_obs';'pi_obs';'r_obs';'l_obs';'co2_obs'};
+%
+% SHOCKS instructions
+%
+M_.exo_det_length = 0;
+M_.Sigma_e(7, 7) = (1)^2;
+options_.no_graph.shock_decomposition = true;
+options_.parameter_set = 'posterior_mode';
+var_list_ = {'gy_obs';'pi_obs';'r_obs';'l_obs';'co2_obs';'phi_E'};
 oo_ = shock_decomposition(M_,oo_,options_,var_list_,bayestopt_,estim_params_);
-load(options_.datafile);
-if exist('T') ==1
-Tvec = T;
-else
-Tvec = 1:size(dataset_,1);
-end
-Tfreq = mean(diff(Tvec));
-tprior = 20; 
-Tvec2 = Tvec(end) + (0:(options_.forecast))*Tfreq;
-for i1 = 1 :size(dataset_.name,1)
-idv		= strmatch(dataset_.name{i1},M_.endo_names,'exact');
-idd		= strmatch(dataset_.name{i1},dataset_.name,'exact');
-if ~isempty(idd) && isfield(oo_.MeanForecast.Mean, dataset_.name{i1})
-yobs   = eval(['oo_.SmoothedVariables.' dataset_.name{i1}])+dataset_info.descriptive.mean(idd);
-yfc    = eval(['oo_.MeanForecast.Mean.'  dataset_.name{i1}])+dataset_info.descriptive.mean(idd);
-yfcVar = sqrt(eval(['oo_.MeanForecast.Var.' dataset_.name{i1}]));
-figure;
-plot(Tvec(end-tprior+1:end),yobs(end-tprior+1:end))
-hold on;
-plot(Tvec2,[yobs(end) yfc'] ,'r--','LineWidth',1.5);
-plot(Tvec2,[yobs(end) (yfc+1.96*yfcVar)'],'r:','LineWidth',1.5)
-plot(Tvec2,[yobs(end) (yfc-1.96*yfcVar)'],'r:','LineWidth',1.5)
-grid on;
-xlim([Tvec(end-tprior+1) Tvec2(end)])
-legend('Sample','Forecasting','Uncertainty')
-title(['forecasting of ' M_.endo_names_tex{idv}])
-hold off;
-else
-warning([ dataset_.name{i1} ' is not an observable or you have not computed its forecast'])
-end
-end
-fx = fieldnames(oo_.SmoothedShocks);
-for ix=1:size(fx,1)
-shock_mat = eval(['oo_.SmoothedShocks.' fx{ix}]);
-if ix==1; ee_mat = zeros(length(shock_mat),M_.exo_nbr); end;
-ee_mat(:,strmatch(fx{ix},M_.exo_names,'exact')) = shock_mat;
-end
-[oo_.dr, info, M_.params] = resol(0, M_, options_, oo_.dr, oo_.dr.ys, oo_.exo_steady_state, oo_.exo_det_steady_state);
-y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat,options_.order);
-Mx  = M_;
-oox = oo_;
-Mx.params(strcmp('phi_y',M_.param_names)) = .25;
-[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
-ydov            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Ty,[],y_,ydov)
-legend('Estimated','Dovish')
-Thorizon 	= 12; 
-fx = fieldnames(oo_.SmoothedShocks);
-for ix=1:size(fx,1)
-shock_mat = eval(['oo_.SmoothedShocks.' fx{ix}]);
-if ix==1; ee_mat2 = zeros(length(shock_mat),M_.exo_nbr); end;
-ee_mat2(:,strmatch(fx{ix},M_.exo_names,'exact')) = shock_mat;
-end
-ee_mat2 	= [ee_mat;zeros(Thorizon,M_.exo_nbr)];
-Tvec2 		= Tvec(1):Tfreq:(Tvec(1)+size(ee_mat2,1)*Tfreq);
-[oo_.dr, info, M_.params] = resol(0, M_, options_, oo_.dr, oo_.dr.ys, oo_.exo_steady_state, oo_.exo_det_steady_state);
-y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat2,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_g',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = 0.05;
-y_fiscal           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_t',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = 0.5;
-y_carbon           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-ee_matx = ee_mat2;
-idx = strmatch('eta_r',M_.exo_names,'exact');
-ee_matx(end-Thorizon+1,idx) = -0.05;
-y_monetary           = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_matx,options_.order);
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs','g','tau'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Tvec2,[2023 Tvec2(end)],y_,y_fiscal,y_carbon,y_monetary)
-legend('Estimated','Fiscal','Carbon','Monetary')
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'phi_E';'l';'e'};
+[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
 
 
 oo_.time = toc(tic0);

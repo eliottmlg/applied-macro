@@ -1,0 +1,66 @@
+Starting Dynare (version 6.3).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ... 
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice 
+Found 39 equation(s). 
+Evaluating expressions... 
+Computing static model derivatives (order 1). 
+Normalizing the static model... 
+Finding the optimal block decomposition of the static model... 
+16 block(s) found: 
+  15 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 18 equation(s) 
+                                 and 18 feedback variable(s). 
+Computing dynamic model derivatives (order 1). 
+Normalizing the dynamic model... 
+Finding the optimal block decomposition of the dynamic model... 
+13 block(s) found: 
+  12 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 21 equation(s) 
+                                 and 19 feedback variable(s). 
+Preprocessing completed. 
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption :       0.000000
+Equation number  2: Euler                           :       0.000000
+Equation number  3: Labor Supply                    :       0.000000
+Equation number  4: FOC i                           :       0.000000
+Equation number  5: technology                      :       0.000000
+Equation number  6: Borrowing constraint            :       0.000000
+Equation number  7: Capital law of motion           :       0.000000
+Equation number  8: FOC c                           :       0.000000
+Equation number  9: FOC l                           :       0.000000
+Equation number 10: FOC k                           :       0.000000
+Equation number 11: FOC h                           :       0.000000
+Equation number 12: NKPC                            :       0.000000
+Equation number 13: FOC y                           :       0.000000
+Equation number 14: FOC mu                          :       0.000000
+Equation number 15: balance sheet                   :       0.000000
+Equation number 16: Resources Constraint            :       0.000000
+Equation number 17: Total consumption               :       0.000000
+Equation number 18: Total emissions                 :       0.000000
+Equation number 19: Fisherian equation              :       0.000000
+Equation number 20: Monetary Policy rule            :       0.000000
+Equation number 21: Public spending                 :       0.000000
+Equation number 22: Carbon tax                      :       0.000000
+Equation number 23: measurement GDP                 :       0.000000
+Equation number 24: measurement consumption         :       0.000000
+Equation number 25: measurement investment          :       0.000000
+Equation number 26: measurement inflation           :       0.000000
+Equation number 27: measurement interest rate       :       0.000000
+Equation number 28: measurement corporate loans     :       0.000000
+Equation number 29: measurement corporate loans     :       0.000000
+Equation number 30: shocks                          :       0.000000
+Equation number 31: 31                              :       0.000000
+Equation number 32: 32                              :       0.000000
+Equation number 33: 33                              :       0.000000
+Equation number 34: 34                              :       0.000000
+Equation number 35: 35                              :       0.000000
+Equation number 36: 36                              :       0.000000
+Equation number 37: 37                              :       0.000000
+Equation number 38: 38                              :       0.000000
+Equation number 39: 39                              :       0.000000
+
+

@@ -15,6 +15,7 @@ options.Dynare_path = 'C:\dynare\6.3';
 %% Launch routine
 
 % user options 
+% options.modfile = 'credit_NK';
 options.modfile = 'credit_NK';
 options.folder2plot = 'Plots/';   % Your destination folder
 
@@ -24,8 +25,89 @@ dynare_config;
 
 %% running mod-file and saving plots  
 
+estim = 1;
 % run mod file
 dynare(options.modfile)
+%%
+estim = 0;
+% run mod file
+dynare(options.modfile)
+
+
+%% Policy Question A
+
+
+% Definiere die mk–mh-Paare
+param_sets = {
+    0.8, 0.1;
+    0.2, 0.1
+};
+
+% Lade .mod-Vorlage
+template = fileread('credit_NK.mod');
+
+for i = 1:size(param_sets, 1)
+    mk = param_sets{i, 1};
+    mh = param_sets{i, 2};
+
+    % Ersetze Platzhalter
+    mod_text = template;
+    mod_text = strrep(mod_text, 'MK_PLACEHOLDER', num2str(mk));
+    mod_text = strrep(mod_text, 'MH_PLACEHOLDER', num2str(mh));
+
+    % Speichere .mod-Datei
+    mod_filename = ['credit_NK_mk_', strrep(num2str(mk), '.', '_'), '.mod'];
+    fid = fopen(mod_filename, 'w');
+    fwrite(fid, mod_text);
+    fclose(fid);
+
+    % Führe Dynare-Modell aus
+    eval(['dynare ', mod_filename, ' noclearall']);
+
+    % Ergebnisse speichern
+    results_name = ['results_mk_', strrep(num2str(mk), '.', '_')];
+    save(results_name);  % speichert alles inkl. IRFs
+end
+
+
+% Lade Ergebnisse
+load credit_NK\Output\credit_NK_results.mat
+irfs = oo_.irfs;
+estimated_params = oo_.posterior_mean.parameters;
+
+
+irf_mk_08 = oo_.irfs;
+irf_mk_02 = oo_.irfs;
+
+% Liste der interessanten Variablen
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'mu', 'e'};
+shockname = 'eta_t';  % Name des Policy Shocks
+
+% Plot
+figure;
+numVars = length(varlist);
+
+for v = 1:numVars
+    var = varlist{v};
+    fieldname = [var '_' shockname];
+
+    if isfield(irf_mk_08, fieldname) && isfield(irf_mk_02, fieldname)
+        subplot(ceil(numVars/2), 2, v);
+        plot(irf_mk_08.(fieldname), 'b', 'LineWidth', 1.5); hold on;
+        plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 1.5);
+        title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')]);
+        legend('mk = 0.8, mh = 0.1', 'mk = 0.8, mh = 0.025');
+        xlabel('Periods');
+        grid on;
+    else
+        disp(['Variable ', var, ' not found in IRFs.']);
+    end
+end
+
+sgtitle('Impulse Responses to Carbon Tax Shock (\eta_t)');
+
+
+
 
 %% plots
 
