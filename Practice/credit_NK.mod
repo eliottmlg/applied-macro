@@ -240,6 +240,38 @@ steady_state_model;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0;
 end;
 
+// initval;
+// y   = 25;
+// tau = 0.1;
+// g   = 5;
+// pi  = 1.0050;
+// rr  = 1.0070;
+// r   = 1.0121;
+// mu  = 1.5520;
+// e   = -1.4499;
+// mc  = 0.9;
+// varrho  = 0.7479;
+// h   = 1/3;
+// phi_E   = 0.0131;
+// k   = 161.1942;
+// i   = 4.0299;
+// w   = 39.2110;
+// l   = 126.7457;
+// c_E = 3.2317;
+// c   = 12.0505;
+// c_H = 8.188;
+// lb_E    = 1.0315;
+// lb_H    = 0.3780;
+// 
+// e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
+// 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0;
+// end;
+// 
+// steady;
+// check;
+
+
+
 % check residuals
 resid;
 
@@ -270,10 +302,10 @@ estimated_params;
 end;
 
 %%% estimation of the model
-estimation(datafile='myobs.xlsx',	% your datafile, must be in your current folder
+estimation(datafile='myobs.mat',	% your datafile, must be in your current folder
 first_obs=1,				% First data of the sample
-mode_compute=4,				% optimization algo, keep it to 4
-mh_replic=500,				% number of sample in Metropolis-Hastings
+mode_compute=0,				% optimization algo, keep it to 4
+mh_replic=0,				% number of sample in Metropolis-Hastings
 mh_jscale=0.5,				% adjust this to have an acceptance rate between 0.2 and 0.3
 prefilter=1,				% remove the mean in the data
 lik_init=2,					% Don't touch this,
@@ -287,10 +319,12 @@ forecast=8					% forecasts horizon
 % variance covariance matrix
 shocks;
 	var eta_a;	stderr 1;
+	var eta_r;	stderr 1;
+	var eta_m;	stderr 1;
 end;
 	
 % stochastic simulations
-stoch_simul(irf=30,order=1) y c_H c_E i pi r q phi_E;
+stoch_simul(irf=30,order=1) y c_H c_E i pi r q phi_E l l_obs;
 
 
 	

@@ -1,0 +1,10 @@
+Starting Dynare (version 5.4).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice
+WARNING: in the 'steady_state_model' block, variable 'b_s' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_o' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_s_E' is not assigned a value
+WARNING: in the 'steady_state_model' block, variable 'b_o_E' is not assigned a value
+ERROR: There are 46 equations but 44 endogenous variables!
+

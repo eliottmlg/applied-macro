@@ -1470,10 +1470,10 @@ options_.forecast = 8;
 options_.lik_init = 2;
 options_.mh_jscale = 0.5;
 options_.mh_nblck = 1;
-options_.mh_replic = 500;
-options_.mode_compute = 4;
+options_.mh_replic = 0;
+options_.mode_compute = 0;
 options_.prefilter = 1;
-options_.datafile = 'myobs.xlsx';
+options_.datafile = 'myobs.mat';
 options_.first_obs = 1;
 options_.order = 1;
 var_list_ = {'gy_obs';'pi_obs';'r_obs';'gc_obs';'gi_obs';'l_obs'};
@@ -1483,9 +1483,11 @@ oo_recursive_=dynare_estimation(var_list_);
 %
 M_.exo_det_length = 0;
 M_.Sigma_e(1, 1) = (1)^2;
+M_.Sigma_e(4, 4) = (1)^2;
+M_.Sigma_e(6, 6) = (1)^2;
 options_.irf = 30;
 options_.order = 1;
-var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'phi_E'};
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'phi_E';'l';'l_obs'};
 [info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
 
 
