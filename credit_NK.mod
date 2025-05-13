@@ -26,31 +26,31 @@ parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kap
 % 2. Calibration
 %----------------------------------------------------------------
 
-beta_H 	= 0.993; 	% Discount factor firms
+beta_H 	= 0.998; 	% Discount factor firms // short-term real rate of 2% per annum, NAWM-II
 beta_E  = 0.980;	% Discount factor entrepreneurs
-delta 	= 0.025;	% Depreciation rate
-alpha 	= 0.30;		% Capital share
-gy 		= 0.2;   	% Public spending in GDP
-hh		= 0.7;		% Consumption habits
-sigmaC 	= 1;		% Consumption risk aversion
-sigmaL 	= 1; 		% Elasticity of labor
-mk      = 0.8;		% Capital borrowing constraint
-mh      = 0.1;		% Labor borrowing constraint
-epsilon = 10;		% Elasticity between goods
-rho 	= .8;		% Monetary policy smoothing
-phi_y	= 0;		% Monetary policy reaction to output
-phi_pi	= 1.5;		% Monetary policy reaction to inflation
+delta 	= 0.025;	% Depreciation rate // NAWM-II
+alpha 	= 0.30;		% Capital share // NAWM-II
+gy 		= 0.215;   	% Public spending in GDP // NAWM-II
+hh		= 0.62;		% Consumption habits // to estimate
+sigmaC 	= 1;		% Consumption risk aversion // to estimate
+sigmaL 	= 1; 		% Elasticity of labor // to estimate
+mk      = 0.8;		% Capital borrowing constraint // to estimate
+mh      = 0.1;		% Labor borrowing constraint // to estimate
+epsilon = 10;		% Elasticity between goods // NAWM-II
+rho 	= 0.93;		% Monetary policy smoothing // to estimate
+phi_y	= 0.03;		% Monetary policy reaction to output // NAWM-II
+phi_pi	= 2.74;		% Monetary policy reaction to inflation // NAWM-II
 psi 	= 80;		% Adjustment costs on prices
-kappa	= 4;		% adjustment costs on investment
-varphi	= 0.2;		% elasticity of emission to GDP
-piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
+kappa	= 5.17;		% adjustment costs on investment // to estimate
+varphi	= 0.2;		% elasticity of emission to GDP // to estimate
+piss	= 1.005;	% 0.5% inflation quarterly basis in steady state // NAWM-II
 
 % value of long term variables
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
-y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.05;		% level of abatement costs
-theta2  = 2.6;		% curvature abatement cost
+y0	 	= 2.4;		% trillions euros France https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
+theta1  = 0.05;		% level of abatement costs // to estimate
+theta2  = 2.6;		% curvature abatement cost // to estimate
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -231,6 +231,10 @@ estimated_params;
 // Parameters related to credit constraints
     mk,                 .2,         ,       ,       beta_pdf,           .2,             0.1;
     mh,                 .6,         ,       ,       normal_pdf,         .6,           0.2; 
+// Parameters related to abatement
+    theta1,             .05,         ,       ,       beta_pdf,           .05,             0.01;
+    theta2,             .2,         ,       ,       beta_pdf,           .2,             0.1;
+    varphi,             .2,         ,       ,       beta_pdf,           .2,             0.1;
 end;
 
 %%% estimation of the model

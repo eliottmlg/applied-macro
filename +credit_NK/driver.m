@@ -1073,7 +1073,7 @@ M_.static_g1_sparse_rowval = int32([2 6 9 10 19 16 17 8 15 17 1 17 3 5 6 11 15 3
 M_.static_g1_sparse_colval = int32([1 1 1 1 1 2 2 3 3 3 4 4 5 5 5 5 5 6 6 6 6 7 7 7 7 7 7 7 7 7 7 8 8 8 8 9 9 9 10 10 11 12 12 12 13 13 14 14 14 14 15 15 15 16 16 17 17 17 18 18 18 19 19 19 19 20 20 20 20 20 21 21 22 22 23 24 25 26 27 28 29 30 30 31 31 32 32 32 33 33 33 34 34 34 35 35 36 36 37 38 38 39 39 39 ]);
 M_.static_g1_sparse_colptr = int32([1 6 8 11 13 18 22 32 36 39 41 42 45 47 51 54 56 59 62 66 71 73 75 76 77 78 79 80 81 82 84 86 89 92 95 97 99 100 102 105 ]);
 close all;
-M_.params(2) = 0.993;
+M_.params(2) = 0.998;
 beta_H = M_.params(2);
 M_.params(1) = 0.980;
 beta_E = M_.params(1);
@@ -1081,9 +1081,9 @@ M_.params(3) = 0.025;
 delta = M_.params(3);
 M_.params(4) = 0.30;
 alpha = M_.params(4);
-M_.params(8) = 0.2;
+M_.params(8) = 0.215;
 gy = M_.params(8);
-M_.params(12) = 0.7;
+M_.params(12) = 0.62;
 hh = M_.params(12);
 M_.params(5) = 1;
 sigmaC = M_.params(5);
@@ -1095,15 +1095,15 @@ M_.params(10) = 0.1;
 mh = M_.params(10);
 M_.params(13) = 10;
 epsilon = M_.params(13);
-M_.params(15) = .8;
+M_.params(15) = 0.93;
 rho = M_.params(15);
-M_.params(16) = 0;
+M_.params(16) = 0.03;
 phi_y = M_.params(16);
-M_.params(17) = 1.5;
+M_.params(17) = 2.74;
 phi_pi = M_.params(17);
 M_.params(18) = 80;
 psi = M_.params(18);
-M_.params(14) = 4;
+M_.params(14) = 5.17;
 kappa = M_.params(14);
 M_.params(33) = 0.2;
 varphi = M_.params(33);
@@ -1113,7 +1113,7 @@ M_.params(34) = 0.1;
 tau0 = M_.params(34);
 M_.params(30) = 0.2;
 sig = M_.params(30);
-M_.params(35) = 25;
+M_.params(35) = 2.4;
 y0 = M_.params(35);
 M_.params(31) = 0.05;
 theta1 = M_.params(31);
@@ -1256,6 +1256,18 @@ if ~isempty(find(estim_params_.param_vals(:,1)==10))
     error('Parameter mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
 end
 estim_params_.param_vals = [estim_params_.param_vals; 10, .6, NaN, NaN, 3, .6, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==31))
+    error('Parameter theta1 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 31, .05, NaN, NaN, 1, .05, 0.01, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==32))
+    error('Parameter theta2 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 32, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==33))
+    error('Parameter varphi has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 33, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
 options_.datafile = 'Utils/myobs.mat';
 options_.first_obs = 1;
 options_.forecast = 8;
