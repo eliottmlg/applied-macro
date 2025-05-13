@@ -49,8 +49,8 @@ piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
 y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.05;		% level of abatement costs
-theta2  = 0.5;		% curvature abatement cost
+theta1  = 0.3;		% level of abatement costs
+theta2  = 2.6;		% curvature abatement cost
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -202,7 +202,6 @@ end;
 
 % stochastic simulations
 stoch_simul(irf=30,order=1,nograph);
-
 
 
 // %%% Estimation

@@ -32,51 +32,53 @@ dynare_config;
 % run mod file
 dynare(options.modfile)
 
-%% Policy Question A
+%% Policy Question A  %%
+close all
+clear all   % clear all variables
 
-% Definiere die mk–mh-Paare
+% Define the mk–mh-pairs
 param_sets = {
     0.8, 0.1;
-    0.2, 0.
+    0.2, 0.025;
 };
 
-% Lade .mod-Vorlage
+% Load origial .mod
 template = fileread('credit_NK.mod');
 
 for i = 1:size(param_sets, 1)
     mk = param_sets{i, 1};
     mh = param_sets{i, 2};
 
-    % Ersetze Platzhalter
+    % Replace Placeholder
     mod_text = template;
     mod_text = strrep(mod_text, 'MK_PLACEHOLDER', num2str(mk));
     mod_text = strrep(mod_text, 'MH_PLACEHOLDER', num2str(mh));
 
-    % Speichere .mod-Datei
+    % Save .mod-Datei
     mod_filename = ['credit_NK_mk_', strrep(num2str(mk), '.', '_'), '.mod'];
     fid = fopen(mod_filename, 'w');
     fwrite(fid, mod_text);
     fclose(fid);
 
-    % Führe Dynare-Modell aus
+    % Run the Dynare-Modell 
     eval(['dynare ', mod_filename, ' noclearall']);
 
     % Ergebnisse speichern
     results_name = ['results_mk_', strrep(num2str(mk), '.', '_')];
-    save(results_name);  % speichert alles inkl. IRFs
+    save(results_name);  % save all incl. IRFs
 end
 
 
-% Lade Ergebnisse
+% Load results
 load results_mk_0_8
 irf_mk_08 = oo_.irfs;
 
 load results_mk_0_2
 irf_mk_02 = oo_.irfs;
 
-% Liste der interessanten Variablen
+% List of variables of interest
 varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'mu', 'e'};
-shockname = 'eta_t';  % Name des Policy Shocks
+shockname = 'eta_t'; 
 
 % Plot
 figure;
@@ -91,7 +93,7 @@ for v = 1:numVars
         plot(irf_mk_08.(fieldname), 'b', 'LineWidth', 1.5); hold on;
         plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 1.5);
         title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')]);
-        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.1');
+        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.05');
         xlabel('Periods');
         grid on;
     else

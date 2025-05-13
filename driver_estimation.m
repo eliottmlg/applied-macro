@@ -39,7 +39,7 @@ clear all   % clear all variables
 % Define the mk–mh-pairs
 param_sets = {
     0.8, 0.1;
-    0.2, 0.025;
+    0.2, 0.4;
 };
 
 % Load origial .mod
@@ -93,7 +93,7 @@ for v = 1:numVars
         plot(irf_mk_08.(fieldname), 'b', 'LineWidth', 1.5); hold on;
         plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 1.5);
         title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')]);
-        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.05');
+        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.4');
         xlabel('Periods');
         grid on;
     else
