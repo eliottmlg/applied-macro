@@ -15,6 +15,7 @@ options.Dynare_path = 'C:\dynare\6.3';
 %% Launch routine
 
 % user options 
+% options.modfile = 'credit_NK';
 options.modfile = 'credit_NK';
 options.folder2plot = 'Plots/';   % Your destination folder
 
@@ -22,8 +23,15 @@ options.folder2plot = 'Plots/';   % Your destination folder
 addpath([options.Dynare_path,'\matlab\']); 
 dynare_config;
 
-%% running mod-file and saving plots  
+%% Estimating
 
+estim = 1;
+% run mod file
+dynare(options.modfile)
+%% Getting results
+options.modfile = 'credit_NK';
+
+estim = 0;
 % run mod file
 dynare(options.modfile)
 
@@ -65,6 +73,10 @@ end
 
 % Lade Ergebnisse
 load credit_NK\Output\credit_NK_results.mat
+irfs = oo_.irfs;
+estimated_params = oo_.posterior_mean.parameters;
+
+
 irf_mk_08 = oo_.irfs;
 irf_mk_02 = oo_.irfs;
 

@@ -49,8 +49,8 @@ piss	= 1.005;	% 0.5% inflation quarterly basis in steady state // NAWM-II
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
 y0	 	= 2.4;		% trillions euros France https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.05;		% level of abatement costs // to estimate
-theta2  = 2.6;		% curvature abatement cost // to estimate
+theta1  = 0.3;		% level of abatement costs // Sahuc, Smets, Vermandel 2024, to estimate
+theta2  = 2.6;		% curvature abatement cost // Sahuc, Smets, Vermandel 2024, to estimate
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -232,34 +232,38 @@ estimated_params;
     mk,                 .2,         ,       ,       beta_pdf,           .2,             0.1;
     mh,                 .6,         ,       ,       normal_pdf,         .6,           0.2; 
 // Parameters related to abatement
-    theta1,             .05,         ,       ,       beta_pdf,           .05,             0.01;
-    theta2,             .2,         ,       ,       beta_pdf,           .2,             0.1;
-    varphi,             .2,         ,       ,       beta_pdf,           .2,             0.1;
+    theta1,             .3,         ,       ,       gamma_pdf,          .3,             0.1;
+    theta2,             2.6,         ,       ,       gamma_pdf,           2.6,             0.5;
+    varphi,             .2,         ,       ,       gamma_pdf,           .2,             0.1;
 end;
 
 %%% estimation of the model
-// estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
-// first_obs=1,				% First data of the sample
-// mode_compute=4,				% optimization algo, keep it to 4
-// mh_replic=10000,				% number of sample in Metropolis-Hastings
-// mh_jscale=0.299,				% adjust this to have an acceptance rate between 0.2 and 0.3
-// prefilter=1,				% remove the mean in the data
-// lik_init=2,					% Don't touch this
-// mh_nblocks=1); //,				% number of mcmc chains
-// // forecast=8					% forecasts horizon
-// // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+
+    estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
+    first_obs=1,				% First data of the sample
+    mode_compute=0,				% optimization algo, keep it to 4
+    mh_replic=0,				% number of sample in Metropolis-Hastings
+    mh_jscale=0.299,				% adjust this to have an acceptance rate between 0.2 and 0.3
+    prefilter=1,				% remove the mean in the data
+    lik_init=2,					% Don't touch this
+    mh_nblocks=1, 
+    nograph,
+    mode_file='Credit_NK/Output/credit_NK_mean.mat'); //,				% number of mcmc chains
+    // forecast=8					% forecasts horizon
+    // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+
 
 
 %%% Stochastic Simulations // replace with your codes
 
 % variance covariance matrix
-// shocks;
-// 	var eta_a;	stderr 1;
-// end;
+shocks;
+	var eta_t;	stderr 1;
+end;
 	
 % stochastic simulations
-shock_decomposition(parameter_set=posterior_mean, nograph, datafile='Utils/myobs.mat') gy_obs pi_obs r_obs l_obs co2_obs phi_E;
-stoch_simul(irf=30,order=1, graph) y c_H c_E i pi r q phi_E l e co2_obs;
+shock_decomposition(parameter_set=posterior_mode, nograph) gy_obs pi_obs r_obs l_obs co2_obs phi_E;
+stoch_simul(irf=30,order=1, nograph) y c_H c_E i pi r q phi_E l e;
 
 // 
 // % load estimated parameters

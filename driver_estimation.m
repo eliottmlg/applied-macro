@@ -23,16 +23,15 @@ options.folder2plot = 'Plots/';   % Your destination folder
 addpath([options.Dynare_path,'\matlab\']); 
 dynare_config;
 
-%% running mod-file and saving plots  
+%% Estimating
 
 estim = 1;
 % run mod file
 dynare(options.modfile)
-%%
-estim = 0;
+%% Getting results
+options.modfile = 'policy_credit_NK';
 % run mod file
 dynare(options.modfile)
-
 
 %% Policy Question A
 
