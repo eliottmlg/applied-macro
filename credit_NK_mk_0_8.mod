@@ -33,9 +33,9 @@ alpha 	= 0.30;		% Capital share
 gy 		= 0.2;   	% Public spending in GDP
 hh		= 0.7;		% Consumption habits
 sigmaC 	= 1;		% Consumption risk aversion
-sigmaL 	= 1; 		% Elasticity of labor
-mk      = 0.8;		% Capital borrowing constraint
-mh      = 0.025;		% Labor borrowing constraint
+sigmaL 	= 1; 		% Elasticity of labor 
+mk      = 0.8;		% Capital borrowing constraint 0.8; % 
+mh      = 0.1;		% Labor borrowing constraint 0.1; % 
 epsilon = 10;		% Elasticity between goods
 rho 	= .8;		% Monetary policy smoothing
 phi_y	= 0;		% Monetary policy reaction to output
@@ -50,7 +50,7 @@ tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
 y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
 theta1  = 0.05;		% level of abatement costs
-theta2  = 2.6;		% curvature abatement cost
+theta2  = 0.5;		% curvature abatement cost
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -188,9 +188,10 @@ steady_state_model;
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1; e_e = 1; e_mh = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; co2_obs = 0;
 end;
-
+steady;
 % check residuals
 resid;
+
 
 %%% Stochastic Simulations High and Low mk
 

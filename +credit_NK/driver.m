@@ -1108,7 +1108,7 @@ M_.params(35) = 25;
 y0 = M_.params(35);
 M_.params(31) = 0.05;
 theta1 = M_.params(31);
-M_.params(32) = 2.6;
+M_.params(32) = 0.5;
 theta2 = M_.params(32);
 M_.params(20) = 0.95;
 rho_a = M_.params(20);
@@ -1130,6 +1130,7 @@ M_.params(28) = 0.90;
 rho_e = M_.params(28);
 M_.params(29) = 0.90;
 rho_mh = M_.params(29);
+steady;
 options_resid_ = struct();
 display_static_residuals(M_, options_, oo_, options_resid_);
 %
