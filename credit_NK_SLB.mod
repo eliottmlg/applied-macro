@@ -44,7 +44,7 @@ var e_a e_g e_c e_m e_i e_r e_t e_p;
 
 % Exogenous processes (shock innovations)
 varexo 
-    eta_a % Technology shock
+    eta_a   % Technology shock
     eta_g   % Government spending shock
     eta_c   % Preference shock
     eta_m   % Collateral value shock
@@ -65,7 +65,7 @@ parameters
     epsilon kappa         % Substitution elasticity, investment adjustment cost
     rho_mp phi_y phi_pi   % Taylor rule parameters (monetary policy smoothing rho renamed to rho_mp)
     psi piss              % Price adjustment cost, steady-state inflation
-    rho                   % Interest rate spread (rho) and SLB loan share (xi) for second loan (new)
+    rho                   % Interest rate spread for second loan (SLB loans)
     rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p  % AR(1) shock parameters
     sig theta1 theta2     % Emission intensity, abatement cost parameters
     varphi tau0 y0;       % Emission elasticity, steady-state CO2 tax, steady-state output
@@ -94,9 +94,9 @@ kappa   = 4;            % Investment adjustment cost
 varphi  = 0.2;          % Elasticity of emissions to output
 piss    = 1.005;        % Steady-state gross inflation (0.5% quarterly)
 //xi_ss  = 0.25;          % Desired steady-state SLB share
-rho_xi = 0.9;           % Persistence of SLB policy rule
-mu_bar = 1.5;
-gamma = 0.5;
+rho_xi  = 0.9;          % Persistence of SLB policy rule
+mu_bar  = 1.5;
+gamma   = 0.3;
 
 % Values of long-term variables (steady-state targets)
 tau0    = 100/1000;     % Steady-state carbon tax ($100 per ton scaled to model units)
@@ -149,8 +149,8 @@ model;
     w = (1 - alpha) * varrho * y / (h * (1 + mh * phi_E));
     [name='NK Phillips Curve']
     (1 - epsilon) + epsilon*mc - psi * pi * (pi - steady_state(pi)) + psi * beta_E * (lb_E(+1)/lb_E) * (y(+1)/y) * pi(+1) * (pi(+1) - steady_state(pi)) = 0;
-    [name='FOC abatement']
-    ((tau * sig * y^(1 - varphi)) / (theta2 * theta1))^(1/(theta2 - 1)) = mu;
+    [name='Exogenous abatement rate']
+    mu = mu_bar;
     [name='Productivity composite definition']
     varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi);
     
@@ -172,11 +172,11 @@ model;
     [name='SLB loan interest rate']
     r_SLB = r - rho;
 
-  [name='FOC xi']
-  theta1 * theta2 * mu^(theta2 - 1) = gamma * xi;
+    [name='FOC xi']
+    theta1 * theta2 * mu^(theta2 - 1) = gamma * xi;
 
-  % SLB share policy rule
-      
+    % SLB share policy rule
+        
     %%% Policy instruments
     [name='Fisherian equation']
     rr = r / pi(+1);
@@ -218,11 +218,10 @@ end;
 %----------------------------------------------------------------
 steady_state_model;
     % Steady-state target values
-    xi = 0.1;
     y       = y0;
     tau     = tau0;
-    % Solve for abatement share mu given tax and parameters
-    mu      = (tau * sig * y^(1 - varphi) / (theta2 * theta1))^(1/(theta2 - 1));
+    % Set abatement rate (mu) exogenously
+    mu      = mu_bar;
     e       = sig * (1 - mu) * y^(1 - varphi);
     g       = gy * y;
     pi      = piss;
@@ -241,8 +240,10 @@ steady_state_model;
     i       = delta * k;
     w       = (1 - alpha) * varrho * y / (h * (1 + mh * phi_E));
     total_borrowing = mk * k / rr - mh * w * h;
+    % Solve for SLB loan share xi using optimality condition
+    xi      = (theta1 * theta2 / gamma) * mu^(theta2 - 1);
     l       = (1 - xi) * total_borrowing;
-    l_SLB   = xi * total_borrowing; % SLB loans in steady state (xi fraction of total loans)          
+    l_SLB   = xi * total_borrowing;           % SLB loans in steady state (xi fraction of total loans)
     d_t     = l + l_SLB;                      % Total loans equals deposits in steady state
     % Entrepreneur consumption (resources): output + loans minus investment, wage, costs, and debt repayment
     c_E     = -i - w*h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l + (1 - rr_SLB) * l_SLB;
@@ -280,9 +281,9 @@ check;
 
 % (Stochastic simulation or estimation commands can follow here)
 shocks;
-    var eta_g; stderr 1;
+    var eta_r; stderr 1;
     % Additional shock standard deviations can be set here...
 end;
 
 % Example: simulate impulse responses
-stoch_simul(irf=30, order=1) y c_H c_E i pi r d_t l_SLB phi_E;
+stoch_simul(irf=30, order=1) y c_E c_H i pi r d_t l_SLB mu phi_E;

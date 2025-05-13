@@ -7,10 +7,10 @@ T_order = 1;
 if size(T, 1) < 31
     T = [T; NaN(31 - size(T, 1), 1)];
 end
-T(26) = getPowerDeriv(y(39)-params(12)*y(3),(-params(5)),1);
-T(27) = getPowerDeriv(y(40)-params(12)*y(4),(-params(5)),1);
-T(28) = getPowerDeriv(y(43),1-params(31),1);
-T(29) = getPowerDeriv(y(55)*params(28)*T(19)/(params(29)*params(30)),1/(params(30)-1),1);
+T(26) = getPowerDeriv(y(42)-params(12)*y(3),(-params(5)),1);
+T(27) = getPowerDeriv(y(43)-params(12)*y(4),(-params(5)),1);
+T(28) = getPowerDeriv(y(46),1-params(33),1);
+T(29) = getPowerDeriv(y(58)*params(30)*T(19)/(params(31)*params(32)),1/(params(32)-1),1);
 T(30) = getPowerDeriv(T(24),1-params(15),1);
-T(31) = params(29)*getPowerDeriv(y(56),params(30),1);
+T(31) = params(31)*getPowerDeriv(y(59),params(32),1);
 end

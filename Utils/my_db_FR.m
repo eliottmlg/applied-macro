@@ -3,6 +3,7 @@
 clear all
 close all
 clc
+
 %%
 [output_table,~,T] = call_dbnomics( ...
     'ECB/MNA/Q.Y.FR.W2.S1.S1.B.B1GQ._Z._Z._Z.EUR.V.N', ...
@@ -12,6 +13,7 @@ clc
     'ECB/FM/Q.U2.EUR.RT.MM.EURIBOR3MD_.HSTA');
 [output_table2,~,T2] = call_dbnomics('ECB/BSI/M.FR.Y.A.A20T.A.1.U2.2240.Z01.E');
 % [output_table3,~,T3] = call_dbnomics('Eurostat/env_ac_aigg_q/Q.GHG.TOTAL_HH.THS_T.FR');
+% [output_table2,~,T2] = call_dbnomics('BDF/DIREN/M.FR.CR.LME.ME.01.N.ZZ.PM');
 
 % In order:
 
@@ -68,6 +70,8 @@ output_table2 = output_table2(1:3:end,:);
 
 % quarterly loan 
 l_obs = diff(log(output_table2(:,2)));
+% stationary test
+adftest(l_obs) % reject unit root
 
 %% Transform co2: correct for seacsonal adjustment using X13
 
@@ -75,13 +79,13 @@ l_obs = diff(log(output_table2(:,2)));
 T3 = T2(29:85);
 output_table3 = output_table3(29:85,:);
 
-data = readtable('Data/filtered_series.csv');
+data = readtable('filtered_series.csv');
 co2_season = output_table3(:,2);
 output_table3(:,2) = table2array(data(:,2)); % replace with filtered series
 
 % co2 emissions
 co2_obs  = diff(log(output_table3(:,2)));
-
+adftest(co2_obs)
 T3 = T3(2:end);
 
 %% Align time series
@@ -100,6 +104,7 @@ Tl = (T >= Tmin); % remove one bc we take difference
 Tu = ~(T > Tmax);
 eff_idx = Tl & Tu;
 eff_sample = T(eff_idx); % 56 obs
+T = eff_sample;
 
 % same for other variables
 Tl2 = (T2 >= Tmin); % remove one bc we take difference
@@ -129,7 +134,7 @@ co2_obs = co2_obs(eff_idx3);
 
 %% SAVE
 % save into myobs.mat
-save myobs gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs
+save myobs T gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs
 
 colNames = {'eff_sample', 'gy_obs', 'gc_obs', 'gi_obs', 'pi_obs', 'r_obs', 'l_obs', 'co2_obs'};
 sTable = array2table(dataset,'VariableNames',colNames);
