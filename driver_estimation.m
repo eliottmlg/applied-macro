@@ -1,6 +1,6 @@
 
 addpath('Utils');
-
+addpath('Data');
 %% Fetching and processing the estimation data
 run( 'my_db_FR.m' );
 

@@ -194,7 +194,7 @@ resid;
 
 
 %%% Estimation
-varobs gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs; // co2_obs;
+varobs gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
 
 estimated_params;
 //	PARAM NAME,		INITVAL,	LB,		UB,		PRIOR_SHAPE,		PRIOR_P1,		PRIOR_P2,		PRIOR_P3,		PRIOR_P4,		JSCALE
