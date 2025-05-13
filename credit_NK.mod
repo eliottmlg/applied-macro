@@ -12,13 +12,13 @@ close all;
 %----------------------------------------------------------------
 
 var rr c c_E c_H h w y k i l lb_E phi_E mc pi r lb_H q varrho tau mu e g gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs;
-var e_a e_g e_c e_m e_i e_r e_t e_p e_e;
+var e_a e_g e_c e_m e_i e_r e_t e_p e_e e_mh;
 
 
-varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p eta_e;
+varexo eta_a eta_g eta_c eta_m eta_i eta_r eta_t eta_p eta_e eta_mh;
 
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
-			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p rho_e
+			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p rho_e rho_mh
 			sig theta1 theta2 varphi  tau0 y0;
             
             
@@ -62,6 +62,7 @@ rho_r	= 0.40;
 rho_t	= 0.40;
 rho_p   = 0.90;
 rho_e   = 0.90;
+rho_mh  = 0.90;
 		
 %----------------------------------------------------------------
 % 3. Model
@@ -84,7 +85,7 @@ model;
 	[name='technology']
 	y = e_a*A*(k(-1)^alpha)*(h^(1-alpha));
 	[name='Borrowing constraint']
-	l = e_m*mk*q(+1)*k/rr - mh*w*h;
+	l = e_m*mk*q(+1)*k/rr - e_mh*mh*w*h;
 	[name='Capital law of motion']
 	i*e_i*(1-(kappa/2)*(i/i(-1)-1)^2) = k-(1-delta)*k(-1);
  	[name='FOC c']
@@ -94,7 +95,7 @@ model;
 	[name='FOC k']
 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
 	[name='FOC h']
-	w = (1-alpha)*varrho*y/(h*(1+mh*phi_E));
+	w = (1-alpha)*varrho*y/(h*(1+e_mh*mh*phi_E));
 	[name='NKPC']
 	(1-epsilon) + epsilon*mc - psi*pi*(pi-steady_state(pi)) + psi*beta_E*lb_E(+1)/lb_E*y(+1)/y*pi(+1)*(pi(+1)-steady_state(pi));
 	[name='FOC y']
@@ -150,6 +151,7 @@ model;
     log(e_r) = rho_r*log(e_r(-1))+eta_r;  
     log(e_t) = rho_t*log(e_t(-1))+eta_t;  
     log(e_e) = rho_e*log(e_e(-1))+eta_e;  
+    log(e_mh) = rho_mh*log(e_mh(-1))+eta_mh;  
 end;
 
 
@@ -183,7 +185,7 @@ steady_state_model;
 	lb_H 	= (c_H-hh*c_H)^-sigmaC;
 	chi		= w*lb_H/(h^sigmaL);
 	g 		= gy*y;
-	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1; e_e = 1;
+	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1; e_e = 1; e_mh = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; co2_obs = 0;
 end;
 
@@ -212,10 +214,23 @@ estimated_params;
 	rho_a,				.9,    		,		,		beta_pdf,			.5,				0.2;
 	stderr eta_t,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
 	rho_t,				.9,    		,		,		beta_pdf,			.5,				0.2;
+
+    rho,				.45,    	,		,		beta_pdf,			.75,			0.1;
+    sigmaC,				1,    		,		,		normal_pdf,			1.5,				.35;
+	sigmaL,				1,   	 	,		,		normal_pdf,			1,				0.5;
+	hh,					.7,    		,		,		beta_pdf,			.75,			0.1;
+	kappa,				4,    		,		,		gamma_pdf,			4,				1.5;
+// 	phi_pi,				1.5,    	,		,		gamma_pdf,			1.5,				0.25;
+// 	phi_y,				0.05,    	,		,		gamma_pdf,			0.12,				0.05;
+// // New
+// Parameters related to shocks
 	stderr eta_e,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
 	rho_e,				.9,    		,		,		beta_pdf,			.5,				0.2;
-
-    rho,				.45,    	,		,		beta_pdf,			.75,				0.1;	
+	stderr eta_mh,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_mh,				.9,    		,		,		beta_pdf,			.5,				0.2;
+// Parameters related to credit constraints
+    mk,                 .2,         ,       ,       beta_pdf,           .2,             0.1;
+    mh,                 .6,         ,       ,       normal_pdf,         .6,           0.2; 
 end;
 
 %%% estimation of the model
@@ -227,8 +242,8 @@ mh_jscale=0.5,				% adjust this to have an acceptance rate between 0.2 and 0.3
 prefilter=1,				% remove the mean in the data
 lik_init=2,					% Don't touch this
 mh_nblocks=1,				% number of mcmc chains
-forecast=8,					% forecasts horizon
-) // gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+forecast=8					% forecasts horizon
+) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
 
 
 %%% Stochastic Simulations // replace with your codes
