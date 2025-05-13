@@ -93,7 +93,6 @@ psi     = 80;           % Price adjustment cost (Rotemberg)
 kappa   = 4;            % Investment adjustment cost
 varphi  = 0.2;          % Elasticity of emissions to output
 piss    = 1.005;        % Steady-state gross inflation (0.5% quarterly)
-//xi_ss  = 0.25;          % Desired steady-state SLB share
 rho_xi  = 0.9;          % Persistence of SLB policy rule
 mu_bar  = 1.5;
 gamma   = 0.3;
@@ -269,10 +268,6 @@ steady_state_model;
     r_obs   = 0; 
     l_obs   = 0;
 end;
-
-% Assign parameters after computing steady state values
-chi = w * lb_H / (h^sigmaL);
-A   = y / (k^alpha * h^(1 - alpha));
 
 % Check for residuals of static equations (should be all zero if steady state is correct)
 resid;

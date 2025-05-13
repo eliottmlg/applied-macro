@@ -27,12 +27,12 @@ eta_s eta_mmu eta_ms;
 parameters beta_E beta_H delta alpha sigmaC sigmaL chi_l gy A mh mk hh epsilon kappa rho phi_y phi_pi psi piss
 			rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p
 			sig theta1 theta2 varphi  tau0 y0
-//  New below
+//             New below
             stepup p_s gamma
             chi_s sigmaS rho_s BDratio
             mmu rho_mmu ms rho_ms;
-
-
+            
+            
 %----------------------------------------------------------------
 % 2. Calibration
 %----------------------------------------------------------------
@@ -62,6 +62,8 @@ BDratio = 0.05; // Bonds (SLB + ordinary) over debt ratio
 // chi_l   = 1;
 // A       = 1;
 
+
+
 % value of long term variables
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
@@ -88,7 +90,7 @@ p_s     = 0.02; // sustainium: yield premium on SLBs (rate bond - rate SLB)
 gamma   = 0.3; // probability of missing target
 ms      = 0.8; // Capital for SLB borrowing constraint
 mmu     = 0.1; // Emission for SLB borrowing constraint
-
+		
 %----------------------------------------------------------------
 % 3. Model
 %----------------------------------------------------------------
@@ -108,6 +110,7 @@ model;
     [name='Euler SLBs (b_s)']
     beta_H * (lb_H(+1)/lb_H) * r_s(+1)/pi(+1) + e_s * (chi_s/lb_H) * (b_s)^-sigmaS = 1;
 
+ 	
 	%% Production
 	[name='technology']
 	y = e_a*A*(k(-1)^alpha)*(h^(1-alpha));
@@ -120,23 +123,23 @@ model;
 	[name='FOC l']
 	1-phi_E = beta_E*lb_E(+1)/lb_E*rr;
 	[name='FOC k']
-// 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
-// New
+% // 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
+% // New
 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk + phiS*q(+1)*e_ms*ms*(rr/rrs) = q*rr;
 	[name='FOC h']
 	w = (1-alpha)*varrho*y/(h*(1+mh*phi_E));
 	[name='NKPC']
 	(1-epsilon) + epsilon*mc - psi*pi*(pi-steady_state(pi)) + psi*beta_E*lb_E(+1)/lb_E*y(+1)/y*pi(+1)*(pi(+1)-steady_state(pi));
 	[name='FOC y']
-// 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
+% // 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi - phiS*mmu*theta1*mu^theta2;
 	[name='FOC mu']
-// 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
+% // 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
     ((tau*sig*y^(1-varphi))/((1+phiS)*theta2*theta1))^(1/(theta2-1)) = mu;
 // New
 	[name='FOC for entrepreneur SLB (b_s_E)']
-//     lb_E = beta_E*lb_E * r_s;
-	1-phiS = beta_E*lb_E(+1)/lb_E*rrs;
+% //     lb_E = beta_E*lb_E * r_s;
+	1-phiS = beta_E*(lb_E(+1)/lb_E)*rrs;
 
 	%% AGGREGATION
 // 	[name='balance sheet']
@@ -169,7 +172,7 @@ model;
 
 
 
-
+	
 	%%% Policy instruments
 	[name='Monetary Policy rule']
 	r = r(-1)^rho * (steady_state(r)*(pi/steady_state(pi))^phi_pi*(y/steady_state(y))^phi_y)^(1-rho) * e_r;
@@ -220,140 +223,179 @@ end;
 %----------------------------------------------------------------
 % 4. Computation
 %----------------------------------------------------------------
-// steady_state_model;
-// 	y		= y0;
-// 	tau 	= tau0;
-// 	g       = gy*y;
-// 	pi		= piss;
-// 	rr		= 1/beta_H;
-// 	r		= rr*pi;
-// // New
-//     rrs     = 1/beta_H * ( 1 - (chi_s/lb_E)*(b_s/piss)^-sigmaS );
-//     r_s     = rrs*pi;
-// 	phiS    = 1 - beta_E*rrs;
-// 	mu		= (tau*sig*y^(1-varphi)/((1+phiS)*theta2*theta1))^(1/(theta2-1));
-// // 
-// 	e 		= sig*(1-mu)*y^(1-varphi);
-// 	mc		= (epsilon-1)/epsilon;
-// 	varrho 	= mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^(-varphi);
-// 	h		= 1/3;
-// 	q		= 1;
-// 	phi_E	= 1-beta_E/beta_H;
-// 	k		= alpha*varrho*y/((rr-phi_E*mk-phiS*ms)/(1-phi_E)-(1-delta)) ;
-// 	A		= y/(k^alpha*h^(1-alpha));
-// 	i		= delta*k;
-// 	w		= (1-alpha)*varrho*y/h/(1+mh*phi_E);
-// 	l		= mk*k/rr - mh*w*h;
-// 	c_E 	= -i - w*h - theta1*mu^theta2*y - tau*e + mc*y +(1-mc)*y + (1-rr)*l;
-// 	c  		= (1-gy)*y-i-theta1*mu^theta2*y;
-// 	c_H		= c - c_E;
-// 	lb_E 	= (c_E-hh*c_E)^-sigmaC;
-// 	lb_H 	= (c_H-hh*c_H)^-sigmaC;
-// 	chi_l	= w*lb_H/(h^sigmaL);
-// 	g 		= gy*y;
-// 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
-// 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
-// // New
-// 	b_s		= mk*k/rr - mmu*y*theta1*mu^theta2;
-//     e_s     = 1; e_mmu  = 1; e_ms   = 1;
-// end;
+% // steady_state_model;
+% // 	y		= y0;
+% // 	tau 	= tau0;
+% // 	g       = gy*y;
+% // 	pi		= piss;
+% // 	rr		= 1/beta_H;
+% // 	r		= rr*pi;
+% // // New
+% //     rrs     = 1/beta_H * ( 1 - (chi_s/lb_E)*(b_s/piss)^-sigmaS );
+% //     r_s     = rrs*pi;
+% // 	phiS    = 1 - beta_E*rrs;
+% // 	mu		= (tau*sig*y^(1-varphi)/((1+phiS)*theta2*theta1))^(1/(theta2-1));
+% // // 
+% // 	e 		= sig*(1-mu)*y^(1-varphi);
+% // 	mc		= (epsilon-1)/epsilon;
+% // 	varrho 	= mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^(-varphi);
+% // 	h		= 1/3;
+% // 	q		= 1;
+% // 	phi_E	= 1-beta_E/beta_H;
+% // 	k		= alpha*varrho*y/((rr-phi_E*mk-phiS*ms)/(1-phi_E)-(1-delta)) ;
+% // 	A		= y/(k^alpha*h^(1-alpha));
+% // 	i		= delta*k;
+% // 	w		= (1-alpha)*varrho*y/h/(1+mh*phi_E);
+% // 	l		= mk*k/rr - mh*w*h;
+% // 	c_E 	= -i - w*h - theta1*mu^theta2*y - tau*e + mc*y +(1-mc)*y + (1-rr)*l;
+% // 	c  		= (1-gy)*y-i-theta1*mu^theta2*y;
+% // 	c_H		= c - c_E;
+% // 	lb_E 	= (c_E-hh*c_E)^-sigmaC;
+% // 	lb_H 	= (c_H-hh*c_H)^-sigmaC;
+% // 	chi_l	= w*lb_H/(h^sigmaL);
+% // 	g 		= gy*y;
+% // 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1;
+% // 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; // co2_obs = 0;
+% // // New
+% // 	b_s		= mk*k/rr - mmu*y*theta1*mu^theta2;
+% //     e_s     = 1; e_mmu  = 1; e_ms   = 1;
+% // end;
 
 steady_state_model;
-
-	// --- Exogenous / policy parameters and basic assignments ---
 	y      = y0;
 	tau    = tau0;
 	pi     = piss;
 	rr     = 1 / beta_H;
 	r      = rr * pi;
 	g      = gy * y;
-
-	// --- Constants and ratios ---
-	h      = 1 / 3;
+    h      = 1 / 3;
 	q      = 1;
 	mc     = (epsilon - 1) / epsilon;
 	phi_E  = 1 - beta_E / beta_H;
-
-	// --- Temporary mu for b_s computation ---
-// 	mu     = 0.3;
     r_s    = r - p_s;
     rrs    = r_s/piss;
 	phiS   = 1 - beta_E * rrs;
 	mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
-//     chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
-
-
-	// --- Early values using temp mu ---
-	e      = sig * (1 - mu) * y^(1 - varphi);
-
-	// --- Capital stock using temporary varrho (no phiS yet) ---
-	k      = alpha * (mc - theta1 * mu^theta2 - tau*(1 - varphi)*sig*(1 - mu)*y^(-varphi)) * y / ((rr - phi_E * mk - 0) / (1 - phi_E) - (1 - delta));
-	A      = y / (k^alpha * h^(1 - alpha));
-	i      = delta * k;
-
-	// --- Wage and labor ---
-	w      = (1 - alpha) * mc * y / h / (1 + mh * phi_E);  // rough approx before varrho
-	l      = mk * k / rr - mh * w * h;
-
-	// --- Entrepreneur consumption using temp mu ---
-	c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l;
-	c      = (1 - gy) * y - i - theta1 * mu^theta2 * y;
-	c_H    = c - c_E;
-
-	// --- Marginal utility of consumption ---
-	lb_E   = (c_E - hh * c_E)^(-sigmaC);
-	lb_H   = (c_H - hh * c_H)^(-sigmaC);
-
-	// --- Compute b_s and rrs, then phiS ---
-	b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;
-// 	rrs    = 1 / beta_H * (1 - (chi_s / lb_H) * (b_s)^(-sigmaS)); // chi_s = 1 normalized
-// 	r_s    = rrs * pi;
-//     p_s    = rr * (chi_s/lb_E)*b_s^-sigmaS
-//     r_s    = r - p_s;
-//     rrs    = r_s/piss;
-   chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
-
-
-// //     chi_s = (1 - Beta_H * (r_s / pi)) * (lb_H / e_s) * (b_s ^ sigmaS);
-// 	phiS   = 1 - beta_E * rrs;
-
-	// --- Now compute mu properly with phiS ---
-	mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
-
-	// --- Final varrho and downstream variables ---
-	e      = sig * (1 - mu) * y^(1 - varphi);
+ 	e      = sig * (1 - mu) * y^(1 - varphi);
 	varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi) - phiS * mmu * theta1 * mu^theta2;
-
-//     k      = alpha * varrho * y / ((rr - phi_E * mk - phiS * ms) / (1 - phi_E) - (1 - delta));
     k      = ((1 - phi_E) * alpha * varrho * y) / ( rr - (1 - phi_E) * (1 - delta) - phi_E * mk - phiS * ms * (rr / rrs) );
-
+    b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;
 	i      = delta * k;
 	A      = y / (k^alpha * h^(1 - alpha));
 	w      = (1 - alpha) * varrho * y / h / (1 + mh * phi_E);
 	l      = mk * k / rr - mh * w * h;
-
 	c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l + (1 - r_s / pi) * b_s;
 	c      = (1 - gy) * y - i - theta1 * mu^theta2 * y;
 	c_H    = c - c_E;
-
 	lb_E   = (c_E - hh * c_E)^(-sigmaC);
 	lb_H   = (c_H - hh * c_H)^(-sigmaC);
-
-	// --- Other steady-state conditions ---
 	chi_l  = w * lb_H / h^sigmaL;
+    chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
 
-	// --- Observables ---
 	gy_obs = 0; gc_obs = 0; gi_obs = 0;
 	pi_obs = 0; r_obs  = 0; l_obs = 0;
 
-	// --- Shocks (normalized to 1) ---
 	e_a = 1; e_g = 1; e_c = 1; e_m = 1;
 	e_i = 1; e_r = 1; e_t = 1; e_p = 1;
 	e_s = 1; e_mmu = 1; e_ms = 1;
 
 end;
 
-
+% steady_state_model;
+% 
+% 	// --- Exogenous / policy parameters and basic assignments ---
+% 	y      = y0;
+% 	tau    = tau0;
+% 	pi     = piss;
+% 	rr     = 1 / beta_H;
+% 	r      = rr * pi;
+% 	g      = gy * y;
+% 
+% 	// --- Constants and ratios ---
+% 	h      = 1 / 3;
+% 	q      = 1;
+% 	mc     = (epsilon - 1) / epsilon;
+% 	phi_E  = 1 - beta_E / beta_H;
+% 
+% 	// --- Temporary mu for b_s computation ---
+% // 	mu     = 0.3;
+%     r_s    = r - p_s;
+%     rrs    = r_s/piss;
+% 	phiS   = 1 - beta_E * rrs;
+% 	% mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
+% //     chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
+% 
+% 
+% 	// --- Early values using temp mu ---
+% 	% e      = sig * (1 - mu) * y^(1 - varphi);
+% 
+% 	// --- Capital stock using temporary varrho (no phiS yet) ---
+% 	% k      = alpha * (mc - theta1 * mu^theta2 - tau*(1 - varphi)*sig*(1 - mu)*y^(-varphi)) * y / ((rr - phi_E * mk - 0) / (1 - phi_E) - (1 - delta));
+% 	% A      = y / (k^alpha * h^(1 - alpha));
+% 	% i      = delta * k;
+%     % 
+% 	% // --- Wage and labor ---
+% 	% w      = (1 - alpha) * mc * y / h / (1 + mh * phi_E);  // rough approx before varrho
+% 	% l      = mk * k / rr - mh * w * h;
+%     % 
+% 	% // --- Entrepreneur consumption using temp mu ---
+% 	% c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l;
+% 	% c      = (1 - gy) * y - i - theta1 * mu^theta2 * y;
+% 	% c_H    = c - c_E;
+%     % 
+% 	% // --- Marginal utility of consumption ---
+% 	% lb_E   = (c_E - hh * c_E)^(-sigmaC);
+% 	% lb_H   = (c_H - hh * c_H)^(-sigmaC);
+% 
+% 	// --- Compute b_s and rrs, then phiS ---
+% 	% b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;
+% % // 	rrs    = 1 / beta_H * (1 - (chi_s / lb_H) * (b_s)^(-sigmaS)); // chi_s = 1 normalized
+% % // 	r_s    = rrs * pi;
+% % //     p_s    = rr * (chi_s/lb_E)*b_s^-sigmaS
+% % //     r_s    = r - p_s;
+% % //     rrs    = r_s/piss;
+%     % chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
+% % // //     chi_s = (1 - Beta_H * (r_s / pi)) * (lb_H / e_s) * (b_s ^ sigmaS);
+% % // 	phiS   = 1 - beta_E * rrs;
+% 	// --- Now compute mu properly with phiS ---
+% 	mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
+% 
+% 	// --- Final varrho and downstream variables ---
+% 	e      = sig * (1 - mu) * y^(1 - varphi);
+% 	varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi) - phiS * mmu * theta1 * mu^theta2;
+% 
+% //     k      = alpha * varrho * y / ((rr - phi_E * mk - phiS * ms) / (1 - phi_E) - (1 - delta));
+%     k      = ((1 - phi_E) * alpha * varrho * y) / ( rr - (1 - phi_E) * (1 - delta) - phi_E * mk - phiS * ms * (rr / rrs) );
+%     b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;
+%     % chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
+% 
+% 	i      = delta * k;
+% 	A      = y / (k^alpha * h^(1 - alpha));
+% 	w      = (1 - alpha) * varrho * y / h / (1 + mh * phi_E);
+% 	l      = mk * k / rr - mh * w * h;
+% 
+% 	c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l + (1 - r_s / pi) * b_s;
+% 	c      = (1 - gy) * y - i - theta1 * mu^theta2 * y;
+% 	c_H    = c - c_E;
+% 
+% 	lb_E   = (c_E - hh * c_E)^(-sigmaC);
+% 	lb_H   = (c_H - hh * c_H)^(-sigmaC);
+% 
+% 	// --- Other steady-state conditions ---
+% 	chi_l  = w * lb_H / h^sigmaL;
+%     chi_s  = p_s * lb_H * ( 1/ (rr*b_s^-sigmaS) ) * 1/piss;
+% 
+% 
+% 	// --- Observables ---
+% 	gy_obs = 0; gc_obs = 0; gi_obs = 0;
+% 	pi_obs = 0; r_obs  = 0; l_obs = 0;
+% 
+% 	// --- Shocks (normalized to 1) ---
+% 	e_a = 1; e_g = 1; e_c = 1; e_m = 1;
+% 	e_i = 1; e_r = 1; e_t = 1; e_p = 1;
+% 	e_s = 1; e_mmu = 1; e_ms = 1;
+% 
+% end;
 
 // initval;
 // y   = 25;
@@ -442,7 +484,7 @@ shocks;
 	var eta_a;	stderr 1;
     var eta_m;    stderr 1;
 end;
-
+	
 % stochastic simulations
 stoch_simul(irf=30,order=1) y c_H c_E i pi r q e phi_E;
 
