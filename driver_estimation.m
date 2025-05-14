@@ -17,9 +17,7 @@ options.Dynare_path = '/Applications/Dynare/6.2-x86_64';
 %% Launch routine
 
 % user options 
-options.modfile = 'credit_NK_SLB';
-%options.modfile = 'credit_NK';
-%options.modfile = 'SLBnum';
+options.modfile = 'credit_NK';
 
 options.folder2plot = 'Plots';   % Your destination folder
 
@@ -39,11 +37,11 @@ clear all   % clear all variables
 % Define the mk–mh-pairs
 param_sets = {
     0.8, 0.1;
-    0.2, 0.4;
+    0.2, 0.4
 };
 
 % Load origial .mod
-template = fileread('credit_NK_SLB.mod');
+template = fileread('credit_NK.mod');
 
 for i = 1:size(param_sets, 1)
     mk = param_sets{i, 1};
@@ -68,6 +66,7 @@ for i = 1:size(param_sets, 1)
     save(results_name);  % save all incl. IRFs
 end
 
+%% - Singular Shocks
 
 % Load results
 load results_mk_0_8
@@ -77,31 +76,38 @@ load results_mk_0_2
 irf_mk_02 = oo_.irfs;
 
 % List of variables of interest
-varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'mu', 'e'};
-shockname = 'eta_t'; 
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+shockname = 'eta_m'; 
 
-% Plot
-figure;
+% Improved IRF Plot
 numVars = length(varlist);
+t = tiledlayout(ceil(numVars/2), 2, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+figure;
+set(gcf, 'Color', 'w');  % White background
 
 for v = 1:numVars
     var = varlist{v};
     fieldname = [var '_' shockname];
 
     if isfield(irf_mk_08, fieldname) && isfield(irf_mk_02, fieldname)
-        subplot(ceil(numVars/2), 2, v);
-        plot(irf_mk_08.(fieldname), 'b', 'LineWidth', 1.5); hold on;
-        plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 1.5);
-        title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')]);
-        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.4');
-        xlabel('Periods');
+        nexttile;
+        plot(irf_mk_08.(fieldname), 'b-', 'LineWidth', 2); hold on;
+        plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 2);
+        
+        title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')], ...
+              'FontSize', 16, 'FontWeight', 'bold');
+        xlabel('Periods', 'FontSize', 14);
+        ylabel('Response', 'FontSize', 14);
         grid on;
+
+        if v == 1
+            legend({'mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.4'}, ...
+                   'Location', 'best', 'FontSize', 14);
+        end
     else
         disp(['Variable ', var, ' not found in IRFs.']);
     end
 end
-
-% sgtitle('Impulse Responses to Carbon Tax Shock (\eta_t)');
 
 
 
@@ -116,3 +122,5 @@ for     iFig = 1:length(FigList)
   savefig(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig)]);
   saveas(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig), '.jpg']);
 end
+
+

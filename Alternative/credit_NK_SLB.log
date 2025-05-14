@@ -1,0 +1,5 @@
+Starting Dynare (version 6.2).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+ERROR: credit_NK_SLB.mod: line 237, cols 9-12: syntax error, unexpected NAME, expecting EQUAL
+Preprocessing time: 0h00m00s.

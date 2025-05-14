@@ -34,8 +34,8 @@ gy 		= 0.2;   	% Public spending in GDP
 hh		= 0.7;		% Consumption habits
 sigmaC 	= 1;		% Consumption risk aversion
 sigmaL 	= 1; 		% Elasticity of labor 
-mk      = MK_PLACEHOLDER;		% Capital borrowing constraint 0.8; % 
-mh      = MH_PLACEHOLDER;		% Labor borrowing constraint 0.1; % 
+mk      = 0.8; % MK_PLACEHOLDER;		% Capital borrowing constraint 0.8; % 
+mh      = 0.2; % MH_PLACEHOLDER;		% Labor borrowing constraint 0.1; % 
 epsilon = 10;		% Elasticity between goods
 rho 	= .8;		% Monetary policy smoothing
 phi_y	= 0;		% Monetary policy reaction to output
@@ -49,7 +49,7 @@ piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
 y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.3;		% level of abatement costs
+theta1  = 1; % 0.3;		% level of abatement costs
 theta2  = 2.6;		% curvature abatement cost
 
 % autoregressive roots parameters
@@ -147,7 +147,7 @@ model;
 	log(e_c) = rho_c*log(e_c(-1))+eta_c;
 	log(e_p) = rho_p*log(e_p(-1))+eta_p;
 	log(e_i) = rho_i*log(e_i(-1))+eta_i;
-    log(e_m) = rho_m*log(e_m(-1))+eta_m;
+    log(e_m) = rho_m*log(e_m(-1))-eta_m;
     log(e_r) = rho_r*log(e_r(-1))+eta_r;  
     log(e_t) = rho_t*log(e_t(-1))+eta_t;  
     log(e_e) = rho_e*log(e_e(-1))+eta_e;  
@@ -195,13 +195,62 @@ resid;
 
 %%% Stochastic Simulations High and Low mk
 
-% variance covariance matrix
 shocks;
-	var eta_t;	stderr 1;
+    var eta_t;
+        periods 1;
+        values 0.05;
+    var eta_m;
+        periods 1;
+        values -0.05;
 end;
 
-% stochastic simulations
-stoch_simul(irf=30,order=1,nograph);
+simul(periods=30);
+
+% Variables list
+variables = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+
+% Find Indices of Variables
+indices = zeros(1, numel(variables));
+for k = 1:numel(variables)
+    for j = 1:length(M_.endo_names)
+        if strcmp(M_.endo_names{j}, variables{k})
+            indices(k) = j;
+            break;
+        end
+    end
+end
+
+periodsToPlot = 3:32;  % or 3:32 if shock hits at period 3 in the array
+
+
+% plots
+numVars = length(variables);
+t = tiledlayout(ceil(numVars/2), 2, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+figure;
+set(gcf, 'Color', 'w');  % White background
+for k = 1:9
+    subplot(3,3,k);
+    plot(periodsToPlot, oo_.endo_simul(indices(k), periodsToPlot), 'b-', 'LineWidth', 2);
+    // plot(oo_.endo_simul(indices(k),:), 'b-', 'LineWidth', 2);
+    title(['IRF of ',variables{k},' to +\eta_t & -\eta_m'], 'FontSize', 16, 'FontWeight', 'bold');
+        xlabel('Periods', 'FontSize', 14);
+        ylabel('Response', 'FontSize', 14);
+        grid on;
+    if k == 1
+            legend({'mk = 0.8, mh = 0.1'}, ...
+                   'Location', 'best', 'FontSize', 14);
+        end
+end
+
+
+// % variance covariance matrix
+// shocks;
+// 	//var eta_t;	stderr 1;
+//     var eta_m;  stderr 1;
+// end;
+// 
+// % stochastic simulations
+// simult(irf=30,order=1,nograph);
 
 
 // %%% Estimation

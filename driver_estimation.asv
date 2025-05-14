@@ -1,0 +1,330 @@
+
+addpath('Utils');
+addpath('Data');
+
+%% Fetching and processing the estimation data
+run( 'my_db_FR.m' );
+
+%% Setting up Dynare
+clc % clean console
+close all  % close all figures
+clear all   % clear all variables
+
+% change your Dynare path
+options = struct(); 
+options.Dynare_path = '/Applications/Dynare/6.2-x86_64';
+
+%% Launch routine
+
+% user options 
+options.modfile = 'credit_NK';
+%options.modfile = 'credit_NK';
+%options.modfile = 'SLBnum';
+
+options.folder2plot = 'Plots';   % Your destination folder
+
+% set path
+addpath([options.Dynare_path,'/matlab/']); 
+dynare_config;
+
+%% running mod-file and saving plots  
+
+% run mod file
+dynare(options.modfile)
+
+%% Policy Question A  %%
+close all
+clear all   % clear all variables
+
+% Define the mk–mh-pairs
+param_sets = {
+    0.8, 0.1;
+    0.2, 0.1
+};
+
+% Load origial .mod
+template = fileread('credit_NK.mod');
+
+for i = 1:size(param_sets, 1)
+    mk = param_sets{i, 1};
+    mh = param_sets{i, 2};
+
+    % Replace Placeholder
+    mod_text = template;
+    mod_text = strrep(mod_text, 'MK_PLACEHOLDER', num2str(mk));
+    mod_text = strrep(mod_text, 'MH_PLACEHOLDER', num2str(mh));
+
+    % Save .mod-Datei
+    mod_filename = ['credit_NK_mk_', strrep(num2str(mk), '.', '_'), '.mod'];
+    fid = fopen(mod_filename, 'w');
+    fwrite(fid, mod_text);
+    fclose(fid);
+
+    % Run the Dynare-Modell 
+    eval(['dynare ', mod_filename, ' noclearall']);
+
+    % Ergebnisse speichern
+    results_name = ['results_mk_', strrep(num2str(mk), '.', '_')];
+    save(results_name);  % save all incl. IRFs
+end
+
+%% - Singular Shocks
+
+% Load results
+load results_mk_0_8
+irf_mk_08 = oo_.irfs;
+
+load results_mk_0_2
+irf_mk_02 = oo_.irfs;
+
+% List of variables of interest
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+shockname = 'eta_t'; 
+
+% Improved IRF Plot
+numVars = length(varlist);
+t = tiledlayout(ceil(numVars/2), 2, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+figure;
+set(gcf, 'Color', 'w');  % White background
+
+for v = 1:numVars
+    var = varlist{v};
+    fieldname = [var '_' shockname];
+
+    if isfield(irf_mk_08, fieldname) && isfield(irf_mk_02, fieldname)
+        nexttile;
+        plot(irf_mk_08.(fieldname), 'b-', 'LineWidth', 2); hold on;
+        plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 2);
+        
+        title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')], ...
+              'FontSize', 16, 'FontWeight', 'bold');
+        xlabel('Periods', 'FontSize', 14);
+        ylabel('Response', 'FontSize', 14);
+        grid on;
+
+        if v == 1
+            legend({'mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.4'}, ...
+                   'Location', 'best', 'FontSize', 14);
+        end
+    else
+        disp(['Variable ', var, ' not found in IRFs.']);
+    end
+end
+
+
+
+%% plots
+
+FigList = findobj(allchild(0), 'flat', 'Type', 'figure');
+for     iFig = 1:length(FigList)   
+  FigHandle = FigList(iFig);
+  FigName   = get(FigHandle, 'Name');
+  FigName   = erase(FigName,[".", ":"]);
+  set(FigHandle,'Position',[300 100 800 800]);
+  savefig(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig)]);
+  saveas(FigHandle, [options.folder2plot, FigName, '-', num2str(iFig), '.jpg']);
+end
+
+%% %% Multiple Shocks
+
+%% DRIVER: Vergleich von Szenarien für mk und mh in credit_NK_SLB.mod
+
+clc; close all; clear;
+
+% Parameterpaare für mk und mh
+param_sets = {
+    0.8, 0.1;
+    0.2, 0.1
+};
+
+% Namen für spätere Legende
+param_labels = {
+    'mk = 0.8, mh = 0.1', ...
+    'mk = 0.2, mh = 0.1'
+};
+
+% Original .mod-File einlesen
+template = fileread('credit_NK.mod');
+
+% Liste für Ergebnisdateien
+result_files = cell(size(param_sets,1),1);
+
+for i = 1:size(param_sets, 1)
+    mk = param_sets{i, 1};
+    mh = param_sets{i, 2};
+
+    % Platzhalter ersetzen
+    mod_text = template;
+    mod_text = strrep(mod_text, 'MK_PLACEHOLDER', num2str(mk));
+    mod_text = strrep(mod_text, 'MH_PLACEHOLDER', num2str(mh));
+
+    % Neue .mod-Datei speichern
+    mod_filename = ['credit_NK_SLB_mk_', strrep(num2str(mk), '.', '_'), '_mh_', strrep(num2str(mh), '.', '_'), '.mod'];
+    fid = fopen(mod_filename, 'w');
+    fwrite(fid, mod_text);
+    fclose(fid);
+
+    % Dynare ausführen
+    eval(['dynare ', mod_filename, ' noclearall']);
+
+    % Ergebnisse speichern
+    results_name = ['results_mk_', strrep(num2str(mk), '.', '_'), '_mh_', strrep(num2str(mh), '.', '_')];
+    save(results_name);  % speichert alle Variablen inkl. oo_
+    result_files{i} = results_name;
+end
+
+%% IRF-Vergleichsplot
+
+% Variablen und Schockname festlegen
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+shockname = 'eta_t';
+numVars = length(varlist);
+numScenarios = length(result_files);
+
+colors = lines(numScenarios);
+
+figure;
+t = tiledlayout(ceil(numVars/3), 3, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+set(gcf, 'Color', 'w');
+
+for v = 1:numVars
+    nexttile;
+    hold on;
+    for s = 1:numScenarios
+        load(result_files{s}, 'oo_');
+        fieldname = [varlist{v} '_' shockname];
+        if isfield(oo_.irfs, fieldname)
+            plot(oo_.irfs.(fieldname), 'LineWidth', 2, 'Color', colors(s,:));
+        else
+            disp(['Variable ', varlist{v}, ' not found in IRFs.']);
+        end
+    end
+    title(['IRF: ', strrep(varlist{v}, '_', '\_')], 'FontSize', 13);
+    xlabel('Periods');
+    grid on;
+    if v == 1
+        legend(param_labels, 'Location', 'best');
+    end
+    hold off;
+end
+
+% Plot speichern
+savefig([folder2plot, 'IRF_Comparison.fig']);
+saveas(gcf, [folder2plot, 'IRF_Comparison.jpg']);
+
+disp('Fertig! IRF-Vergleich gespeichert.');
+
+
+%% DRIVER: Vergleich von Szenarien für mk und mh in credit_NK_SLB.mod
+
+clc; close all; clear;
+
+% Dynare-Pfad hinzufügen (anpassen!)
+addpath('/Applications/Dynare/6.2/matlab/');
+
+% Parameterpaare für mk und mh
+param_sets = {
+    0.8, 0.1;
+    0.2, 0.1
+};
+
+% Namen für Legende
+param_labels = {
+    'mk = 0.8, mh = 0.1', ...
+    'mk = 0.2, mh = 0.1'
+};
+
+% Original .mod-File einlesen
+template = fileread('credit_NK_SLB.mod');  % WICHTIG: Auf korrekten Dateinamen achten!
+
+% Ordner für Plots erstellen
+folder2plot = 'Plots/';
+if ~exist(folder2plot, 'dir')
+    mkdir(folder2plot);
+end
+
+% Liste für Ergebnisdateien
+result_files = cell(size(param_sets,1),1);
+
+%% Hauptschleife für Parameterkombinationen
+for i = 1:size(param_sets, 1)
+    mk = param_sets{i, 1};
+    mh = param_sets{i, 2};
+    
+    % Platzhalter ersetzen (angepasst an Ihre .mod-Datei)
+    mod_text = template;
+    mod_text = strrep(mod_text, 'mk = 0.8; % Capital borrowing constraint', ['mk = ', num2str(mk), ';']);
+    mod_text = strrep(mod_text, 'mh = 0.2; % Labor borrowing constraint', ['mh = ', num2str(mh), ';']);
+    
+    % Neue .mod-Datei erstellen
+    mod_filename = ['credit_NK_SLB_mk_', strrep(num2str(mk), '.', '_'), '_mh_', strrep(num2str(mh), '.', '_'), '.mod'];
+    fid = fopen(mod_filename, 'w');
+    fwrite(fid, mod_text);
+    fclose(fid);
+    
+    % Dynare ausführen (mit vollständigem Pfad falls nötig)
+    try
+        dynare(mod_filename, 'noclearall');
+    catch
+        error('Dynare-Lauf für mk=%.1f, mh=%.1f fehlgeschlagen!', mk, mh);
+    end
+    
+    % Explizit oo_ und M_ speichern
+    results_name = ['results_mk_', strrep(num2str(mk), '.', '_'), '_mh_', strrep(num2str(mh), '.', '_'), '.mat'];
+    save(results_name, 'oo_', 'M_');
+    result_files{i} = results_name;
+    
+    % Workspace aufräumen
+    clear('oo_', 'M_');
+end
+
+%% IRF-Vergleichsplot (korrigiert)
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+shockname = 'eta_t';
+numVars = length(varlist);
+numScenarios = length(result_files);
+
+colors = lines(numScenarios);
+
+figure;
+t = tiledlayout(ceil(numVars/3), 3, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+set(gcf, 'Color', 'w', 'Position', [100 100 1400 900]);
+
+for v = 1:numVars
+    nexttile;
+    hold on;
+    for s = 1:numScenarios
+        % Explizites Laden der Struktur
+        loaded = load(result_files{s}, 'oo_');
+        
+        % Feldnamen generieren
+        fieldname = [varlist{v} '_' shockname];
+        
+        if isfield(loaded.oo_.irfs, fieldname)
+            % IRF-Daten extrahieren
+            irf_data = loaded.oo_.irfs.(fieldname);
+            
+            % Plot mit dynamischer Linienbreite
+            plot(irf_data(1:20), 'LineWidth', 1.5 + s*0.5, 'Color', colors(s,:));
+        else
+            warning('Feld %s nicht gefunden in Datei %s', fieldname, result_files{s});
+        end
+    end
+    
+    title(strrep(varlist{v}, '_', '\_'), 'FontSize', 12);
+    xlabel('Perioden', 'FontSize', 10);
+    grid on;
+    box on;
+    
+    if v == 1
+        legend(param_labels, 'Location', 'best', 'FontSize', 10);
+    end
+    hold off;
+end
+
+% Plot optimieren und speichern
+sgtitle('IRF-Vergleich für verschiedene Parameterkombinationen', 'FontSize', 14);
+print([folder2plot 'IRF_Comparison.png'], '-dpng', '-r300');
+savefig([folder2plot 'IRF_Comparison.fig']);
+
+disp('+++ Prozess erfolgreich abgeschlossen! +++');

@@ -1106,7 +1106,7 @@ M_.params(30) = 0.2;
 sig = M_.params(30);
 M_.params(35) = 25;
 y0 = M_.params(35);
-M_.params(31) = 0.05;
+M_.params(31) = 1;
 theta1 = M_.params(31);
 M_.params(32) = 2.6;
 theta2 = M_.params(32);
@@ -1136,12 +1136,41 @@ display_static_residuals(M_, options_, oo_, options_resid_);
 %
 % SHOCKS instructions
 %
+M_.det_shocks = [ M_.det_shocks;
+struct('exo_det',false,'exo_id',4,'type','level','periods',1:1,'value',(-0.05)) ];
+M_.det_shocks = [ M_.det_shocks;
+struct('exo_det',false,'exo_id',7,'type','level','periods',1:1,'value',0.05) ];
 M_.exo_det_length = 0;
-M_.Sigma_e(7, 7) = (1)^2;
-options_.irf = 30;
-options_.order = 1;
-var_list_ = {};
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
+options_.periods = 30;
+oo_ = perfect_foresight_setup(M_, options_, oo_);
+[oo_, Simulated_time_series] = perfect_foresight_solver(M_, options_, oo_);
+variables = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'e'};
+indices = zeros(1, numel(variables));
+for k = 1:numel(variables)
+for j = 1:length(M_.endo_names)
+if strcmp(M_.endo_names{j}, variables{k})
+indices(k) = j;
+break;
+end
+end
+end
+periodsToPlot = 3:32;  
+numVars = length(variables);
+t = tiledlayout(ceil(numVars/2), 2, 'TileSpacing', 'Compact', 'Padding', 'Compact');
+figure;
+set(gcf, 'Color', 'w');  
+for k = 1:9
+subplot(3,3,k);
+plot(periodsToPlot, oo_.endo_simul(indices(k), periodsToPlot), 'b-', 'LineWidth', 2);
+title(['IRF of ',variables{k},' to +\eta_t & -\eta_m'], 'FontSize', 16, 'FontWeight', 'bold');
+xlabel('Periods', 'FontSize', 14);
+ylabel('Response', 'FontSize', 14);
+grid on;
+if k == 1
+legend({'mk = 0.8, mh = 0.1'}, ...
+                   'Location', 'best', 'FontSize', 14);
+end
+end
 
 
 oo_.time = toc(tic0);
@@ -1171,6 +1200,7 @@ end
 if exist('options_mom_', 'var') == 1
   save([M_.dname filesep 'Output' filesep 'credit_NK_results.mat'], 'options_mom_', '-append');
 end
+disp('Note: 1 warning(s) encountered in the preprocessor')
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end
