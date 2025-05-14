@@ -1,0 +1,228 @@
+Starting Dynare (version 6.3).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ... 
+WARNING: in the 'steady_state_model' block, variable 'g' is declared twice 
+Found 38 equation(s). 
+Evaluating expressions... 
+Computing static model derivatives (order 1). 
+Normalizing the static model... 
+Finding the optimal block decomposition of the static model... 
+15 block(s) found: 
+  14 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 18 equation(s) 
+                                 and 18 feedback variable(s). 
+Computing dynamic model derivatives (order 1). 
+Normalizing the dynamic model... 
+Finding the optimal block decomposition of the dynamic model... 
+12 block(s) found: 
+  11 recursive block(s) and 1 simultaneous block(s). 
+  the largest simultaneous block has 21 equation(s) 
+                                 and 19 feedback variable(s). 
+Preprocessing completed. 
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number  1: marginal utility of consumption :       0.000000
+Equation number  2: Euler                           :       0.000000
+Equation number  3: Labor Supply                    :       0.000000
+Equation number  4: FOC i                           :       0.000000
+Equation number  5: technology                      :       0.000000
+Equation number  6: Borrowing constraint            :       0.000000
+Equation number  7: Capital law of motion           :       0.000000
+Equation number  8: FOC c                           :       0.000000
+Equation number  9: FOC l                           :       0.000000
+Equation number 10: FOC k                           :       0.000000
+Equation number 11: FOC h                           :       0.000000
+Equation number 12: NKPC                            :       0.000000
+Equation number 13: FOC y                           :       0.000000
+Equation number 14: FOC mu                          :       0.000000
+Equation number 15: balance sheet                   :       0.000000
+Equation number 16: Resources Constraint            :       0.000000
+Equation number 17: Total consumption               :       0.000000
+Equation number 18: Total emissions                 :       0.000000
+Equation number 19: Fisherian equation              :       0.000000
+Equation number 20: Monetary Policy rule            :       0.000000
+Equation number 21: Public spending                 :       0.000000
+Equation number 22: Carbon tax                      :       0.000000
+Equation number 23: measurement GDP                 :       0.000000
+Equation number 24: measurement consumption         :       0.000000
+Equation number 25: measurement investment          :       0.000000
+Equation number 26: measurement inflation           :       0.000000
+Equation number 27: measurement interest rate       :       0.000000
+Equation number 28: measurement corporate loans     :       0.000000
+Equation number 29: measurement corporate loans     :       0.000000
+Equation number 30: shocks                          :       0.000000
+Equation number 31: 31                              :       0.000000
+Equation number 32: 32                              :       0.000000
+Equation number 33: 33                              :       0.000000
+Equation number 34: 34                              :       0.000000
+Equation number 35: 35                              :       0.000000
+Equation number 36: 36                              :       0.000000
+Equation number 37: 37                              :       0.000000
+Equation number 38: 38                              :       0.000000
+
+
+[Warning: Some of the parameters have no value (chi, A) when using steady. If these parameters are not initialized
+in a steadystate file or a steady_state_model-block, Dynare may not be able to solve the model. Note that simul,
+perfect_foresight_setup, and perfect_foresight_solver do not automatically call the steady state file.] 
+
+STEADY-STATE RESULTS:
+
+rr      		 1.002
+c       		 1.35814
+c_E     		 0.327139
+c_H     		 1.031
+h       		 0.333333
+w       		 4.50699
+y       		 2.4
+k       		 21.0005
+i       		 0.525014
+l       		 16.6166
+lb_E    		 8.04423
+phi_E   		 0.0180361
+mc      		 0.9
+pi      		 1.005
+r       		 1.00701
+lb_H    		 2.55245
+q       		 1
+varrho  		 0.895857
+tau     		 0.0305
+mu      		 0.0747098
+e       		 0.372801
+g       		 0.516
+gy_obs  		 0
+gc_obs  		 0
+gi_obs  		 0
+pi_obs  		 0
+r_obs   		 0
+l_obs   		 0
+co2_obs 		 0
+e_a     		 1
+e_g     		 1
+e_c     		 1
+e_m     		 1
+e_i     		 1
+e_r     		 1
+e_t     		 1
+e_p     		 1
+e_mh    		 1
+
+You did not declare endogenous variables after the estimation/calib_smoother command.
+
+Initial value of the log posterior (or likelihood): 1200.0924
+
+RESULTS FROM POSTERIOR ESTIMATION
+parameters
+       prior mean     mode    s.d.  prior pstdev
+
+rho_g      0.5000   0.7053  0.0931   beta 0.2000 
+rho_p      0.5000   0.5074  0.1914   beta 0.2000 
+rho_r      0.5000   0.5812  0.0783   beta 0.2000 
+rho_c      0.5000   0.9727  0.0131   beta 0.2000 
+rho_i      0.5000   0.2434  0.0619   beta 0.2000 
+rho_m      0.5000   0.9700  0.0172   beta 0.2000 
+rho_a      0.5000   0.8753  0.0425   beta 0.2000 
+rho_t      0.5000   0.6133  0.1170   beta 0.2000 
+rho        0.7500   0.9181  0.0198   beta 0.1000 
+sigmaC     1.5000   1.1709  0.3407   norm 0.3500 
+sigmaL     1.0000  -0.0161  0.1387   norm 0.5000 
+hh         0.7500   0.6729  0.0242   beta 0.1000 
+kappa      4.0000   6.5617  1.5947   gamm 1.5000 
+rho_mh     0.5000   0.8375  0.0403   beta 0.2000 
+mk         0.2000   0.0350  0.0076   beta 0.1000 
+mh         0.6000   0.0673  0.0304   norm 0.2000 
+theta1     0.3000   0.2717  0.0838   gamm 0.1000 
+theta2     2.6000   2.8452  0.3888   gamm 0.5000 
+varphi     0.2000   0.0975  0.0456   gamm 0.1000 
+
+standard deviation of shocks
+       prior mean     mode    s.d.  prior pstdev
+
+eta_g      0.0100   0.0271  0.0025   invg 2.0000 
+eta_p      0.0100   0.0169  0.0128   invg 2.0000 
+eta_r      0.0100   0.0022  0.0005   invg 2.0000 
+eta_c      0.0100   0.1103  0.0306   invg 2.0000 
+eta_i      0.0100   0.1664  0.0564   invg 2.0000 
+eta_m      0.0100   0.0151  0.0030   invg 2.0000 
+eta_a      0.0100   0.0155  0.0025   invg 2.0000 
+eta_t      0.0100   0.3167  0.0850   invg 2.0000 
+eta_mh     0.0100   0.0121  0.0061   invg 2.0000 
+
+
+Log data density [Laplace approximation] is 1116.758465.
+
+
+MODEL SUMMARY
+
+  Number of variables:         38
+  Number of stochastic shocks: 9
+  Number of state variables:   18
+  Number of jumpers:           8
+  Number of static variables:  15
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables       eta_a     eta_g     eta_c     eta_m     eta_i     eta_r     eta_t     eta_p    eta_mh
+eta_a        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_g        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_c        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_m        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_i        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_r        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_t        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  1.000000  0.000000  0.000000
+eta_p        0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+eta_mh       0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000  0.000000
+
+POLICY AND TRANSITION FUNCTIONS
+                                   e
+Constant                    0.391706
+c_E(-1)                     0.009465
+c_H(-1)                     0.111862
+k(-1)                       0.005331
+l(-1)                      -0.090401
+r(-1)                       0.511713
+e_a(-1)                     0.170599
+e_g(-1)                     0.061131
+e_c(-1)                     0.066580
+e_m(-1)                     0.042498
+e_r(-1)                     0.772252
+e_t(-1)                    -0.017042
+e_mh(-1)                   -0.006095
+i(-1)                      -0.015262
+e_i(-1)                    -0.000499
+eta_a                       0.194903
+eta_g                       0.086677
+eta_c                       0.068452
+eta_m                       0.043811
+eta_i                      -0.002051
+eta_r                       1.328759
+eta_t                      -0.027788
+eta_mh                     -0.007277
+
+
+THEORETICAL MOMENTS
+VARIABLE         MEAN  STD. DEV.   VARIANCE
+e              0.3917     0.0353     0.0012
+
+
+
+VARIANCE DECOMPOSITION (in percent)
+      eta_a   eta_g   eta_c   eta_m   eta_i   eta_r   eta_t   eta_p  eta_mh
+e      0.00    0.00    0.00    0.00    0.00    0.00  100.00    0.00    0.00
+
+
+
+MATRIX OF CORRELATIONS
+Variables         e
+e            1.0000
+
+
+
+COEFFICIENTS OF AUTOCORRELATION
+Order          1       2       3       4       5
+e         0.6179  0.3817  0.2361  0.1465  0.0912
+
+Total computing time : 0h00m15s
+Note: 1 warning(s) encountered in the preprocessor
+Note: warning(s) encountered in MATLAB/Octave code
