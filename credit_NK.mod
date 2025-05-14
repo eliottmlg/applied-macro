@@ -46,8 +46,8 @@ varphi	= 0.2;		% elasticity of emission to GDP // to estimate
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state // NAWM-II
 
 % value of long term variables
-tau0 	= 100/1000;	% value of carbon tax ($/ton)
-sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
+tau0 	= 30.5/1000;	% value of carbon tax ($/ton) // carbon tax in france since 2017
+sig		= 0.1; 		% Carbon intensity USA 0.2 Gt / Trillions USD // to estimate
 y0	 	= 2.4;		% trillions euros France https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
 theta1  = 0.3;		% level of abatement costs // Sahuc, Smets, Vermandel 2024, to estimate
 theta2  = 2.6;		% curvature abatement cost // Sahuc, Smets, Vermandel 2024, to estimate
