@@ -734,6 +734,10 @@ mu         0.5975   0.3498   0.1973   0.1036   0.0461
 phi_E     -0.0212  -0.0130  -0.0081  -0.0052  -0.0034
 l          0.9865   0.9701   0.9497   0.9258   0.8989
 e          0.6112   0.3638   0.2075   0.1095   0.0484
-Total computing time : 0h00m04s
+Baseline mk: 0.030838
+Counterfactual mk: 0.01
+Baseline mk: 0.030838
+Counterfactual mk: 0.3
+Total computing time : 0h00m03s
 Note: 1 warning(s) encountered in the preprocessor
 Note: warning(s) encountered in MATLAB/Octave code

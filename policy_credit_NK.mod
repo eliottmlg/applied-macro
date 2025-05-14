@@ -345,17 +345,13 @@ sgtitle('Impulse Response Functions (IRFs)');
 
 
 // // // // // // // // // // // // // // // // // // // // // // //  POLICY
-
 load(options_.datafile);
 if exist('T') ==1
 	Tvec = T;
 else
-	Tvec = 1:size(dataset_,1);
+Tvec = 1:size(dataset_,1);
 end
 Tfreq = mean(diff(Tvec));
-
-
-
 
 %%%%%%%%%%%%%%%%% COUNTERFACTUAL EXERCISES %%%%%%%%%%%%%%%%%%
 %% stacks shocks in matrix
@@ -377,20 +373,44 @@ y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat,options_.order);
 Mx  = M_;
 oox = oo_;
 % change parameter
-Mx.params(strcmp('phi_y',M_.param_names)) = .25;
+Mx.params(strcmp('mk',M_.param_names)) = 0.01;
+disp(['Baseline mk: ', num2str(M_.params(strcmp('mk', M_.param_names)))])
+disp(['Counterfactual mk: ', num2str(Mx.params(strcmp('mk', M_.param_names)))])
 % solve new decision rule
 [oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% [oox.dr, info, Mx.params] = resol(0, Mx, options_);
 % simulate dovish central bank
-ydov            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
+y_tightcredit            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
 
 % draw result
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Ty,[],y_,ydov)
-legend('Estimated','Dovish')
+var_names={'gy_obs', 'l_obs', 'co2_obs', 'mu'};
+% Ty = [T(1)-Tfreq;T];
+Ty = [Tvec(1)-Tfreq; Tvec(:)];
+draw_tables(var_names,M_,Ty,[],y_,y_tightcredit)
+legend('Estimated' ,'Tight constraint')
 
+%%% Simulate alternative scenario
+% make a copy
+Mz  = M_;
+oox = oo_;
+% change parameter
+Mz.params(strcmp('mk',M_.param_names)) = 0.3;
+disp(['Baseline mk: ', num2str(M_.params(strcmp('mk', M_.param_names)))])
+disp(['Counterfactual mk: ', num2str(Mz.params(strcmp('mk', M_.param_names)))])
+% solve new decision rule
+[oox.dr, info, Mz.params] = resol(0, Mz, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% [oox.dr, info, Mx.params] = resol(0, Mx, options_);
+% simulate dovish central bank
+y_largecredit            = simult_(Mz,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
 
+% draw result
+var_names={'gy_obs','l_obs', 'co2_obs', 'mu'};
+% Ty = [T(1)-Tfreq;T];
+Ty = [Tvec(1)-Tfreq; Tvec(:)];
+draw_tables(var_names,M_,Ty,[],y_,y_largecredit)
+legend('Estimated','Loose constraint')
 
+    
 
 
 %%%%%%%%%%%%%%%%% FORECAST UNDER ALTERNATIVE POLICY %%%%%%%%%%%%%%%%%%

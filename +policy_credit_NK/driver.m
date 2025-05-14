@@ -1372,13 +1372,26 @@ end
 y_            = simult_(M_,options_,oo_.dr.ys,oo_.dr,ee_mat,options_.order);
 Mx  = M_;
 oox = oo_;
-Mx.params(strcmp('phi_y',M_.param_names)) = .25;
+Mx.params(strcmp('mk',M_.param_names)) = 0.01;
+disp(['Baseline mk: ', num2str(M_.params(strcmp('mk', M_.param_names)))])
+disp(['Counterfactual mk: ', num2str(Mx.params(strcmp('mk', M_.param_names)))])
 [oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
-ydov            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
-var_names={'gy_obs','gc_obs','gi_obs','pi_obs','r_obs','l_obs'};
-Ty = [T(1)-Tfreq;T];
-draw_tables(var_names,M_,Ty,[],y_,ydov)
-legend('Estimated','Dovish')
+y_tightcredit            = simult_(Mx,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
+var_names={'gy_obs', 'l_obs', 'co2_obs', 'mu'};
+Ty = [Tvec(1)-Tfreq; Tvec(:)];
+draw_tables(var_names,M_,Ty,[],y_,y_tightcredit)
+legend('Estimated' ,'Tight constraint')
+Mz  = M_;
+oox = oo_;
+Mz.params(strcmp('mk',M_.param_names)) = 0.3;
+disp(['Baseline mk: ', num2str(M_.params(strcmp('mk', M_.param_names)))])
+disp(['Counterfactual mk: ', num2str(Mz.params(strcmp('mk', M_.param_names)))])
+[oox.dr, info, Mz.params] = resol(0, Mz, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+y_largecredit            = simult_(Mz,options_,oox.dr.ys,oox.dr,ee_mat,options_.order);
+var_names={'gy_obs','l_obs', 'co2_obs', 'mu'};
+Ty = [Tvec(1)-Tfreq; Tvec(:)];
+draw_tables(var_names,M_,Ty,[],y_,y_largecredit)
+legend('Estimated','Loose constraint')
 Thorizon 	= 25; 
 fx = fieldnames(oo_.SmoothedShocks);
 for ix=1:size(fx,1)
