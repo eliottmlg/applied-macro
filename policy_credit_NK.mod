@@ -191,6 +191,7 @@ end;
 
 % check residuals
 resid;
+steady;
 
 
 %%% Estimation
@@ -256,14 +257,52 @@ end;
 
 %%% Stochastic Simulations // replace with your codes
 
-% variance covariance matrix
-shocks;
+// % variance covariance matrix
+shocks; 
 	var eta_t;	stderr 1;
+	var eta_m;	stderr 0;
+	var eta_r;	stderr 0;
+	var eta_p;	stderr 0;
+	var eta_g;	stderr 0;
+	var eta_c;	stderr 0;
+	var eta_i;	stderr 0;
+	var eta_e;	stderr 0;
+	var eta_mh;	stderr 0;
+	var eta_a;	stderr 0;
 end;
 	
 % stochastic simulations
-shock_decomposition(parameter_set=posterior_mode, nograph) gy_obs pi_obs r_obs l_obs co2_obs phi_E;
-stoch_simul(irf=30,order=1, nograph) y c_H c_E i pi r q phi_E l e;
+// shock_decomposition(parameter_set=posterior_mode, nograph) gy_obs pi_obs r_obs l_obs co2_obs phi_E;
+// stoch_simul(irf=30, order=1, graph) y c_H c_E i pi r mu phi_E l e;
+
+%%% Simulate IRFs under different collateral constraint parameter
+% make a copy
+Mx  = M_;
+oox = oo_;
+% change parameter
+Mx.params(strcmp('theta1',M_.param_names)) = 1;
+Mx.params(strcmp('mk',M_.param_names)) = 0.001;
+[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% set options
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'mu';'phi_E';'l';'e'};
+% run
+[info, oox, options_, Mx] = stoch_simul(Mx, options_, oox, var_list_);
+
+Mx.params(strcmp('theta1',M_.param_names)) = 1;
+Mx.params(strcmp('mk',M_.param_names)) = 1;
+[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% set options
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'mu';'phi_E';'l';'e'};
+% run
+[info, oox, options_, Mx] = stoch_simul(Mx, options_, oox, var_list_);
+
+
 
 // 
 // % load estimated parameters

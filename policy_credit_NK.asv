@@ -193,6 +193,7 @@ end;
 resid;
 steady;
 
+
 %%% Estimation
 varobs gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
 
@@ -238,18 +239,7 @@ estimated_params;
 end;
 
 %%% estimation of the model
-if estim ==1 
-    estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
-    first_obs=1,				% First data of the sample
-    mode_compute=4,				% optimization algo, keep it to 4
-    mh_replic=10000,				% number of sample in Metropolis-Hastings
-    mh_jscale=0.299,				% adjust this to have an acceptance rate between 0.2 and 0.3
-    prefilter=1,				% remove the mean in the data
-    lik_init=2,					% Don't touch this
-    mh_nblocks=1); //,				% number of mcmc chains
-    // forecast=8					% forecasts horizon
-    // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
-else
+
     estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
     first_obs=1,				% First data of the sample
     mode_compute=0,				% optimization algo, keep it to 4
@@ -262,7 +252,7 @@ else
     mode_file='Credit_NK/Output/credit_NK_mean.mat'); //,				% number of mcmc chains
     // forecast=8					% forecasts horizon
     // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
-end
+
 
 
 %%% Stochastic Simulations // replace with your codes
@@ -270,11 +260,43 @@ end
 % variance covariance matrix
 shocks;
 	var eta_t;	stderr 1;
+	var eta_m;	stderr 1;
 end;
 	
 % stochastic simulations
 shock_decomposition(parameter_set=posterior_mode, nograph) gy_obs pi_obs r_obs l_obs co2_obs phi_E;
-stoch_simul(irf=30,order=1, graph) y c_H c_E i pi r q phi_E l e;
+stoch_simul(irf=30, order=1, graph) y c_H c_E i pi r mu phi_E l e;
+
+%%% Simulate IRFs under different collateral constraint parameter
+% make a copy
+Mx  = M_;
+oox = oo_;
+% change parameter
+Mx.params(strcmp('mk',M_.param_names)) = .25;
+[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% set options
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'mu';'phi_E';'l';'e'};
+% run
+[info, oox, options_, Mx] = stoch_simul(Mx, options_, oox, var_list_);
+hold on 
+
+Mx.params(strcmp('mk',M_.param_names)) = .05;
+[oox.dr, info, Mx.params] = resol(0, Mx, options_, oox.dr, oox.dr.ys, oox.exo_steady_state, oox.exo_det_steady_state);
+% set options
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'mu';'phi_E';'l';'e'};
+% run
+[info, oox, options_, Mx] = stoch_simul(Mx, options_, oox, var_list_);
+
+
+plot()
+
+
 
 // 
 // % load estimated parameters

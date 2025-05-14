@@ -29,9 +29,7 @@ estim = 1;
 % run mod file
 dynare(options.modfile)
 %% Getting results
-options.modfile = 'credit_NK';
-
-estim = 0;
+options.modfile = 'policy_credit_NK';
 % run mod file
 dynare(options.modfile)
 
