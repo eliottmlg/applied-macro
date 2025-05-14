@@ -117,17 +117,19 @@ model;
 	[name='FOC k']
 % // 	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk = q*rr;
 % // New
-	(1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk + phiS*q(+1)*e_ms*ms*(rr/rrs) = q*rr;
+    (1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk + phiS*q(+1)*e_ms*ms/(r_s) = q*rr;
+	% (1-phi_E)*((1-delta)*q(+1)+alpha*varrho(+1)*y(+1)/k) + phi_E*q(+1)*e_m*mk + phiS*q(+1)*e_ms*ms*(rr/rrs) = q*rr;
 	[name='FOC h']
 	w = (1-alpha)*varrho*y/(h*(1+mh*phi_E));
 	[name='NKPC']
 	(1-epsilon) + epsilon*mc - psi*pi*(pi-steady_state(pi)) + psi*beta_E*lb_E(+1)/lb_E*y(+1)/y*pi(+1)*(pi(+1)-steady_state(pi));
 	[name='FOC y']
-% // 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
-	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi - phiS*mmu*theta1*mu^theta2;
+ 	varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi;
+	% varrho = mc - theta1*mu^theta2 - tau*(1-varphi)*sig*(1-mu)*y^-varphi - phiS*mmu*theta1*mu^theta2;
 	[name='FOC mu']
 % // 	((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
-    ((tau*sig*y^(1-varphi))/((1+phiS)*theta2*theta1))^(1/(theta2-1)) = mu;
+    % ((tau*sig*y^(1-varphi))/((1+phiS)*theta2*theta1))^(1/(theta2-1)) = mu;
+    ((tau*sig*y^(1-varphi)+phiS*mmu)/(theta2*theta1))^(1/(theta2-1)) = mu;
 // New
 	[name='FOC for entrepreneur SLB (b_s_E)']
 % //     lb_E = beta_E*lb_E * r_s;
@@ -135,7 +137,7 @@ model;
 
 	%% AGGREGATION
 	[name='balance sheet']
-	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s/pi)*b_s(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_s;
+	c_E + i + w*h + (r(-1)/pi)*l(-1) + (r_s(-1)/pi)*b_s(-1) + theta1*mu^theta2*y + tau*e = mc*y +(1-mc-psi/2*(pi-steady_state(pi))^2)*y + l + b_s;
 	[name='Resources Constraint']
 	y = c + i + g + theta1*mu^theta2*y + y*psi/2*(pi-steady_state(pi))^2;
 	[name='Total consumption']
@@ -215,16 +217,20 @@ steady_state_model;
     r_s    = r - p_s;
     rrs    = r_s/piss;
 	phiS   = 1 - beta_E * rrs;
-	mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
+	% mu     = (tau * sig * y^(1 - varphi) / ((1 + phiS) * theta2 * theta1))^(1 / (theta2 - 1));
+	mu     = ((tau * sig * y^(1 - varphi) + phiS * mmu) / (theta2 * theta1))^(1 / (theta2 - 1));
  	e      = sig * (1 - mu) * y^(1 - varphi);
-	varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi) - phiS * mmu * theta1 * mu^theta2;
-    k      = ((1 - phi_E) * alpha * varrho * y) / ( rr - (1 - phi_E) * (1 - delta) - phi_E * mk - phiS * ms * (rr / rrs) );
+	% varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi) - phiS * mmu * theta1 * mu^theta2;
+    varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi);
+    k      = ((1 - phi_E) * alpha * varrho * y) / ( rr - (1 - phi_E) * (1 - delta) - phi_E * mk - phiS * ms/(r_s));
+    % k      = ((1 - phi_E) * alpha * varrho * y) / ( rr - (1 - phi_E) * (1 - delta) - phi_E * mk - phiS * ms * (rr / rrs) );
     b_s    = mk * k / rr - mmu * y * theta1 * mu^theta2;
 	i      = delta * k;
 	A      = y / (k^alpha * h^(1 - alpha));
 	w      = (1 - alpha) * varrho * y / h / (1 + mh * phi_E);
 	l      = mk * k / rr - mh * w * h;
-	c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l + (1 - r_s / pi) * b_s;
+    c_E    = y + l * (1 - rr) + (1 - r_s/pi) * b_s - i - w * h - theta1 * mu^theta2 * y - tau * e;
+	% c_E    = -i - w * h - theta1 * mu^theta2 * y - tau * e + mc * y + (1 - mc) * y + (1 - rr) * l + (1 - rrs) * b_s;
 	c      = (1 - gy) * y - i - theta1 * mu^theta2 * y;
 	c_H    = c - c_E;
 	lb_E   = (c_E - hh * c_E)^(-sigmaC);

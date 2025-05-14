@@ -13,13 +13,13 @@ function T = static_g1_tt(T, y, x, params)
 %   T         [#temp variables by 1]  double   vector of temporary terms
 %
 
-assert(length(T) >= 21);
+assert(length(T) >= 20);
 
 T = SLBnum.static_resid_tt(T, y, x, params);
 
-T(18) = getPowerDeriv(y(7),1-params(31),1);
-T(19) = getPowerDeriv(y(19)*params(28)*T(10)/(params(29)*params(30)*(1+y(32))),1/(params(30)-1),1);
-T(20) = getPowerDeriv(T(16),1-params(15),1);
-T(21) = getPowerDeriv(y(20),params(30),1);
+T(17) = getPowerDeriv(y(7),1-params(31),1);
+T(18) = getPowerDeriv((y(19)*params(28)*T(9)+y(32)*params(41))/(params(29)*params(30)),1/(params(30)-1),1);
+T(19) = getPowerDeriv(T(15),1-params(15),1);
+T(20) = params(29)*getPowerDeriv(y(20),params(30),1);
 
 end

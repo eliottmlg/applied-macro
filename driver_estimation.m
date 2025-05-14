@@ -1,32 +1,110 @@
 
 
+addpath('Utils');
+addpath('Data');
+
+%% Fetching and processing the estimation data
+run( 'my_db_FR.m' );
+
 %% Setting up Dynare
 clc % clean console
 close all  % close all figures
+clear all   % clear all variables
+
+% change your Dynare path
+options = struct(); 
+options.Dynare_path = 'C:\dynare\6.2';
+
+%% Launch routine
 
 % user options 
-options.model_path = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro/';
-options.modfile = 'SLBnum';
-% change your Dynare path
-options.Dynare_path = 'C:\dynare\6.3';
-options.Dynare_path = 'C:\Users\eliot\OneDrive\Documents\Desktop\ECB\ENSAE REPORT FOLDER\Dynare_Versions\dynare-5.4';
+%options.modfile = 'credit_NK_SLB';
+options.modfile = 'credit_NK';
+%options.modfile = 'SLBnum';
 
-options.folder2plot = 'C:\Users\eliot\Documents\REPOSITORIES\applied-macro\Plots/';   % Your destination folder
+options.folder2plot = 'Plots\';   % Your destination folder
 
 % set path
 addpath([options.Dynare_path,'\matlab\']); 
 dynare_config;
-addpath([options.model_path,'\']); 
-
-
-%% Fetching and processing the estimation data
-my_db_FR;
 
 %% running mod-file and saving plots  
 
 % run mod file
-cd(options.model_path)
 dynare(options.modfile)
+
+%% Policy Question A  %%
+close all
+clear all   % clear all variables
+
+% Define the mk–mh-pairs
+param_sets = {
+    0.8, 0.1;
+    0.2, 0.4;
+};
+
+% Load origial .mod
+template = fileread('credit_NK.mod');
+
+for i = 1:size(param_sets, 1)
+    mk = param_sets{i, 1};
+    mh = param_sets{i, 2};
+
+    % Replace Placeholder
+    mod_text = template;
+    mod_text = strrep(mod_text, 'MK_PLACEHOLDER', num2str(mk));
+    mod_text = strrep(mod_text, 'MH_PLACEHOLDER', num2str(mh));
+
+    % Save .mod-Datei
+    mod_filename = ['credit_NK_mk_', strrep(num2str(mk), '.', '_'), '.mod'];
+    fid = fopen(mod_filename, 'w');
+    fwrite(fid, mod_text);
+    fclose(fid);
+
+    % Run the Dynare-Modell 
+    eval(['dynare ', mod_filename, ' noclearall']);
+
+    % Ergebnisse speichern
+    results_name = ['results_mk_', strrep(num2str(mk), '.', '_')];
+    save(results_name);  % save all incl. IRFs
+end
+
+
+% Load results
+load results_mk_0_8
+irf_mk_08 = oo_.irfs;
+
+load results_mk_0_2
+irf_mk_02 = oo_.irfs;
+
+% List of variables of interest
+varlist = {'y', 'c_H', 'c_E', 'i', 'pi', 'r', 'q', 'l', 'mu', 'e'};
+shockname = 'eta_m'; 
+
+% Plot
+figure;
+numVars = length(varlist);
+
+for v = 1:numVars
+    var = varlist{v};
+    fieldname = [var '_' shockname];
+
+    if isfield(irf_mk_08, fieldname) && isfield(irf_mk_02, fieldname)
+        subplot(ceil(numVars/2), 2, v);
+        plot(irf_mk_08.(fieldname), 'b', 'LineWidth', 1.5); hold on;
+        plot(irf_mk_02.(fieldname), 'r--', 'LineWidth', 1.5);
+        title(['IRF of ', strrep(var, '_', '\_'), ' to ', strrep(shockname, '_', '\_')]);
+        legend('mk = 0.8, mh = 0.1', 'mk = 0.2, mh = 0.05');
+        xlabel('Periods');
+        grid on;
+    else
+        disp(['Variable ', var, ' not found in IRFs.']);
+    end
+end
+
+sgtitle('Impulse Responses to Carbon Tax Shock (\eta_t)');
+
+
 
 %% plots
 
