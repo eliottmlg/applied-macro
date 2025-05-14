@@ -26,8 +26,9 @@ parameters beta_E beta_H delta alpha sigmaC sigmaL chi gy A mh mk hh epsilon kap
 % 2. Calibration
 %----------------------------------------------------------------
 
-beta_H 	= 0.993; 	% Discount factor firms
+beta_H 	= 0.998; 	% Discount factor firms // short-term real rate of 2% per annum, NAWM-II
 beta_E  = 0.980;	% Discount factor entrepreneurs
+<<<<<<< HEAD
 delta 	= 0.025;	% Depreciation rate
 alpha 	= 0.30;		% Capital share
 gy 		= 0.2;   	% Public spending in GDP
@@ -44,13 +45,31 @@ psi 	= 80;		% Adjustment costs on prices
 kappa	= 4;		% adjustment costs on investment
 varphi	= 0.2;		% elasticity of emission to GDP
 piss	= 1.005;	% 0.5% inflation quarterly basis in steady state
+=======
+delta 	= 0.025;	% Depreciation rate // NAWM-II
+alpha 	= 0.30;		% Capital share // NAWM-II
+gy 		= 0.215;   	% Public spending in GDP // NAWM-II
+hh		= 0.62;		% Consumption habits // to estimate
+sigmaC 	= 1;		% Consumption risk aversion // to estimate
+sigmaL 	= 1; 		% Elasticity of labor // to estimate
+mk      = 0.8;		% Capital borrowing constraint // to estimate
+mh      = 0.1;		% Labor borrowing constraint // to estimate
+epsilon = 10;		% Elasticity between goods // NAWM-II
+rho 	= 0.93;		% Monetary policy smoothing // to estimate
+phi_y	= 0.03;		% Monetary policy reaction to output // NAWM-II
+phi_pi	= 2.74;		% Monetary policy reaction to inflation // NAWM-II
+psi 	= 80;		% Adjustment costs on prices
+kappa	= 5.17;		% adjustment costs on investment // to estimate
+varphi	= 0.2;		% elasticity of emission to GDP // to estimate
+piss	= 1.005;	% 0.5% inflation quarterly basis in steady state // NAWM-II
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 
 % value of long term variables
 tau0 	= 100/1000;	% value of carbon tax ($/ton)
 sig		= 0.2; 		% Carbon intensity USA 0.2 Gt / Trillions USD
-y0	 	= 25;		% trillions usd PPA https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
-theta1  = 0.05;		% level of abatement costs
-theta2  = 2.6;		% curvature abatement cost
+y0	 	= 2.4;		% trillions euros France https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
+theta1  = 0.3;		% level of abatement costs // Sahuc, Smets, Vermandel 2024, to estimate
+theta2  = 2.6;		% curvature abatement cost // Sahuc, Smets, Vermandel 2024, to estimate
 
 % autoregressive roots parameters
 rho_a	= 0.95;
@@ -184,17 +203,28 @@ steady_state_model;
 	lb_E 	= (c_E-hh*c_E)^-sigmaC;
 	lb_H 	= (c_H-hh*c_H)^-sigmaC;
 	chi		= w*lb_H/(h^sigmaL);
+<<<<<<< HEAD
 	// g 		= gy*y;
+=======
+	g 		= gy*y;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 	e_a 	= 1; e_g 	= 1; e_c 	= 1; e_m 	= 1; e_i 	= 1; e_r 	= 1; e_t 	= 1; e_p = 1; e_e = 1; e_mh = 1;
 	gy_obs = 0; gc_obs = 0; gi_obs = 0; pi_obs = 0; r_obs = 0; l_obs = 0; co2_obs = 0;
 end;
 steady;
 % check residuals
 resid;
+steady;
 
+<<<<<<< HEAD
+=======
+%%% Estimation
+varobs gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 
 %%% Stochastic Simulations High and Low mk
 
+<<<<<<< HEAD
 % variance covariance matrix
 shocks;
 	var eta_m;	stderr 1;
@@ -268,6 +298,69 @@ stoch_simul(irf=30,order=1,nograph);
 // % stochastic simulations
 // stoch_simul(irf=30,order=1) y c_H c_E i pi l e; // y c_H c_E i pi r q phi_E l e;
 // 
+=======
+    rho,				.45,    	,		,		beta_pdf,			.75,			0.1;
+    sigmaC,				1,    		,		,		normal_pdf,			1.5,				.35;
+	sigmaL,				1,   	 	,		,		normal_pdf,			1,				0.5;
+	hh,					.7,    		,		,		beta_pdf,			.75,			0.1;
+	kappa,				4,    		,		,		gamma_pdf,			4,				1.5;
+// 	phi_pi,				1.5,    	,		,		gamma_pdf,			1.5,				0.25;
+// 	phi_y,				0.05,    	,		,		gamma_pdf,			0.12,				0.05;
+// // New
+// Parameters related to shocks
+	stderr eta_e,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_e,				.9,    		,		,		beta_pdf,			.5,				0.2;
+	stderr eta_mh,   	,			,		,		INV_GAMMA_PDF,		.01,			2;
+	rho_mh,				.9,    		,		,		beta_pdf,			.5,				0.2;
+// Parameters related to credit constraints
+    mk,                 .2,         ,       ,       beta_pdf,           .2,             0.1;
+    mh,                 .6,         ,       ,       normal_pdf,         .6,           0.2; 
+// Parameters related to abatement
+    theta1,             .3,         ,       ,       gamma_pdf,          .3,             0.1;
+    theta2,             2.6,         ,       ,       gamma_pdf,           2.6,             0.5;
+    varphi,             .2,         ,       ,       gamma_pdf,           .2,             0.1;
+end;
+
+%%% estimation of the model
+if estim ==1 
+    estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
+    first_obs=1,				% First data of the sample
+    mode_compute=4,				% optimization algo, keep it to 4
+    mh_replic=10000,				% number of sample in Metropolis-Hastings
+    mh_jscale=0.299,				% adjust this to have an acceptance rate between 0.2 and 0.3
+    prefilter=1,				% remove the mean in the data
+    lik_init=2,					% Don't touch this
+    mh_nblocks=1); //,				% number of mcmc chains
+    // forecast=8					% forecasts horizon
+    // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+else
+    estimation(datafile='Utils/myobs.mat',	% your datafile, must be in your current folder
+    first_obs=1,				% First data of the sample
+    mode_compute=0,				% optimization algo, keep it to 4
+    mh_replic=0,				% number of sample in Metropolis-Hastings
+    mh_jscale=0.299,				% adjust this to have an acceptance rate between 0.2 and 0.3
+    prefilter=1,				% remove the mean in the data
+    lik_init=2,					% Don't touch this
+    mh_nblocks=1, 
+    nograph,
+    mode_file='Credit_NK/Output/credit_NK_mean.mat'); //,				% number of mcmc chains
+    // forecast=8					% forecasts horizon
+    // ) gy_obs pi_obs r_obs gc_obs gi_obs l_obs co2_obs;
+end
+
+
+%%% Stochastic Simulations // replace with your codes
+
+% variance covariance matrix
+shocks;
+	var eta_t;	stderr 1;
+end;
+	
+% stochastic simulations
+shock_decomposition(parameter_set=posterior_mode, nograph) gy_obs pi_obs r_obs l_obs co2_obs phi_E;
+stoch_simul(irf=30,order=1, graph) y c_H c_E i pi r q phi_E l e;
+
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 // 
 // % load estimated parameters
 // fn = fieldnames(oo_.posterior_mean.parameters);
@@ -417,4 +510,8 @@ stoch_simul(irf=30,order=1,nograph);
 // Ty = [T(1)-Tfreq;T];
 // draw_tables(var_names,M_,Tvec2,[2023 Tvec2(end)],y_,y_fiscal,y_carbon,y_monetary)
 // legend('Estimated','Fiscal','Carbon','Monetary')
+<<<<<<< HEAD
 	
+=======
+// 	
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5

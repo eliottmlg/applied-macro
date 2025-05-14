@@ -11,9 +11,15 @@ tic0 = tic;
 global M_ options_ oo_ estim_params_ bayestopt_ dataset_ dataset_info estimation_info
 options_ = [];
 M_.fname = 'credit_NK';
+<<<<<<< HEAD
 M_.dynare_version = '6.2';
 oo_.dynare_version = '6.2';
 options_.dynare_version = '6.2';
+=======
+M_.dynare_version = '6.3';
+oo_.dynare_version = '6.3';
+options_.dynare_version = '6.3';
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 %
 % Some global variables initialization
 %
@@ -287,6 +293,18 @@ M_.endo_nbr = 39;
 M_.param_nbr = 35;
 M_.orig_endo_nbr = 39;
 M_.aux_vars = [];
+<<<<<<< HEAD
+=======
+options_.varobs = cell(7, 1);
+options_.varobs(1)  = {'gy_obs'};
+options_.varobs(2)  = {'pi_obs'};
+options_.varobs(3)  = {'r_obs'};
+options_.varobs(4)  = {'gc_obs'};
+options_.varobs(5)  = {'gi_obs'};
+options_.varobs(6)  = {'l_obs'};
+options_.varobs(7)  = {'co2_obs'};
+options_.varobs_id = [ 23 26 27 24 25 28 29  ];
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 M_.Sigma_e = zeros(10, 10);
 M_.Correlation_matrix = eye(10, 10);
 M_.H = 0;
@@ -1064,7 +1082,11 @@ M_.static_g1_sparse_rowval = int32([2 6 9 10 19 16 17 8 15 17 1 17 3 5 6 11 15 3
 M_.static_g1_sparse_colval = int32([1 1 1 1 1 2 2 3 3 3 4 4 5 5 5 5 5 6 6 6 6 7 7 7 7 7 7 7 7 7 7 8 8 8 8 9 9 9 10 10 11 12 12 12 13 13 14 14 14 14 15 15 15 16 16 17 17 17 18 18 18 19 19 19 19 20 20 20 20 20 21 21 22 22 23 24 25 26 27 28 29 30 30 31 31 32 32 32 33 33 33 34 34 34 35 35 36 36 37 38 38 39 39 39 ]);
 M_.static_g1_sparse_colptr = int32([1 6 8 11 13 18 22 32 36 39 41 42 45 47 51 54 56 59 62 66 71 73 75 76 77 78 79 80 81 82 84 86 89 92 95 97 99 100 102 105 ]);
 close all;
+<<<<<<< HEAD
 M_.params(2) = 0.993;
+=======
+M_.params(2) = 0.998;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 beta_H = M_.params(2);
 M_.params(1) = 0.980;
 beta_E = M_.params(1);
@@ -1072,9 +1094,15 @@ M_.params(3) = 0.025;
 delta = M_.params(3);
 M_.params(4) = 0.30;
 alpha = M_.params(4);
+<<<<<<< HEAD
 M_.params(8) = 0.2;
 gy = M_.params(8);
 M_.params(12) = 0.7;
+=======
+M_.params(8) = 0.215;
+gy = M_.params(8);
+M_.params(12) = 0.62;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 hh = M_.params(12);
 M_.params(5) = 1;
 sigmaC = M_.params(5);
@@ -1086,6 +1114,7 @@ M_.params(10) = 0.1;
 mh = M_.params(10);
 M_.params(13) = 10;
 epsilon = M_.params(13);
+<<<<<<< HEAD
 M_.params(15) = .8;
 rho = M_.params(15);
 M_.params(16) = 0;
@@ -1095,6 +1124,17 @@ phi_pi = M_.params(17);
 M_.params(18) = 80;
 psi = M_.params(18);
 M_.params(14) = 4;
+=======
+M_.params(15) = 0.93;
+rho = M_.params(15);
+M_.params(16) = 0.03;
+phi_y = M_.params(16);
+M_.params(17) = 2.74;
+phi_pi = M_.params(17);
+M_.params(18) = 80;
+psi = M_.params(18);
+M_.params(14) = 5.17;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 kappa = M_.params(14);
 M_.params(33) = 0.2;
 varphi = M_.params(33);
@@ -1104,11 +1144,19 @@ M_.params(34) = 0.1;
 tau0 = M_.params(34);
 M_.params(30) = 0.2;
 sig = M_.params(30);
+<<<<<<< HEAD
 M_.params(35) = 25;
 y0 = M_.params(35);
 M_.params(31) = 0.05;
 theta1 = M_.params(31);
 M_.params(32) = 0.5;
+=======
+M_.params(35) = 2.4;
+y0 = M_.params(35);
+M_.params(31) = 0.3;
+theta1 = M_.params(31);
+M_.params(32) = 2.6;
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 theta2 = M_.params(32);
 M_.params(20) = 0.95;
 rho_a = M_.params(20);
@@ -1130,18 +1178,188 @@ M_.params(28) = 0.90;
 rho_e = M_.params(28);
 M_.params(29) = 0.90;
 rho_mh = M_.params(29);
+<<<<<<< HEAD
 steady;
 options_resid_ = struct();
 display_static_residuals(M_, options_, oo_, options_resid_);
+=======
+options_resid_ = struct();
+display_static_residuals(M_, options_, oo_, options_resid_);
+if isempty(estim_params_)
+    estim_params_.var_exo = zeros(0, 10);
+    estim_params_.var_endo = zeros(0, 10);
+    estim_params_.corrx = zeros(0, 11);
+    estim_params_.corrn = zeros(0, 11);
+    estim_params_.param_vals = zeros(0, 10);
+end
+if ~isempty(find(estim_params_.var_exo(:,1)==2))
+    error('The standard deviation for eta_g has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 2, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==21))
+    error('Parameter rho_g has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 21, .92, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==8))
+    error('The standard deviation for eta_p has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 8, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==27))
+    error('Parameter rho_p has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 27, .92, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==6))
+    error('The standard deviation for eta_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 6, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==25))
+    error('Parameter rho_r has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 25, .5, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==3))
+    error('The standard deviation for eta_c has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 3, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==22))
+    error('Parameter rho_c has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 22, .96, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==5))
+    error('The standard deviation for eta_i has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 5, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==24))
+    error('Parameter rho_i has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 24, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==4))
+    error('The standard deviation for eta_m has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 4, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==23))
+    error('Parameter rho_m has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 23, .96, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==1))
+    error('The standard deviation for eta_a has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 1, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==20))
+    error('Parameter rho_a has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 20, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==7))
+    error('The standard deviation for eta_t has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 7, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==26))
+    error('Parameter rho_t has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 26, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==15))
+    error('Parameter rho has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 15, .45, NaN, NaN, 1, .75, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==5))
+    error('Parameter sigmaC has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 5, 1, NaN, NaN, 3, 1.5, .35, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==6))
+    error('Parameter sigmaL has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 6, 1, NaN, NaN, 3, 1, 0.5, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==12))
+    error('Parameter hh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 12, .7, NaN, NaN, 1, .75, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==14))
+    error('Parameter kappa has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 14, 4, NaN, NaN, 2, 4, 1.5, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==9))
+    error('The standard deviation for eta_e has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 9, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==28))
+    error('Parameter rho_e has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 28, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.var_exo(:,1)==10))
+    error('The standard deviation for eta_mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.var_exo = [estim_params_.var_exo; 10, NaN, NaN, NaN, 4, .01, 2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==29))
+    error('Parameter rho_mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 29, .9, NaN, NaN, 1, .5, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==11))
+    error('Parameter mk has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 11, .2, NaN, NaN, 1, .2, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==10))
+    error('Parameter mh has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 10, .6, NaN, NaN, 3, .6, 0.2, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==31))
+    error('Parameter theta1 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 31, .3, NaN, NaN, 2, .3, 0.1, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==32))
+    error('Parameter theta2 has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 32, 2.6, NaN, NaN, 2, 2.6, 0.5, NaN, NaN, NaN ];
+if ~isempty(find(estim_params_.param_vals(:,1)==33))
+    error('Parameter varphi has been specified twice in two concatenated ''estimated_params'' blocks. Depending on your intention, you may want to use the ''overwrite'' option or an ''estimated_params_remove'' block.')
+end
+estim_params_.param_vals = [estim_params_.param_vals; 33, .2, NaN, NaN, 2, .2, 0.1, NaN, NaN, NaN ];
+if estim ==1 
+options_.datafile = 'Utils/myobs.mat';
+options_.first_obs = 1;
+options_.lik_init = 2;
+options_.mh_jscale = 0.299;
+options_.mh_nblck = 1;
+options_.mh_replic = 10000;
+options_.mode_compute = 4;
+options_.prefilter = 1;
+options_.order = 1;
+var_list_ = {};
+oo_recursive_=dynare_estimation(var_list_);
+else
+options_.datafile = 'Utils/myobs.mat';
+options_.first_obs = 1;
+options_.lik_init = 2;
+options_.mh_jscale = 0.299;
+options_.mh_nblck = 1;
+options_.mh_replic = 0;
+options_.mode_compute = 0;
+options_.mode_file = 'Credit_NK/Output/credit_NK_mean.mat';
+options_.nograph = true;
+options_.prefilter = 1;
+options_.order = 1;
+var_list_ = {};
+oo_recursive_=dynare_estimation(var_list_);
+end
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 %
 % SHOCKS instructions
 %
 M_.exo_det_length = 0;
 M_.Sigma_e(7, 7) = (1)^2;
+<<<<<<< HEAD
 options_.irf = 30;
 options_.nograph = true;
 options_.order = 1;
 var_list_ = {};
+=======
+options_.no_graph.shock_decomposition = true;
+options_.parameter_set = 'posterior_mode';
+var_list_ = {'gy_obs';'pi_obs';'r_obs';'l_obs';'co2_obs';'phi_E'};
+oo_ = shock_decomposition(M_,oo_,options_,var_list_,bayestopt_,estim_params_);
+options_.irf = 30;
+options_.nograph = false;
+options_.order = 1;
+var_list_ = {'y';'c_H';'c_E';'i';'pi';'r';'q';'phi_E';'l';'e'};
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 [info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
 
 
@@ -1172,6 +1390,10 @@ end
 if exist('options_mom_', 'var') == 1
   save([M_.dname filesep 'Output' filesep 'credit_NK_results.mat'], 'options_mom_', '-append');
 end
+<<<<<<< HEAD
+=======
+disp('Note: 1 warning(s) encountered in the preprocessor')
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
 if ~isempty(lastwarn)
   disp('Note: warning(s) encountered in MATLAB/Octave code')
 end

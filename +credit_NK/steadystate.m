@@ -25,6 +25,10 @@ function [ys_, params, info] = steadystate(ys_, exo_, params)
     ys_(11)=(ys_(3)-ys_(3)*params(12))^(-params(5));
     ys_(16)=(ys_(4)-ys_(4)*params(12))^(-params(5));
     params(7)=ys_(6)*ys_(16)/ys_(5)^params(6);
+<<<<<<< HEAD
+=======
+    ys_(22)=ys_(7)*params(8);
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
     ys_(30)=1;
     ys_(31)=1;
     ys_(32)=1;
@@ -41,6 +45,33 @@ function [ys_, params, info] = steadystate(ys_, exo_, params)
     ys_(26)=0;
     ys_(27)=0;
     ys_(28)=0;
+<<<<<<< HEAD
     ys_(29)=0;
+=======
+<<<<<<<< HEAD:Practice/+credit_NK/steadystate.m
+<<<<<<< HEAD:+credit_NK/steadystate.m
+    ys_(33)=ys_(15)+params(41);
+    ys_(43)=1;
+    ys_(44)=1;
+    ys_(35)=1;
+    ys_(36)=1;
+    ys_(37)=1;
+    ys_(38)=1;
+    ys_(39)=1;
+    ys_(40)=1;
+    ys_(41)=1;
+    ys_(42)=1;
+    ys_(23)=0;
+    ys_(24)=0;
+    ys_(25)=0;
+    ys_(26)=0;
+    ys_(27)=0;
+    ys_(28)=0;
+=======
+>>>>>>> 9b33eab1212ab750e77b816dff3daff8008c73fa:Practice/+credit_NK/steadystate.m
+========
+    ys_(29)=0;
+>>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5:+credit_NK/steadystate.m
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
     % Auxiliary equations
 end

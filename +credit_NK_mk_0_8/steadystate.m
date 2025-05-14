@@ -25,6 +25,10 @@ function [ys_, params, info] = steadystate(ys_, exo_, params)
     ys_(11)=(ys_(3)-ys_(3)*params(12))^(-params(5));
     ys_(16)=(ys_(4)-ys_(4)*params(12))^(-params(5));
     params(7)=ys_(6)*ys_(16)/ys_(5)^params(6);
+<<<<<<< HEAD
+=======
+    ys_(22)=ys_(7)*params(8);
+>>>>>>> a45dbe56eb9dca555a0f7348b3fd1749651a8af5
     ys_(30)=1;
     ys_(31)=1;
     ys_(32)=1;
