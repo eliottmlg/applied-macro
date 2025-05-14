@@ -13,11 +13,13 @@ function T = static_g1_tt(T, y, x, params)
 %   T         [#temp variables by 1]  double   vector of temporary terms
 %
 
-assert(length(T) >= 17);
+assert(length(T) >= 19);
 
 T = credit_NK_SLB.static_resid_tt(T, y, x, params);
 
-T(16) = getPowerDeriv(T(14),1-params(17),1);
-T(17) = params(32)*getPowerDeriv(y(24),params(33),1);
+T(16) = getPowerDeriv(y(8),1-params(35),1);
+T(17) = getPowerDeriv(y(23)*params(32)*T(6)/(params(34)*params(33)),1/(params(34)-1),1);
+T(18) = getPowerDeriv(T(14),1-params(16),1);
+T(19) = params(33)*getPowerDeriv(y(24),params(34),1);
 
 end

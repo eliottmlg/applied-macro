@@ -37,10 +37,10 @@ var
     mu      % Emissions abatement rate
     e       % Emissions
     g       % Government spending
-    gy_obs gc_obs gi_obs pi_obs r_obs l_obs; % Observable variables
+    gy_obs gc_obs gi_obs pi_obs r_obs l_obs co2_obs; % Observable variables
 
 % Exogenous shocks
-var e_a e_g e_c e_m e_i e_r e_t e_p;
+var e_a e_g e_c e_m e_i e_r e_t e_p e_e e_mh;
 
 % Exogenous processes (shock innovations)
 varexo 
@@ -51,19 +51,21 @@ varexo
     eta_i   % Investment shock
     eta_r   % Monetary policy shock
     eta_t   % CO2 tax shock
-    eta_p;  % Cost-push shock
+    eta_p   % Cost-push shock
+    eta_e
+    eta_mh;  
 
 %----------------------------------------------------------------
 % 2. Parameter Declaration
 %----------------------------------------------------------------
 parameters 
-    mu_bar gamma 
+    gamma 
     beta_E beta_H         % Discount factors (Entrepreneurs, Households)
     delta alpha           % Capital depreciation rate, output elasticity of capital
     sigmaC sigmaL chi     % Preferences: risk aversion, labor supply elasticity, disutility weight
     gy A mh mk hh         % Steady state gov. spending ratio, TFP, collateral ratios, habit
     epsilon kappa         % Substitution elasticity, investment adjustment cost
-    rho_mp phi_y phi_pi   % Taylor rule parameters (monetary policy smoothing rho renamed to rho_mp)
+    rho_mp phi_y phi_pi rho_e rho_mh   % Taylor rule parameters (monetary policy smoothing rho renamed to rho_mp)
     psi piss              % Price adjustment cost, steady-state inflation
     rho                   % Interest rate spread for second loan (SLB loans)
     rho_a rho_g rho_c rho_m rho_i rho_r rho_t rho_p  % AR(1) shock parameters
@@ -82,19 +84,19 @@ gy      = 0.2;          % Government spending to GDP ratio
 hh      = 0.7;          % Consumption habit formation weight
 sigmaC  = 1;            % Relative risk aversion (consumption)
 sigmaL  = 1;            % Inverse Frisch elasticity of labor supply
-mk      = 0.8;          % Capital collateral constraint coefficient
-mh      = 0.1;          % Labor collateral constraint coefficient
+mk      = MK_PLACEHOLDER;		% Capital borrowing constraint 0.8; % 
+mh      = MH_PLACEHOLDER;		% Labor borrowing constraint 0.1; % 
 epsilon = 10;           % Elasticity of substitution between differentiated goods
 rho_mp  = 0.8;          % Monetary policy smoothing (Taylor rule) – renamed from rho
 phi_y   = 0;            % Monetary policy response to output
 phi_pi  = 1.5;          % Monetary policy response to inflation
-rho     = 0.0002/4;       % Interest rate spread for SLB loans (e.g., SLB loans 2% cheaper)
+rho     = 0.02;       % Interest rate spread for SLB loans (e.g., SLB loans 2% cheaper)
 psi     = 80;           % Price adjustment cost (Rotemberg)
 kappa   = 4;            % Investment adjustment cost
 varphi  = 0.2;          % Elasticity of emissions to output
 piss    = 1.005;        % Steady-state gross inflation (0.5% quarterly)
 rho_xi  = 0.9;          % Persistence of SLB policy rule
-mu_bar  = 0.8;
+//mu_bar  = 0.8;
 gamma   = 0.3;
 
 % Values of long-term variables (steady-state targets)
@@ -103,7 +105,7 @@ sig     = 0.2;          % Carbon intensity (Gt emissions per trillion USD output
 y0      = 25;           % Steady-state output (trillions USD, for scaling)
 % Source: World Bank national accounts data
 
-theta1  = 0.05;         % Level of abatement cost
+theta1  = 0.3;         % Level of abatement cost
 theta2  = 2.6;          % Curvature of abatement cost
 
 % Autoregressive shock parameters (persistence)
@@ -115,6 +117,8 @@ rho_i   = 0.95;
 rho_r   = 0.40;
 rho_t   = 0.40;
 rho_p   = 0.90;
+rho_e   = 0.90;
+rho_mh  = 0.90;
                 
 %----------------------------------------------------------------
 % 3. Model
@@ -135,7 +139,7 @@ model;
     [name='technology']
     y = e_a * A * (k(-1)^alpha) * (h^(1-alpha));
     [name='Borrowing constraint']
-    l + l_SLB = e_m * mk * q(+1) * k / rr - mh * w * h;
+    l + l_SLB = e_m * mk * q(+1) * k / rr - e_mh * mh * w * h;
     [name='Capital law of motion']
     i * e_i * (1 - (kappa/2)*((i/i(-1) - 1)^2)) = k - (1 - delta) * k(-1);
     [name='FOC entrepreneur consumption']
@@ -145,11 +149,11 @@ model;
     [name='FOC capital']
     (1 - phi_E) * ((1 - delta)*q(+1) + alpha * varrho(+1) * y(+1)/k) + phi_E * q(+1) * e_m * mk = q * rr;
     [name='FOC labor demand']
-    w = (1 - alpha) * varrho * y / (h * (1 + mh * phi_E));
+    w = (1 - alpha) * varrho * y / (h * (1 + e_mh * mh * phi_E));
     [name='NK Phillips Curve']
-    (1 - epsilon) + epsilon*mc - psi * pi * (pi - steady_state(pi)) + psi * beta_E * (lb_E(+1)/lb_E) * (y(+1)/y) * pi(+1) * (pi(+1) - steady_state(pi)) = 0;
-    [name='Exogenous abatement rate']
-    mu = mu_bar;
+    (1 - epsilon) + epsilon*mc - psi * pi * (pi - steady_state(pi)) + psi * beta_E * (lb_E(+1)/lb_E) * (y(+1)/y) * pi(+1) * (pi(+1) - steady_state(pi));
+    [name='FOC mu']
+    ((tau*sig*y^(1-varphi))/(theta2*theta1))^(1/(theta2-1)) = mu;
     [name='Productivity composite definition']
     varrho = mc - theta1 * mu^theta2 - tau * (1 - varphi) * sig * (1 - mu) * y^(-varphi);
     
@@ -162,6 +166,7 @@ model;
     c = c_E + c_H;
     [name='Emissions definition']
     e = sig * (1 - mu) * y^(1 - varphi);
+
     
     %% Banking Sector (SLB Loans)
     [name='SLB loan share']
@@ -199,6 +204,8 @@ model;
     r_obs = r - steady_state(r);
     [name='measurement total loans']
     l_obs = log(d_t / d_t(-1));
+	[name='measurement corporate loans']
+	co2_obs  = log(e/e(-1));
     
     %%% Stochastic processes for exogenous shocks
     [name='shocks']
@@ -210,6 +217,8 @@ model;
     log(e_r) = rho_r * log(e_r(-1)) + eta_r;
     log(e_t) = rho_t * log(e_t(-1)) + eta_t;
     log(e_p) = rho_p * log(e_p(-1)) + eta_p;
+    log(e_e) = rho_e*log(e_e(-1))+eta_e;  
+    log(e_mh) = rho_mh*log(e_mh(-1))+eta_mh;
 end;
 
 %----------------------------------------------------------------
@@ -219,9 +228,8 @@ steady_state_model;
     % Steady-state target values
     y       = y0;
     tau     = tau0;
-    % Set abatement rate (mu) exogenously
-    mu      = mu_bar;
-    e       = sig * (1 - mu) * y^(1 - varphi);
+    mu		= (tau*sig*y^(1-varphi)/(theta2*theta1))^(1/(theta2-1));
+	e       = sig * (1 - mu) * y^(1 - varphi);
     g       = gy * y;
     pi      = piss;
     rr      = 1 / beta_H;
@@ -260,6 +268,8 @@ steady_state_model;
     e_r     = 1; 
     e_t     = 1; 
     e_p     = 1;
+    e_e = 1; 
+    e_mh = 1;
     % Steady-state observables (logs or gaps are zero)
     gy_obs  = 0; 
     gc_obs  = 0; 
@@ -276,10 +286,9 @@ check;
 
 % (Stochastic simulation or estimation commands can follow here)
 shocks;
-    var eta_g; stderr 1;
-    % Additional shock standard deviations can be set here...
+    var eta_t; stderr 1;
 end;
 
 % Example: simulate impulse responses
-stoch_simul(irf=30, order=1) y c_E c_H i pi r l l_SLB e;
+stoch_simul(irf=30, order=1, nograph);
 

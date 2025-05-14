@@ -22,6 +22,6 @@ function g2 = dynamic_g2(T, y, x, params, steady_state, it_, T_flag)
 if T_flag
     T = credit_NK_SLB.dynamic_g2_tt(T, y, x, params, steady_state, it_);
 end
-g2 = sparse([],[],[],40,5625);
+g2 = sparse([],[],[],43,6889);
 
 end

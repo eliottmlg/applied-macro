@@ -22,11 +22,11 @@ assert(length(T) >= 31);
 
 T = credit_NK_mk_0_8.dynamic_resid_tt(T, y, x, params, steady_state, it_);
 
-T(26) = getPowerDeriv(y(22)-params(12)*y(2),(-params(5)),1);
-T(27) = getPowerDeriv(y(23)-params(12)*y(3),(-params(5)),1);
-T(28) = getPowerDeriv(y(26),1-params(33),1);
-T(29) = getPowerDeriv(y(38)*params(30)*T(19)/(params(31)*params(32)),1/(params(32)-1),1);
-T(30) = getPowerDeriv(T(24),1-params(15),1);
-T(31) = params(31)*getPowerDeriv(y(39),params(32),1);
+T(26) = getPowerDeriv(y(26)-params(13)*y(2),(-params(6)),1);
+T(27) = getPowerDeriv(y(27)-params(13)*y(3),(-params(6)),1);
+T(28) = getPowerDeriv(y(30),1-params(35),1);
+T(29) = getPowerDeriv(y(45)*params(32)*T(17)/(params(34)*params(33)),1/(params(34)-1),1);
+T(30) = getPowerDeriv(T(24),1-params(16),1);
+T(31) = params(33)*getPowerDeriv(y(46),params(34),1);
 
 end

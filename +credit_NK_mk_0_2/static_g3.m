@@ -18,6 +18,6 @@ function g3 = static_g3(T, y, x, params, T_flag)
 if T_flag
     T = credit_NK_mk_0_2.static_g3_tt(T, y, x, params);
 end
-g3 = sparse([],[],[],39,59319);
+g3 = sparse([],[],[],43,79507);
 
 end

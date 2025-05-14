@@ -17,8 +17,8 @@ options.Dynare_path = '/Applications/Dynare/6.2-x86_64';
 %% Launch routine
 
 % user options 
-%options.modfile = 'credit_NK_SLB';
-options.modfile = 'credit_NK';
+options.modfile = 'credit_NK_SLB';
+%options.modfile = 'credit_NK';
 %options.modfile = 'SLBnum';
 
 options.folder2plot = 'Plots';   % Your destination folder
@@ -43,7 +43,7 @@ param_sets = {
 };
 
 % Load origial .mod
-template = fileread('credit_NK.mod');
+template = fileread('credit_NK_SLB.mod');
 
 for i = 1:size(param_sets, 1)
     mk = param_sets{i, 1};
@@ -101,7 +101,7 @@ for v = 1:numVars
     end
 end
 
-sgtitle('Impulse Responses to Carbon Tax Shock (\eta_t)');
+% sgtitle('Impulse Responses to Carbon Tax Shock (\eta_t)');
 
 
 
