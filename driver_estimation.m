@@ -1,3 +1,6 @@
+clc % clean console
+close all  % close all figures
+clear all   % clear all variables
 
 addpath('Utils');
 addpath('Data');
